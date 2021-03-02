@@ -1,0 +1,51 @@
+@import './normalize.css';
+
+/*:root 获取根元素HTML*/
+:root {
+    --color-text: #666;
+    --color-high-text: #ff5777;
+    --color-tint: #ff8198;/*tint一般表示背景颜色*/
+    --color-background:#fff;
+    --font-size: 14px;
+    --line-height: 1.5
+}
+
+*,
+*::before,
+*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: '微软雅黑',Arial, Helvetica, sans-serif,'PingFang SC','Microsoft YaHei';
+    user-select: none;/*禁止用户鼠标选中页面上的文字或图片*/
+    -webkit-tap-highlight-color: transparent;
+    background: var(--color-background);
+    color: var(--color-text);
+    width: 100vw;
+}
+img{
+    vertical-align: middle;
+}
+a{
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.clear-fix{
+    zoom: 1;
+}
+
+.clear-fix::after{/*清除浮动*/
+    clear: both;
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.left{float: left;}
+.right{float: right;}
