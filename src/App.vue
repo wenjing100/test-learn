@@ -1,4 +1,5 @@
 <template>
+  
   <tabbar></tabbar>
   <router-view/>
 </template>

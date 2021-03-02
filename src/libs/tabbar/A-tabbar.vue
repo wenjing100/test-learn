@@ -53,13 +53,19 @@ export default {
   padding: 5px;
   background: #ffe2e28c;
   border-top: 1px solid rgba($color: #424242, $alpha: 0.1);
-  img {
-    width: 30px;
-    height: 30px;
+  i {
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+  }
+  p {
+    width: 100%;
+    font-size: 14px;
+    display: block;
   }
   .active {
     color: #ff5000;
-    font-weight: bold;
   }
 }
 </style>

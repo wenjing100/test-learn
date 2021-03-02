@@ -2,7 +2,7 @@
     <div class="navbar">
         <div class="left"><slot name="left"></slot></div>
         <div class="center"><slot name="center"></slot></div>
-        <div class="right"><slot name="center"></slot></div>
+        <div class="right"><slot name="right"></slot></div>
     </div>
 </template>
 
@@ -18,17 +18,18 @@
     height: 44px;
     line-height: 44px;
     display: flex;
+    justify-content: space-between;
+    background: var(--color-tint);
     .left{
         width: 64px;
-        background: red;
     }
     .right{
         width: 64px;
-        background: red;
     }
     .center{
         flex: 1;
-        background: blue;
+        color:#fff;
+        text-align: center;
     }
 }
 </style>

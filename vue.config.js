@@ -1,5 +1,5 @@
 module.exports = {
-    congifureWebpack:{
+    configureWebpack:{
         resolve:{
             alias:{
                 "assets":"@/assets",

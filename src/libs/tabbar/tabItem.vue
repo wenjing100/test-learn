@@ -19,10 +19,6 @@ export default {
   justify-items: center;
   min-width: 30px;
   text-align: center;
-  p {
-    width: 100%;
-    font-size: 14px;
-    display: block;
-  }
+  
 }
 </style>

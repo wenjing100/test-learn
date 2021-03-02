@@ -1,5 +1,8 @@
 <template>
-    <h2>Home</h2>
+  <navbar>
+    <template v-slot:center>购物街</template>
+  </navbar>
+  <h2>Home</h2>
 </template>
 
 <script lang='ts'>
