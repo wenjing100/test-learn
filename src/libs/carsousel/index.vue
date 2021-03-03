@@ -3,14 +3,16 @@
     class="container"
     @mouseenter="menterHandler"
     @mouseleave="mleaveHandler"
-    :style="{ width: w, height: h }"
   >
-    <div class="inner">
+    <div class="inner" >
       <car-item v-for="(item, index) in cardata" :key="index">
-        <img
-          :src="require(`../../assets/img/${item.img_name}`)"
-          alt=""
+        <span class="banner">{{item.title}}</span>
+        <a :href="item.link">
+          <img
+          :src="require(`${item.image}`)"
+          alt="item.title"
         />
+        </a>
       </car-item>
       <director dir="pre" @dirClick="dirClick"></director>
       <director dir="next" @dirClick="dirClick"></director>
@@ -28,15 +30,14 @@
 <script>
 import dots from "./dots";
 import director from "./director";
-import cardata from "../../data/carsoulData";
+// import cardata from "../../data/carsoulData";
 import {
   reactive,
   toRefs,
   onMounted,
   onBeforeUnmount,
-  getCurrentInstance,
 } from "vue";
-
+import { IcarData_item } from '../../typings'
 export default {
   name: "my-carsousel",
   components: {
@@ -65,14 +66,12 @@ export default {
       default: true,
     },
     dotBgColor: String,
-    w: String,
-    h: String,
+    cardata:Array
   },
   setup(props) {
-    const instance = getCurrentInstance();
     const state = reactive({
       currentIndex: props.ini,
-      itemLen: cardata.length,
+      itemLen: props.cardata.length,
     });
     let t = null;
     const autoplay = () => {
@@ -129,8 +128,7 @@ export default {
       dotClick,
       menterHandler,
       mleaveHandler,
-      dirClick,
-      cardata,
+      dirClick
     };
   },
 };
@@ -140,12 +138,28 @@ export default {
 .container {
   width: 100%;
   height: 100%;
-
+ 
   .inner {
     width: 100%;
     height: 100%;
     position: relative;
     overflow: hidden;
+    transition: all .2s;
+    
+    .banner{
+      width: 100%;
+      height: 20px;
+      font-size: 14px;
+      padding-left: 10px;
+      background: rgba(0,0,0,.5);
+      color: #fff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+    
   }
+  
 }
 </style>

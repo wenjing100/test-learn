@@ -1,4 +1,7 @@
 <template>
+  <navbar>
+    <template v-slot:center>商品分类</template>
+  </navbar>
     <h2>Catagory</h2>
 </template>
 

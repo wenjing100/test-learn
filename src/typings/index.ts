@@ -4,6 +4,17 @@ interface ItabData_item{
     path:string
 }
 
+interface IcarData_item{
+    link:string
+    title:string
+    image:string
+}
+
+interface Istate{
+    carData:IcarData_item []
+}
 export{
-    ItabData_item
+    ItabData_item,
+    IcarData_item,
+    Istate
 }

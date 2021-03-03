@@ -1,4 +1,7 @@
 <template>
+  <navbar>
+    <template v-slot:center>我的档案</template>
+  </navbar>
     <h2>Me</h2>
 </template>
 

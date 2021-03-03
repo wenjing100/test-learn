@@ -1,11 +1,21 @@
 <template>
+  <navbar>
+    <template v-slot:center>购物车({{count}})</template>
+  </navbar>
     <h2>Cart</h2>
 </template>
 
 <script lang='ts'>
-import { defineComponent} from 'vue'
+import { defineComponent, ref} from 'vue'
   export default defineComponent({
-      name: 'cartPage'
+      name: 'cartPage',
+      setup(){
+        const count = ref(0);
+
+        return {
+          count
+        }
+      }
   })
 </script>
 
