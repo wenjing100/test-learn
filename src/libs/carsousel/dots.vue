@@ -1,6 +1,6 @@
 <template>
   <div class="dots-wraper" v-if="hasDot">
-    <div class="dotitem" v-for="item in itemLen" :key="item">
+    <div class="dotitem" v-for="item in Len" :key="item">
         <a href="javascript:;" class="dotlink"
             :style="{backgroundColor:(item - 1) === currentIndex ? dotBgColor : '#fff' }"
             @click="dotClick(item - 1)"
@@ -9,7 +9,8 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { watchEffect,ref } from 'vue';
   export default {
       name: 'car-dots',
       props: {
@@ -24,12 +25,14 @@
               default:'#ff5000'
           }
       },
-      setup(props,ctx) {
-          const dotClick = (index)=>{
+      setup(props: { itemLen: number },ctx: { emit: (arg0: string, arg1: number) => void; }) {
+          let Len = ref(props.itemLen);
+          const dotClick = (index:number)=>{
               ctx.emit('dotClick',index)
           }
           return {
-              dotClick
+              dotClick,
+              Len
           }
       }
   }

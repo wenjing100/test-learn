@@ -4,15 +4,11 @@
     @mouseenter="menterHandler"
     @mouseleave="mleaveHandler"
   >
-    <div class="inner" >
+    <div class="inner">
       <car-item v-for="(item, index) in cardata" :key="index">
-        <span class="banner">{{item.title}}</span>
-        <a :href="item.link">
-          <img
-          :src="require(`${item.image}`)"
-          alt="item.title"
-        />
-        </a>
+          <a :href="item.link">
+            <img :src="`http://47.110.38.241/${item.image}`" alt="item.title" />
+          </a>
       </car-item>
       <director dir="pre" @dirClick="dirClick"></director>
       <director dir="next" @dirClick="dirClick"></director>
@@ -27,17 +23,12 @@
   </div>
 </template>
 
-<script>
-import dots from "./dots";
-import director from "./director";
-// import cardata from "../../data/carsoulData";
-import {
-  reactive,
-  toRefs,
-  onMounted,
-  onBeforeUnmount,
-} from "vue";
-import { IcarData_item } from '../../typings'
+<script lang='ts'>
+import dots from "./dots.vue";
+import director from "./director.vue";
+import { reactive, toRefs, onMounted, onBeforeUnmount, watchEffect, onBeforeMount } from "vue";
+import { IcarData_item } from "../../typings";
+import { PropType } from "vue";
 export default {
   name: "my-carsousel",
   components: {
@@ -66,12 +57,15 @@ export default {
       default: true,
     },
     dotBgColor: String,
-    cardata:Array
+    cardata: {
+      type:Array as PropType<IcarData_item[]>,
+      default: null,
+    },
   },
-  setup(props) {
+  setup(props: { ini: number; cardata: IcarData_item[]|null; autoplay: boolean; duration: number; }) {
     const state = reactive({
       currentIndex: props.ini,
-      itemLen: props.cardata.length,
+      itemLen: props.cardata == null?0:props.cardata.length,
     });
     let t = null;
     const autoplay = () => {
@@ -82,7 +76,7 @@ export default {
       }
     };
 
-    const play = (dir) => {
+    const play = (dir: string) => {
       switch (dir) {
         case "next":
           state.currentIndex += 1;
@@ -93,17 +87,17 @@ export default {
         case "pre":
           state.currentIndex -= 1;
           if (state.currentIndex === -1) {
-            state.currentIndex = state.itemLen - 1;
+            state.currentIndex = state.itemLen! - 1;
           }
           break;
         default:
           break;
       }
     };
-    const dotClick = (index) => {
+    const dotClick = (index: number) => {
       state.currentIndex = index;
     };
-    const dirClick = (dir) => {
+    const dirClick = (dir: string) => {
       play(dir);
     };
     const menterHandler = () => {
@@ -116,6 +110,10 @@ export default {
       clearInterval(t);
       t = null;
     }
+    onBeforeMount(()=>{
+      let _len:number = props.cardata.length;
+      state.itemLen = _len;
+    })
     onMounted(() => {
       autoplay();
     });
@@ -128,7 +126,7 @@ export default {
       dotClick,
       menterHandler,
       mleaveHandler,
-      dirClick
+      dirClick,
     };
   },
 };
@@ -138,28 +136,26 @@ export default {
 .container {
   width: 100%;
   height: 100%;
- 
+
   .inner {
     width: 100%;
     height: 100%;
     position: relative;
     overflow: hidden;
-    transition: all .2s;
-    
-    .banner{
+    transition: all 0.2s;
+
+    .banner {
       width: 100%;
       height: 20px;
       font-size: 14px;
       padding-left: 10px;
-      background: rgba(0,0,0,.5);
+      background: rgba(0, 0, 0, 0.5);
       color: #fff;
       position: absolute;
       top: 0;
       left: 0;
       z-index: 2;
     }
-    
   }
-  
 }
 </style>

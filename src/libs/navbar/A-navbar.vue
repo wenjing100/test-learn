@@ -27,7 +27,7 @@
         width: 64px;
     }
     .center{
-        flex: 1;
+        
         color:#fff;
         text-align: center;
     }
