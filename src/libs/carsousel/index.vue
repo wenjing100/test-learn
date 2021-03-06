@@ -65,7 +65,7 @@ export default {
   setup(props: { ini: number; cardata: IcarData_item[]|null; autoplay: boolean; duration: number; }) {
     const state = reactive({
       currentIndex: props.ini,
-      itemLen: props.cardata == null?0:props.cardata.length,
+      itemLen:props.cardata.length,
     });
     let t = null;
     const autoplay = () => {
@@ -110,10 +110,6 @@ export default {
       clearInterval(t);
       t = null;
     }
-    onBeforeMount(()=>{
-      let _len:number = props.cardata.length;
-      state.itemLen = _len;
-    })
     onMounted(() => {
       autoplay();
     });
