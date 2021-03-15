@@ -45,12 +45,12 @@ export default {
 
 #main {
   width: 100%;
-  height: 59px;
-  position: absolute;
+  height: 49px;
+  position: fixed;
   bottom: 0;
   display: flex;
   justify-content: space-around;
-  padding: 5px;
+  padding: 3px;
   background: #ffe2e28c;
   border-top: 1px solid rgba($color: #424242, $alpha: 0.1);
   i {

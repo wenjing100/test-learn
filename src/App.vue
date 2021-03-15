@@ -1,7 +1,8 @@
 <template>
-  
+
+  <router-view>   
+  </router-view>   
   <tabbar></tabbar>
-  <router-view/>
 </template>
 
 <style lang="scss">

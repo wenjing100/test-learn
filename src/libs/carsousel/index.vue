@@ -6,7 +6,7 @@
   >
     <div class="inner">
       <car-item v-for="(item, index) in cardata" :key="index">
-          <a :href="item.link">
+          <a :href="item.link" target="_blank">
             <img :src="`http://47.110.38.241/${item.image}`" alt="item.title" />
           </a>
       </car-item>
@@ -139,18 +139,9 @@ export default {
     position: relative;
     overflow: hidden;
     transition: all 0.2s;
-
-    .banner {
+    img{
       width: 100%;
-      height: 20px;
-      font-size: 14px;
-      padding-left: 10px;
-      background: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 2;
+      height: 100%;
     }
   }
 }

@@ -13,8 +13,16 @@ interface IcarData_item{
 interface Istate{
     carData:IcarData_item []
 }
+
+interface IhomeReactive{
+    cardata: IcarData_item[]
+    recomlist: IcarData_item[]
+    flag:boolean
+    thweek:Object
+}
 export{
     ItabData_item,
     IcarData_item,
-    Istate
+    Istate,
+    IhomeReactive
 }
