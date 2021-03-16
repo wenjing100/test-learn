@@ -19,7 +19,9 @@
       <recommend :recomlist="recomlist"></recommend>
       <thweek :thisweek="thweek"></thweek>
       <sortbar :sortTitle="sortbarData"></sortbar>
+      <goodscon :goods_data="goods_pop.data"></goodscon>
     </div>
+    
     <ul>
       <li>1</li>
       <li>2</li>
@@ -68,25 +70,29 @@
 
 <script lang='ts'>
 import { defineComponent, onBeforeMount, reactive, toRefs } from "vue";
-import { IhomeReactive } from "../../typings";
-import { gethomeMulti } from "../../network/homeNet";
-import sortbarData from '../../data/sortbar'
-import recommend from '../../components/recommend/Recommend.vue'
-import thweek from '../../components/thisweek/Thisweek.vue'
-import sortbar from '../../components/sort-bar/SortBar.vue'
+import { IhomeReactive } from "@/typings";
+import { gethomeMulti } from "@/network/homeNet";
+import { getgoodsList } from '@/network/goodsList'
+import sortbarData from '@/data/sortbar'
+import recommend from '@/components/recommend/Recommend.vue'
+import thweek from '@/components/thisweek/Thisweek.vue'
+import sortbar from '@/components/sort-bar/SortBar.vue'
 export default defineComponent({
   name: "homePage",
   components:{
     recommend,
     thweek,
-    sortbar
+    sortbar,
   },
   setup() {
     const state = reactive<IhomeReactive>({
       cardata: null,
       recomlist:null,
       flag:false,
-      thweek:null
+      thweek:null,
+      goods_pop:{index:1,data:null},
+      goods_new:{index:1,data:null},
+      goods_sell:{index:1,data:null}
     });
     onBeforeMount(async () => {
       try {
@@ -94,6 +100,16 @@ export default defineComponent({
         state.cardata = _data.data.banner.list;
         state.recomlist = _data.data.recommend.list;
         state.thweek = _data.data.thisWeek;
+
+        let goods_pop = await getgoodsList(4,state.goods_pop.index,'asc','流行');
+        state.goods_pop.data = goods_pop.data;
+        // state.goods_pop.index++;
+        // let goods_new = await getgoodsList(4,state.goods_new.index,'asc','最新');
+        // state.goods_new.data = goods_new.data;
+        // state.goods_new.index++;
+        // let goods_sell = await getgoodsList(4,state.goods_sell.index,'asc','精选');
+        // state.goods_sell.data = goods_sell.data;
+        // state.goods_sell.index++;
         state.flag = true
       } catch (error) {
         console.log("请求数据出错" + error);

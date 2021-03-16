@@ -13,16 +13,34 @@ interface IcarData_item{
 interface Istate{
     carData:IcarData_item []
 }
-
+interface Igoods_list_item{
+    id:number
+    name:string
+    price:number
+    marketprice:number
+    inventory:string
+    img_lg: string
+    hotpoint: string,
+    goods_link: string
+}
+interface Igoods_list{
+    index:number
+    data:Igoods_list_item[]
+}
 interface IhomeReactive{
     cardata: IcarData_item[]
     recomlist: IcarData_item[]
     flag:boolean
     thweek:Object
+    goods_pop:Igoods_list
+    goods_new:Igoods_list
+    goods_sell:Igoods_list
 }
 export{
     ItabData_item,
     IcarData_item,
     Istate,
-    IhomeReactive
+    IhomeReactive,
+    Igoods_list_item,
+    Igoods_list
 }
