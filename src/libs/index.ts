@@ -4,8 +4,10 @@ import carsousel from './carsousel/index.vue';
 import caritem from './carsousel/car-item.vue';
 import navbar from './navbar/A-navbar.vue';
 import toast from './toast-compnent/index.vue';
-import goodsitem from './goosLists/itemcard.vue'
-import goodscon from './goosLists/goodscon.vue'
+import goodsitem from './goosLists/itemcard.vue';
+import goodscon from './goosLists/goodscon.vue';
+import myscroll from './scroll/Scroll.vue';
+import backtop from './backTop/backtop.vue'
 
 const POOL = [
     tabbar,
@@ -14,7 +16,9 @@ const POOL = [
     navbar,
     toast,
     goodsitem,
-    goodscon
+    goodscon,
+    myscroll,
+    backtop
 ]
     
 let wenjingUI = {

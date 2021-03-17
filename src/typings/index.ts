@@ -36,6 +36,10 @@ interface IhomeReactive{
     goods_new:Igoods_list
     goods_sell:Igoods_list
     goods_con_type:number
+    bt_show:boolean
+}
+interface Iscroll{
+    scrollPosition: (x:number,y:number,time:number) => void
 }
 export{
     ItabData_item,
@@ -43,5 +47,6 @@ export{
     Istate,
     IhomeReactive,
     Igoods_list_item,
-    Igoods_list
+    Igoods_list,
+    Iscroll
 }
