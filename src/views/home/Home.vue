@@ -18,52 +18,12 @@
       </div>
       <recommend :recomlist="recomlist"></recommend>
       <thweek :thisweek="thweek"></thweek>
-      <sortbar :sortTitle="sortbarData"></sortbar>
-      <goodscon :goods_data="goods_pop.data"></goodscon>
+      <sortbar :sortTitle="sortbarData" @changetype="switchgoodscon"></sortbar>
+      <goodscon :goods_data="goods_pop.data" v-if="goods_con_type === 0"></goodscon>
+      <goodscon :goods_data="goods_new.data" v-if="goods_con_type === 1"></goodscon>
+      <goodscon :goods_data="goods_sell.data" v-if="goods_con_type === 2"></goodscon>
     </div>
     
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
-      <li>10</li>
-      <li>11</li>
-      <li>12</li>
-      <li>13</li>
-      <li>14</li>
-      <li>15</li>
-      <li>16</li>
-      <li>17</li>
-      <li>18</li>
-      <li>19</li>
-      <li>20</li>
-      <li>21</li>
-      <li>22</li>
-      <li>23</li>
-      <li>24</li>
-      <li>25</li>
-      <li>26</li>
-      <li>27</li>
-      <li>28</li>
-      <li>29</li>
-      <li>30</li>
-      <li>31</li>
-      <li>32</li>
-      <li>33</li>
-      <li>34</li>
-      <li>35</li>
-      <li>36</li>
-      <li>37</li>
-      <li>38</li>
-      <li>39</li>
-      <li>40</li>
-    </ul>
     <h2>Home</h2>
   </div>
 </template>
@@ -92,7 +52,8 @@ export default defineComponent({
       thweek:null,
       goods_pop:{index:1,data:null},
       goods_new:{index:1,data:null},
-      goods_sell:{index:1,data:null}
+      goods_sell:{index:1,data:null},
+      goods_con_type:0
     });
     onBeforeMount(async () => {
       try {
@@ -101,25 +62,31 @@ export default defineComponent({
         state.recomlist = _data.data.recommend.list;
         state.thweek = _data.data.thisWeek;
 
-        let goods_pop = await getgoodsList(4,state.goods_pop.index,'asc','流行');
+        let goods_pop = await getgoodsList(8,state.goods_pop.index,'asc','流行');
         state.goods_pop.data = goods_pop.data;
-        // state.goods_pop.index++;
-        // let goods_new = await getgoodsList(4,state.goods_new.index,'asc','最新');
-        // state.goods_new.data = goods_new.data;
-        // state.goods_new.index++;
-        // let goods_sell = await getgoodsList(4,state.goods_sell.index,'asc','精选');
-        // state.goods_sell.data = goods_sell.data;
-        // state.goods_sell.index++;
+        state.goods_pop.index++;
+
+        let goods_new = await getgoodsList(8,state.goods_new.index,'asc','新款');
+        state.goods_new.data = goods_new.data;
+        state.goods_new.index++;
+
+        let goods_sell = await getgoodsList(8,state.goods_sell.index,'asc','精选');
+        state.goods_sell.data = goods_sell.data;
+        state.goods_sell.index++;
+
         state.flag = true
       } catch (error) {
         console.log("请求数据出错" + error);
       }
     });
-
+    const switchgoodscon = (index)=>{
+      state.goods_con_type = index;
+    }
     // let cardata = [{link:'',title:'',image:'./src/assets/img/0.jpg'}]
     return {
       ...toRefs(state),
-      sortbarData
+      sortbarData,
+      switchgoodscon
     };
   },
 });
@@ -130,7 +97,8 @@ export default defineComponent({
   padding-top: 44px;
 }
 .carsou {
-  width: 100%;
+  max-width: 650px;
   height: 150px;
+  margin: 0 auto;
 }
 </style>

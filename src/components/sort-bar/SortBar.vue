@@ -19,11 +19,12 @@ export default defineComponent({
   props: {
     sortTitle: Array,
   },
-  setup() {
+  setup(props,ctx) {
     let currentIndex = ref(0);
 
     const clickitem = (index: number) => {
       currentIndex.value = index;
+      ctx.emit('changetype',index);
     };
     return {
       currentIndex,

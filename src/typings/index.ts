@@ -35,6 +35,7 @@ interface IhomeReactive{
     goods_pop:Igoods_list
     goods_new:Igoods_list
     goods_sell:Igoods_list
+    goods_con_type:number
 }
 export{
     ItabData_item,

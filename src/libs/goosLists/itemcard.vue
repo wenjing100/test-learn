@@ -1,5 +1,5 @@
 <template>
-  <div class="cardbody" :style="{ width: w, height: h }">
+  <div class="cardbody">
     <div class="imgcon">
       <a :href="goodsitem.goods_link" target="_blank">
         <img :src="goodsitem.img_lg" alt="" />
@@ -7,13 +7,15 @@
     </div>
 
     <div class="bottom">
-      <a :href="goodsitem.goods_link" target="_blank">
-        <span class="goodsname">{{ goodsitem.name }}</span>
-      </a>
-
+      <div class="aaa">
+        <a :href="goodsitem.goods_link" target="_blank">
+          <span class="goodsname">{{ goodsitem.name }}</span>
+        </a>
+      </div>
+      
       <div class="more_wrap">
         <span class="price">￥{{ goodsitem.price }}</span>
-        <span class="like">☆</span>
+        <span class="like iconfont iconxingxing"></span>
         <span class="inventory">{{ goodsitem.inventory }}</span>
       </div>
     </div>
@@ -27,14 +29,6 @@ export default defineComponent({
   name: "goodsitem",
   props: {
     goodsitem: Object as PropType<Igoods_list_item>,
-    w: {
-      type: String,
-      default: "200px",
-    },
-    h: {
-      type: String,
-      default: "280px",
-    },
   },
 });
 </script>
@@ -43,26 +37,48 @@ export default defineComponent({
 .cardbody {
     padding: 3px;
     box-sizing: border-box;
-    border: 1px solid black;
+    position: relative;
+    /*border: 1px solid black;*/
     .imgcon{
         width: 100%;
-        height: 80%;
-        border-radius: 3px;
         overflow: hidden;
+        padding-bottom: 5px;
         a img{
             width: 100%;
-            height: 100%;
+            border-radius: 5px;
         }
     }
     .bottom{
+        width: 100%;
         display: flex;
         flex-direction: column;
-        a{
+        font-size: 12px;
+        .aaa{
+          a{
+            width: 100%;
             display: inline-block;
+            height: 20px;
+            padding:3px 1px;
+            overflow: hidden;
+            .goodsname{
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
         }
-        .price {
+        
+        .more_wrap{
+          align-self: center;
+          .price {
             color: var(--color-high-text);
+          }
+          .like{
+            color:var(--color-high-text);
+            font-size: 14px;
+            padding: 0 5px;
+          }
         }
+        
     }
     
 }
