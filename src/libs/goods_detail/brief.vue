@@ -59,6 +59,8 @@ import { defineComponent} from 'vue'
     border-radius: 20px;
     padding: 5px;
     background: var(--color-background); 
+    border-bottom: 5px;
+    
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

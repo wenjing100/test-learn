@@ -13,6 +13,7 @@
         ></my-carsousel>
       </div>
       <detailbrief :briefdata="brief"></detailbrief>
+      <shopbrief :sid="sid"></shopbrief>
     </div>
   <li>aa</li>
   <li>aa</li>
@@ -65,6 +66,7 @@ export default defineComponent({
       swiper: [],
       brief:[],
       falg: false,
+      sid:null
     });
 
     onBeforeMount(async () => {
@@ -76,6 +78,7 @@ export default defineComponent({
         //brief[gname,price,marketprice,likes,grand_total]
         state.brief.push(d.g_name,d.price,d.marketprice,d.likes,d.grand_total);
         //形成swiper数据格式
+        state.sid = d.shop_id;
         for (let i = 0; i < topimgs.length; i++) {
           state.swiper.push({
             link: "",
@@ -102,7 +105,7 @@ export default defineComponent({
   background: var(--color-background-light);
   .swiper {
     width: 100%;
-    height: 24rem;
+    height: 22rem;
     margin-top: 44px;
   }
 }
