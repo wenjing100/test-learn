@@ -6,12 +6,18 @@
   >
     <div class="inner">
       <car-item v-for="(item, index) in cardata" :key="index">
-          <a :href="item.link" target="_blank">
-            <img :src="`http://47.110.38.241/${item.image}`" alt="item.title" />
+          <a href="http://47.110.38.241" target="_blank">
+            <img :src="`${item.image}`"
+              alt="item.title"
+              @load="car_img_load"
+              @touchstart="startH($event)"
+              @touchmove="moveH($event)"
+              @touchend="endH($event)"
+            />
           </a>
       </car-item>
-      <director dir="pre" @dirClick="dirClick"></director>
-      <director dir="next" @dirClick="dirClick"></director>
+      <director :hasDirector="hasDirector" dir="pre" @dirClick="dirClick"></director>
+      <director :hasDirector="hasDirector" dir="next" @dirClick="dirClick"></director>
       <dots
         :hasDot="hasDot"
         :itemLen="itemLen"
@@ -52,20 +58,19 @@ export default {
       type: Boolean,
       default: true,
     },
-    hasDirector: {
-      type: Boolean,
-      default: true,
-    },
+    hasDirector: Boolean,
     dotBgColor: String,
     cardata: {
       type:Array as PropType<IcarData_item[]>,
       default: null,
     },
   },
-  setup(props: { ini: number; cardata: IcarData_item[]|null; autoplay: boolean; duration: number; }) {
+  setup(props: { ini: number; cardata: IcarData_item[]|null; autoplay: boolean; duration: number; },ctx) {
     const state = reactive({
       currentIndex: props.ini,
       itemLen:props.cardata.length,
+      startX:null,
+      moveLength:null,
     });
     let t = null;
     const autoplay = () => {
@@ -75,7 +80,30 @@ export default {
         }, props.duration);
       }
     };
-
+    const startH = (e)=>{
+      let a = e.changedTouches[0];
+      state.startX = a.clientX;
+      _clearIntervalFn();
+    }
+    const moveH = (e)=>{
+      let moveX = e.changedTouches[0].clientX;
+      state.moveLength = moveX-state.startX;
+    }
+    const endH = (e)=>{
+      if(state.moveLength<=0){
+        play('next')        
+      }else{
+        play('pre')
+      }
+      autoplay();
+    }
+    let temp = false
+    const car_img_load= ()=>{
+      if(!temp){
+       ctx.emit('car_img_load'); 
+      }
+      temp = true;
+    }
     const play = (dir: string) => {
       switch (dir) {
         case "next":
@@ -123,6 +151,10 @@ export default {
       menterHandler,
       mleaveHandler,
       dirClick,
+      car_img_load,
+      startH,
+      moveH,
+      endH,
     };
   },
 };

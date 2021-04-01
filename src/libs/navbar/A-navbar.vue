@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar">
+    <div class="navbar" :style="{backgroundColor:bgcolor}">
         <div class="left"><slot name="left"></slot></div>
         <div class="center"><slot name="center"></slot></div>
         <div class="right"><slot name="right"></slot></div>
@@ -8,7 +8,13 @@
 
 <script lang='ts'>
   export default {
-      name: 'navbar'
+      name: 'navbar',
+      props:{
+          bgcolor:{
+            type:String,
+            default:'var(--color-tint)'
+          }
+      }
   }
 </script>
 
@@ -19,20 +25,27 @@
     line-height: 44px;
     position: fixed;
     top: 0;
-    z-index: 10;
+    z-index: 11;
     display: flex;
     justify-content: space-between;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .2);
     background: var(--color-tint);
+
     .left{
-        width: 64px;
+        width: 20%;
     }
     .right{
-        width: 64px;
+        width: 20%;
     }
     .center{
-        
-        color:#fff;
+        flex-grow: 1;
+        display: flex;
+        justify-content: space-evenly;
         text-align: center;
     }
+    
 }
+
+
+
 </style>

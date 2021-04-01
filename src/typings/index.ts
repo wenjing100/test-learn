@@ -14,14 +14,12 @@ interface Istate{
     carData:IcarData_item []
 }
 interface Igoods_list_item{
-    id:number
-    name:string
+    iid:string
+    g_name:string
     price:number
     marketprice:number
-    inventory:string
-    img_lg: string
-    hotpoint: string,
-    goods_link: string
+    inventory:number
+    top_imgs: string
 }
 interface Igoods_list{
     index:number
@@ -37,10 +35,15 @@ interface IhomeReactive{
     goods_sell:Igoods_list
     goods_con_type:number
     bt_show:boolean
+    sb_offsettop:number
+    is_fixed:boolean
 }
 interface Iscroll{
     scrollPosition: (x:number,y:number,time:number) => void
+    finishpullup: () => void
+    pull_refresh: () => void
 }
+
 export{
     ItabData_item,
     IcarData_item,

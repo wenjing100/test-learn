@@ -1,7 +1,11 @@
 <template>
-  <div class="me">
+  <div id="me">
     <navbar>
-      <template v-slot:center>我的档案</template>
+      <template v-slot:center>
+        <span class="nav-span">
+          我的档案
+        </span>
+      </template>
     </navbar>
     <h2>Me</h2>
   </div>
@@ -15,7 +19,10 @@ import { defineComponent} from 'vue'
 </script>
 
 <style lang='scss' scoped>
-.me{
+#me{
   padding-top: 44px;
+  .nav-span{
+    color: #fff;
+  }
 }
 </style>

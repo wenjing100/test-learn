@@ -1,4 +1,5 @@
 <template>
+<div v-if="hasDirector">
   <div class="director dleft" v-if="dir === 'next'">
     <a href="javascript:;"
     @click="dirClick(dir)"
@@ -7,14 +8,20 @@
   <div class="director dright" v-else-if="dir === 'pre'">
     <a href="javascript:;"
     @click="dirClick(dir)">&lt;</a>
-  </div>
+  </div>  
+</div>
+  
 </template>
 
 <script>
   export default {
       name: 'director',
       props:{
-          dir:String
+          dir:String,
+          hasDirector:{
+            type: Boolean,
+            default: true,
+          }
       },
       setup(props,ctx){
           const dirClick = (dir)=>{

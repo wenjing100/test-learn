@@ -1,7 +1,11 @@
 <template>
-  <div class="catagory">
+  <div id="catagory">
     <navbar>
-      <template v-slot:center>商品分类</template>
+      <template #center>
+        <span class="nav-span">
+          商品分类
+        </span>
+      </template>
     </navbar>
     <h2>Catagory</h2>
   </div>
@@ -15,7 +19,10 @@ import { defineComponent} from 'vue'
 </script>
 
 <style lang='scss' scoped>
-.catagory{
+#catagory{
   padding-top: 44px;
+  .nav-span{
+    color:#fff;
+  }
 }
 </style>

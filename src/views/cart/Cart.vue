@@ -1,7 +1,11 @@
 <template>
-  <div class="cart">
+  <div id="cart">
     <navbar>
-      <template v-slot:center>购物车({{count}})</template>
+      <template v-slot:center>
+        <span class="nav-span">
+          购物车({{count}})
+        </span>
+      </template>
     </navbar>
     <h2>Cart</h2>
   </div>
@@ -22,7 +26,10 @@ import { defineComponent, ref} from 'vue'
 </script>
 
 <style lang='scss' scoped>
-.cart{
+#cart{
   padding-top: 44px;
+  .nav-span{
+    color:#fff;
+  }
 }
 </style>

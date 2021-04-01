@@ -8,23 +8,19 @@
 
 <script lang='ts'>
 import { defineComponent, onMounted, reactive, ref, toRefs} from 'vue'
-import BScroll from 'better-scroll';
+import BScroll, { Options } from 'better-scroll';
   export default defineComponent({
       name: 'myscroll',
       props:{
           probtype:{
               type:Number,
               default:0
-          },
-          pullupload:{
-              type:Boolean,
-              default:false
           }
       },
       setup(props,ctx){
           const myscroll = ref(null)
         //   let bs = ref(null);
-        let state = reactive({
+        let state = reactive<{bs:BScroll}>({
             bs:null,
         })
           onMounted(()=>{
@@ -32,20 +28,36 @@ import BScroll from 'better-scroll';
               //默认情况bsscroll里面的元素 如div是不可以带点击事件的，要click true才可以
              click:true,
              probeType:props.probtype,
-            //  pullUpLoad:props.pullupload
+             pullUpLoad:true
             }) 
+            //滚动监听
             state.bs.on('scroll',(p)=>{
               ctx.emit('scrollmove',p)
             })
+            //上拉时候监听
+            state.bs.on('pullingUp',()=>{
+                console.log('上拉')
+              ctx.emit('pullupload')
+            })
+            state.bs.refresh()
           })
-          
+          //滚动到指定位置函数
           const scrollPosition = (x:number, y:number, time:number):void =>{
               state.bs.scrollTo(x,y,time);
+          }
+          //上拉函数
+          const finishpullup = ():void=>{
+              state.bs.finishPullUp();
+          }
+          const pull_refresh = ():void => {
+              state.bs.refresh()
           }
           return{
               ...toRefs(state),
               myscroll,
-              scrollPosition
+              scrollPosition,
+              finishpullup,
+              pull_refresh
           }
       }
   })

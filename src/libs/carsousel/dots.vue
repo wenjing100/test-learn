@@ -2,7 +2,7 @@
   <div class="dots-wraper" v-if="hasDot">
     <div class="dotitem" v-for="item in Len" :key="item">
         <a href="javascript:;" class="dotlink"
-            :style="{backgroundColor:(item - 1) === currentIndex ? dotBgColor : '#fff' }"
+            :style="{backgroundColor:(item - 1) === currentIndex ? dotBgColor : '#ffffff' }"
             @click="dotClick(item - 1)"
         ></a>
     </div>
@@ -25,7 +25,7 @@ import { watchEffect,ref } from 'vue';
               default:'#ff5000'
           }
       },
-      setup(props: { itemLen: number },ctx: { emit: (arg0: string, arg1: number) => void; }) {
+      setup(props,ctx) {
           let Len = ref(props.itemLen);
           const dotClick = (index:number)=>{
               ctx.emit('dotClick',index)
@@ -40,7 +40,7 @@ import { watchEffect,ref } from 'vue';
 
 <style lang="scss" scoped>
 .dots-wraper{
-    width: 100px;
+    min-width: 100px;
     height: 13px;
     border-radius: 10px;
     position: absolute;

@@ -7,7 +7,8 @@ import toast from './toast-compnent/index.vue';
 import goodsitem from './goosLists/itemcard.vue';
 import goodscon from './goosLists/goodscon.vue';
 import myscroll from './scroll/Scroll.vue';
-import backtop from './backTop/backtop.vue'
+import backtop from './backTop/backtop.vue';
+import detailbrief from './goods_detail/brief.vue'
 
 const POOL = [
     tabbar,
@@ -18,7 +19,8 @@ const POOL = [
     goodsitem,
     goodscon,
     myscroll,
-    backtop
+    backtop,
+    detailbrief
 ]
     
 let wenjingUI = {

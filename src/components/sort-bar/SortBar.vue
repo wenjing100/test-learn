@@ -40,11 +40,13 @@ export default defineComponent({
   justify-content: space-around;
   width: 100%;
   background: #fff;
-  height: 44px;
-  line-height: 44px;
+  height: 40px;
+  line-height: 40px;
+  z-index: 10;
+  margin-bottom: 10px;
   .sort-item {
     padding: 5px;
-    font-size: 14px;
+    font-size: 16px;
   }
   .sort-item.active {
     border-bottom: 3px solid var(--color-high-text);
