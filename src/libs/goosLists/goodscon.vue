@@ -1,7 +1,7 @@
 <template>
   <div class="goodscon">
       <div v-for="(item,index) of goods_data" :key="index" class="singleitem">
-          <goodsitem :goodsitem="item" @imgload="imgload"></goodsitem>
+          <goodsitem :goodsitem="item"></goodsitem>
       </div>
   </div>
 </template>
@@ -16,14 +16,6 @@ export default defineComponent({
           type:Array as PropType<Igoods_list_item[]>
       }
   },
-  setup(props,ctx){
-    const imgload = ()=>{
-      ctx.emit('imgload')
-    }
-    return {
-      imgload
-    }
-  }
 });
 </script>
 

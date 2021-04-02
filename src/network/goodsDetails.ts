@@ -25,9 +25,22 @@ async function getShopBrief(sid:string){
     // let res = await laxrequest(option);
     return res
 }
+async function getComments(goodsiid:string){
+    let option = {
+        method:'get',
+        url:'/api/details/comments',
+        params:{
+            id:goodsiid
+        }
+    }
+    let res = await local_axrequest(option);
+    // let res = await laxrequest(option);
+    return res
+}
  
 
 export {
     getDetails,
-    getShopBrief
+    getShopBrief,
+    getComments
 }

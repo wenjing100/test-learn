@@ -2,7 +2,7 @@
   <div class="cardbody"  @click="goodsclick">
     <div class="imgcon">
       <!-- goodsitem.goods_link  -->
-        <img :src="imgsrc" alt="" @load="imgload"/>
+        <img :src="imgsrc" alt=""/>
     </div>
 
     <div class="bottom">
@@ -32,16 +32,12 @@ export default defineComponent({
   },
   setup(props,ctx){
     const router = useRouter();
-    const imgload = ()=>{
-      ctx.emit('imgload');
-    }
     const goodsclick = ()=>{
       router.push('/details/'+props.goodsitem.iid)
     }
     let ii = props.goodsitem.top_imgs.split(',')[0];
     let imgsrc = ii.trim() ==""?props.goodsitem.top_imgs.split(',')[1]:ii;
     return {
-      imgload,
       goodsclick,
       imgsrc
     }

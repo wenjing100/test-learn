@@ -179,19 +179,20 @@ export default defineComponent({
   .digital {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     .total {
       display: flex;
       flex-direction: row;
       justify-content: space-evenly;
       border-right: 1px solid gray;
+      padding-right: 10px;
       .total-round {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-right: 10px;
-        font-size: 14px;
+        font-size: 12px;
+        margin-right: 8px;
         .num {
           font-size: 18px;
           margin-bottom: 5px;
@@ -199,7 +200,7 @@ export default defineComponent({
       }
     }
     .compare {
-			width: 150px;
+      margin-left:10px;
       .sss {
 				@include inside;
 				margin: 10px 0;

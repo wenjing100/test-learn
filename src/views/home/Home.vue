@@ -45,17 +45,14 @@
         <goodscon
           :goods_data="goods_pop.data"
           v-if="goods_con_type === 0"
-          @imgload="imgload"
         ></goodscon>
         <goodscon
           :goods_data="goods_new.data"
           v-if="goods_con_type === 1"
-          @imgload="imgload"
         ></goodscon>
         <goodscon
           :goods_data="goods_sell.data"
           v-if="goods_con_type === 2"
-          @imgload="imgload"
         ></goodscon>
       </myscroll>
       <backtop
@@ -118,7 +115,6 @@ export default defineComponent({
           let a = 'http://47.110.38.241/';
           item.image = a + item.image;
         })
-        console.log(state.cardata)
         state.recomlist = _data.data.recommend.list;
         state.thweek = _data.data.thisWeek;
         //请求商品列表数据
@@ -180,9 +176,7 @@ export default defineComponent({
         state.is_fixed = true
       }
     };
-    const imgload = ()=>{
-      (instance.refs.scroll as Iscroll).pull_refresh();
-    }
+
     const loadmore = async () => {
       let hotpoint = '';
       let goods = null
@@ -236,7 +230,6 @@ export default defineComponent({
       backtopclick,
       scrollmove,
       loadmore,
-      imgload,
       sortbar2,
       sortbar1,
       car_img_load
