@@ -2,7 +2,7 @@
   <div class="cardbody"  @click="goodsclick">
     <div class="imgcon">
       <!-- goodsitem.goods_link  -->
-        <img :src="imgsrc" alt=""/>
+        <img :src="imgsrc" alt="" @load="carImgload"/>
     </div>
 
     <div class="bottom">
@@ -24,7 +24,7 @@
 <script lang='ts'>
 import { Igoods_list_item } from "@/typings";
 import { defineComponent, PropType, reactive } from "vue";
-import { useRouter } from 'vue-router'
+import { useRouter,useRoute } from 'vue-router'
 export default defineComponent({
   name: "goodsitem",
   props: {
@@ -32,14 +32,31 @@ export default defineComponent({
   },
   setup(props,ctx){
     const router = useRouter();
+    const route = useRoute();
     const goodsclick = ()=>{
-      router.push('/details/'+props.goodsitem.iid)
+      console.log(route.path);
+      router.beforeEach((to,from,next)=>{
+        if(from.path.includes('details')){
+          // console.log(route.params);
+          router.replace('/details/'+props.goodsitem.iid);
+        }else{
+          // console.log('哈哈')
+          router.push('/details/'+props.goodsitem.iid);
+        }
+        next();
+      })
+
+      
     }
     let ii = props.goodsitem.top_imgs.split(',')[0];
     let imgsrc = ii.trim() ==""?props.goodsitem.top_imgs.split(',')[1]:ii;
+    const carImgload = ()=>{
+      ctx.emit('carImgload')
+    }
     return {
       goodsclick,
-      imgsrc
+      imgsrc,
+      carImgload
     }
   }
 });

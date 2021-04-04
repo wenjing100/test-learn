@@ -73,6 +73,7 @@ import {
   reactive,
   ref,
   toRefs,
+  watch,
 } from "vue";
 import { IhomeReactive, Iscroll } from "@/typings";
 import { gethomeMulti } from "@/network/homeNet";
@@ -104,7 +105,8 @@ export default defineComponent({
       goods_con_type: 0,
       bt_show: false,
       sb_offsettop:0,
-      is_fixed:false
+      is_fixed:false,
+      stay_position:0,
     });
     onBeforeMount(async () => {
       try {
@@ -149,10 +151,7 @@ export default defineComponent({
         console.log("请求数据出错" + error);
       }
     });
-    // onMounted(()=>{
-    //   let aa = (instance.refs.scroll as Iscroll);
-    //   let refresh = debounce(aa.pull_refresh,500);
-    // })
+
     const switchgoodscon = (index:number) => {
       state.goods_con_type = index;
       //让两个sortbar 显示一致
@@ -165,6 +164,7 @@ export default defineComponent({
       (instance.refs.scroll as Iscroll).scrollPosition(0, 0, 500);
     };
     const scrollmove = (p) => {
+      state.stay_position = p.y;
       if (p.y < -500) {
         state.bt_show = true;
       } else {

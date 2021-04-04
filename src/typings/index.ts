@@ -37,6 +37,7 @@ interface IhomeReactive{
     bt_show:boolean
     sb_offsettop:number
     is_fixed:boolean
+    stay_position:number
 }
 interface Iscroll{
     scrollPosition: (x:number,y:number,time:number) => void

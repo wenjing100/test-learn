@@ -23,19 +23,37 @@
 
 <script lang='ts'>
 import { useRouter } from 'vue-router';
-import { defineComponent, reactive, ref, toRefs } from "vue";
+import { defineComponent, getCurrentInstance, reactive, ref, toRefs, watch } from "vue";
 export default defineComponent({
   name: "detailnavbar",
-  setup() {
+  props:{
+    dpy:{
+      type:Array
+    }
+  },
+  setup(p,ctx) {
     const data = ref(["商品", "参数", "评论", "推荐"]);
     const router = useRouter();
+    const instance = getCurrentInstance();
     const state = reactive({
       currentIndex: 0,
-      isMousedown:false
+      isMousedown:false,
+      p_y:p.dpy,
     });
+
     const spanclick = (index) => {
       state.currentIndex = index;
+      goscroll(index);
     };
+    const goscroll = (indx)=>{
+      let scrollP = (instance.parent.subTree.children[1] as any).children[0].component.ctx.scrollPosition;
+      let refresh = (instance.parent.subTree.children[1] as any).children[0].component.ctx.pull_refresh;
+      scrollP(0,-state.p_y[indx],100);
+      refresh();
+    }
+    const changeindex = (index)=>{
+      state.currentIndex = index;
+    }
     const backclick = () => {
       router.back();
     };
@@ -45,6 +63,7 @@ export default defineComponent({
       data,
       spanclick,
       backclick,
+      changeindex
     };
   },
 });

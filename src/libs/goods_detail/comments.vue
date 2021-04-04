@@ -1,24 +1,26 @@
 <template>
-  <div class="commentcon">
+  <div class="commentcon" ref="commentcon">
     <div class="cbanner">
-      <span>用户评价</span>
+      <span>用户评价（{{ total.length }}）</span>
       <span v-show="vshow" @click="vroll">
         <i class="iconfont icon-ICON-"></i>收起评论
       </span>
     </div>
     <div class="middle" v-for="(item, index) in comments" :key="index">
       <div class="buyerinfo">
-        <div class="avator">
-          <img :src="item.logo" alt="" />
+        <div class="buyer">
+          <div class="avator">
+            <img :src="item.logo" alt="" />
+          </div>
+          <span class="bname">{{ item.buyer_name }}</span>
         </div>
-        <span class="bname">{{ item.buyer_name }}</span>
+        <span class="ctime">{{ item.comment_time.split("T")[0] }}</span>
       </div>
       <div class="context">
-        <span>{{ item.comments==""?"默认好评":item.comments }}</span>
+        <span>{{ item.comments == "" ? "默认好评" : item.comments }}</span>
       </div>
       <div class="extra">
         <span class="parm">{{ item.goods_parms }}</span>
-        <span class="ctime">{{ item.comment_time.split('T')[0] }}</span>
       </div>
     </div>
     <div class="cfooter">
@@ -29,7 +31,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, onBeforeMount, reactive, toRefs } from "vue";
+import { defineComponent, getCurrentInstance, onBeforeMount, reactive, toRefs, ref, onUpdated } from "vue";
 import { getComments } from "@/network/goodsDetails";
 export default defineComponent({
   name: "buyercomments",
@@ -39,22 +41,32 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props,ctx) {
+  setup(props, ctx) {
+    const instance = getCurrentInstance();
+    const commentcon = ref(null)
     const state = reactive({
       comments: [], //{buyer_id,goods_parms,comments}
       total: [],
       ismore: false,
       vshow: false,
+      vH:null,
     });
+    onUpdated(()=>{
+      state.vH = commentcon.value.offsetTop;
+    })
     onBeforeMount(async () => {
       try {
         let cc = await getComments(props.gid);
         state.total = cc.data;
-        if (state.total.length > 3) {
+        let ll = 0;
+        if (state.total.length > 2) {
           state.ismore = true;
-          for (let i = 0; i < 3; i++) {
-            state.comments.push(state.total[i]);
-          }
+          ll = 2
+        }else{
+          ll = state.total.length;
+        }
+        for (let i = 0; i < ll; i++) {
+          state.comments.push(state.total[i]);
         }
       } catch (err) {
         console.log("comments请求出问题：" + err);
@@ -81,16 +93,20 @@ export default defineComponent({
       } else {
         state.ismore = false;
       }
+      // (instance.parent.parent as any).ctx.parmalready();
+      (instance.parent as any).ctx.pull_refresh();
     };
     const vroll = () => {
-      state.comments.length = 3;
+      state.comments.length = 2;
       state.vshow = false;
       state.ismore = true;
+      (instance.parent as any).ctx.pull_refresh();
     };
     return {
       ...toRefs(state),
       bannerclick,
       vroll,
+      commentcon
     };
   },
 });
@@ -138,7 +154,7 @@ export default defineComponent({
     justify-content: space-between;
     font-size: 18px;
     padding: 10px 5px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     color: var(--color-text);
     border-bottom: 1px dashed var(--color-background-details);
   }
@@ -150,36 +166,42 @@ export default defineComponent({
       height: 3.5rem;
       display: flex;
       flex-direction: row;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
-      .avator {
-        width: 2rem;
-        height: 2rem;
-        border-radius: 50%;
-        overflow: hidden;
-        img {
-          width: 100%;
-          height: 100%;
+      .buyer{
+        width: 70%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .avator {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 50%;
+          overflow: hidden;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .bname {
+          color: #000;
+          padding-left: 10px;
         }
       }
-      .bname {
-        color: #000;
-        padding-left: 10px;
-      }
     }
-    .context{
+    .context {
       width: 100%;
       padding: 5px 5px;
     }
-    .extra{
+    .extra {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      margin:10px 0;
+      margin: 10px 0;
       padding-left: 5px;
-      span{
+      span {
         font-size: 10px;
-        color:var(--color-text-light)
+        color: #b6b4b4e0;
       }
     }
   }

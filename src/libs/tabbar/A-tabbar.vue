@@ -51,7 +51,7 @@ export default {
   display: flex;
   justify-content: space-around;
   padding: 3px;
-  background: #ffe2e28c;
+  background: #ffe2e2;
   border-top: 1px solid rgba($color: #424242, $alpha: 0.1);
   i {
     font-size: 20px;

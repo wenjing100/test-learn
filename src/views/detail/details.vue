@@ -1,27 +1,33 @@
 <template>
     <div id="gdetails" class="wrapper">
-      <detailnavbar></detailnavbar>
+      <detailnavbar :dpy="dpy"></detailnavbar>
       <div v-if="falg">
-      <myscroll
-        class="content"
-        :probtype="3"
-      >
-        <div class="swiper">
-          <my-carsousel
-            :autoplay="true"
-            :duration="3000"
-            :hasDot="true"
-            :hasDirector="false"
-            dotBgColor="#ff5777"
-            :cardata="swiper"
-          ></my-carsousel>
-        </div>
-        <detailbrief :briefdata="brief"></detailbrief>
-        <shopbrief :sid="sid"></shopbrief>
-        <buyercomments :gid="gid"></buyercomments>
-        <goodsparams :parms="parmlist"></goodsparams>
-      </myscroll>
-    </div>
+        <myscroll
+          class="content"
+          :probtype="3"
+          ref="scroll"
+          @scrollmove="detailScrollMove"
+        >
+          <div class="swiper">
+            <my-carsousel
+              :autoplay="true"
+              :duration="3000"
+              :hasDot="true"
+              :hasDirector="false"
+              dotBgColor="#ff5777"
+              :cardata="swiper"
+              @car_img_load="parmalready"
+            ></my-carsousel>
+          </div>
+          <detailbrief :briefdata="brief"></detailbrief>
+          <shopbrief :sid="sid"></shopbrief>
+          <goodsparams :parms="parmlist" ref="parm" @parmalready="parmalready"></goodsparams>
+          <buyercomments :gid="gid" ref="comm"></buyercomments>
+          <goodsrecom ref="recom" @carImgload="parmalready"></goodsrecom>
+          <div class="fix-p"></div>
+        </myscroll>
+      </div>
+      <bottomtool class="bottomtool"></bottomtool>
   </div>
 </template>
 
@@ -31,20 +37,25 @@ import {
   onBeforeMount,
   reactive,
   toRefs,
-  ref,
+  getCurrentInstance,
+  nextTick,
   onMounted,
+  onUpdated
 } from "vue";
 import { useRoute } from "vue-router";
 import { getDetails } from "@/network/goodsDetails";
 import detailnavbar from "./detailnavbar.vue";
-import { Iscroll } from "@/typings";
+import goodsrecom from './goodsRecomend.vue';
+import { debounce } from '@/hooks/fangdou'
 export default defineComponent({
   name: "malldetails",
   components: {
     detailnavbar,
+    goodsrecom
   },
   setup() {
     const route = useRoute();
+    const instance = getCurrentInstance();
     const state = reactive({
       sr: null,
       swiper: [],
@@ -53,12 +64,37 @@ export default defineComponent({
       gid: null,
       parmlist: [], //color,sizi,params,describe,desimgs
       falg: false,
+      dpy:[],
+      cindex:0
     });
-
+    const parmalready = ()=>{
+      state.dpy[0] = 0;
+      state.dpy[2] = (instance.refs.comm as any).vH;
+      state.dpy[1] = (instance.refs.parm as any).vH;
+      state.dpy[3] = (instance.refs.recom as any).vH;
+    }
+    const detailScrollMove = (p)=>{
+      let yy = -p.y;
+      let len = state.dpy.length;
+      //组件中修改 currentIndex的方法
+      let changein = instance.subTree.children[0].component.ctx.changeindex;
+      //滚动到 区域产生唯一一个 i 
+      for(let i = 0; i < len; i++){
+        if(state.cindex !== i && (
+          (i<len-1 && yy >= state.dpy[i] && yy<state.dpy[i+1])||
+          (i===len - 1 && yy >= state.dpy[i])
+          )){
+          state.cindex = i;
+          changein(i);
+        }
+      } 
+    }
+    onUpdated(async()=>{
+      await nextTick();
+    })
     onBeforeMount(async () => {
       try {
         let dd = await getDetails(route.params.id as string);
-
         let d = dd.data[0];
         let topimgs = d.top_imgs.split(",");
         let gname = d.g_name;
@@ -94,6 +130,8 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      parmalready,
+      detailScrollMove
     };
   },
 });
@@ -109,6 +147,14 @@ export default defineComponent({
     width: 100%;
     height: 22rem;
     margin-top: 44px;
+  }
+  .fix-p{
+    width: 100%;
+    height: 49px;
+  }
+  .bottomtool{
+    position: fixed;
+    bottom: 0;
   }
 }
 </style>

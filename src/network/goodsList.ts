@@ -16,8 +16,22 @@ import { local_axrequest,axrequest } from './request'
         // let res = await laxrequest(option);
         return res
     }
- 
+    async function getrecomList(pageSize = 16,pageIndex = 1,sortType = ''){
+        let option = {
+            method:'get',
+            url:'/api/home/multidata/recom',
+            params:{
+                pageSize,
+                pageIndex,
+                sortType,
+            }
+        }
+        let res = await local_axrequest(option);
+        // let res = await laxrequest(option);
+        return res
+    }
 
 export {
-    getgoodsList
+    getgoodsList,
+    getrecomList
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="wraper" ref="myscroll" :style="{height:wraperHeight}">
+  <div class="wraper" ref="myscroll" :style="{height:wraperHeight}" >
     <div class="content">
       <slot></slot>
     </div>
@@ -24,13 +24,11 @@ export default defineComponent({
   setup(props, ctx) {
     const myscroll = ref(null);
     //   let bs = ref(null);
-    let state = reactive<{ bs: BScroll,wraperHeight:String }>({
+    let state = reactive<{ bs: BScroll, wraperHeight:string}>({
       bs: null,
-      wraperHeight: '450px'
+      wraperHeight: '812px'
     });
     onMounted(async ()=>{
-      state.wraperHeight = document.documentElement.clientHeight - 44 + 'px';
-      // console.log(myscroll.value);
       await nextTick(() => {
         state.bs = new BScroll(myscroll.value, {
           //默认情况bsscroll里面的元素 如div是不可以带点击事件的，要click true才可以
@@ -48,7 +46,7 @@ export default defineComponent({
         state.bs.on("pullingUp", () => {
           ctx.emit("pullupload");
           state.bs.refresh();
-          state.wraperHeight = document.documentElement.clientHeight - 44 + 'px';
+          state.wraperHeight = document.documentElement.clientHeight -44 + 'px';
         });
         state.bs.refresh();
       });

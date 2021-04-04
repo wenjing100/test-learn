@@ -12,9 +12,8 @@ function delayVal<T>(val:T,delay:number){
                 clearTimeout(id);
                 id = null;
                 setTimeout(()=>{
-                    
-                    val = newval;
                     trigger()
+                    val = newval;
                 },delay)
             }
         }
@@ -22,14 +21,11 @@ function delayVal<T>(val:T,delay:number){
 }
 function debounce(fn:Function,delay:number){
     let id = null;
-    const fnn = ()=>{
-      id = setTimeout(()=>{
+    id = setTimeout(()=>{
         clearTimeout(id);
         id = null;
         fn();
-      },delay)  
-    }
-    return fnn
+    },delay)  
 }
 export {
     delayVal,

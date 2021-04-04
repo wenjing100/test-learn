@@ -1,5 +1,5 @@
 <template>
-  <div class="pcon">
+  <div class="pcon" ref="pcon">
     <span class="ptitle">产品参数</span>
     <div class="detext">
       <parmitem v-if="parms[3]">
@@ -15,7 +15,7 @@
         <template #co>{{ parms[1] }}</template>
       </parmitem>
       <div class="more" v-for="(item, index) in moreparm" :key="index">
-        <parmitem>
+        <parmitem >
           <template #ti>{{item.title}}</template>
           <template #co>{{item.content}}</template>
         </parmitem>
@@ -23,13 +23,13 @@
     </div>
 		<span class="ptitle">产品细节</span>
 		<div class="parmimgs" v-for="(item,index) in parms[4]" :key="index">
-			<img :src="item" alt="产品描述">
+			<img :src="item" @load="deimgload()" alt="产品描述">
 		</div>
   </div>
 </template>
 
 <script lang='ts'>
-import { defineComponent, onMounted, reactive, toRefs } from "vue";
+import { defineComponent, onMounted, reactive, ref, toRefs, onUpdated, nextTick } from "vue";
 import parmitem from "./parms___item.vue";
 export default defineComponent({
   name: "goodsparams",
@@ -42,10 +42,20 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup(props,ctx) {
+    const pcon = ref(null);
     const state = reactive({
       moreparm: [],
+      vH:null
     });
+    const deimgload =async ()=>{
+      await nextTick();
+      state.vH = pcon.value.offsetTop;
+      ctx.emit('parmalready');
+    }
+    onUpdated(async ()=>{
+      await nextTick()
+    })
     onMounted(() => {
       (props.parms[2] as Array<String>).forEach((item) => {
         let title = item.split(":")[1] ? item.split(":")[0] : "";
@@ -60,6 +70,8 @@ export default defineComponent({
     });
     return {
       ...toRefs(state),
+      pcon,
+      deimgload,
     };
   },
 });
