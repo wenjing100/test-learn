@@ -1,30 +1,40 @@
 <template>
+  <router-view v-slot="{ Component }">
+    <keep-alive include="goodscon">
+      <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive"/>
+    </keep-alive>
+    <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive"/>
+  </router-view>
 
-    <router-view> </router-view>
   <tabbar v-if="!isdetails"></tabbar>
 </template>
 <script lang="ts">
-import { watch,ref } from 'vue';
-import { useRoute } from 'vue-router'
+import { watch, ref, } from "vue";
+import { useRoute } from "vue-router";
 export default {
-  setup(){
+  setup() {
     const isdetails = ref(false);
     let route = useRoute();
-    watch(()=>{
-      return route.path
-    },(val)=>{
-      //判断路由，如果进入详情页就隐藏tabbar
-      if(val.includes('details')){
-        isdetails.value = true;
-      }else{
-        isdetails.value = false;
+    watch(
+      () => {
+        return route.path;
+      },
+      (val) => {
+        //判断路由，如果进入详情页就隐藏tabbar
+        if (val.includes("details")) {
+          isdetails.value = true;
+        } else {
+          isdetails.value = false;
+        }
       }
-    })
+    );
+    
+    
     return {
-      isdetails
-    }
-  }
-}
+      isdetails,
+    };
+  },
+};
 </script>
 <style lang="scss">
 </style>
