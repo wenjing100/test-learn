@@ -6,7 +6,7 @@
       <div class="three aa"><i class="iconfont icon-biaoqiankuozhan_shoucang-208"></i><span>收藏</span></div>
     </div>
     <div class="tool-right">
-      <span class="add">加入购物车</span>
+      <span class="add" @click="addToCart">加入购物车</span>
       <span class="buy">购买</span>
     </div>
   </div>
@@ -16,6 +16,14 @@
 import { defineComponent } from "vue";
 export default defineComponent({
   name: "bottomtool",
+  setup(p,{emit}){
+    const addToCart = ()=>{
+      emit('addToCart')
+    }
+    return{
+      addToCart
+    }
+  }
 });
 </script>
 

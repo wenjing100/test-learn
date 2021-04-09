@@ -9,9 +9,19 @@ interface IcarData_item{
     title:string
     image:string
 }
-
+//购物车 接口
+interface IviewCartItem{
+    gid:string
+    faceimg:string
+    gname:string
+    price:number
+    num:number
+    checked:number
+}
+//vuex state接口
 interface Istate{
-    carData:IcarData_item []
+    cartData:IviewCartItem []
+    isAllchecked:number
 }
 interface Igoods_list_item{
     iid:string
@@ -52,5 +62,6 @@ export{
     IhomeReactive,
     Igoods_list_item,
     Igoods_list,
-    Iscroll
+    Iscroll,
+    IviewCartItem
 }

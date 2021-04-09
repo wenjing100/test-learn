@@ -27,7 +27,7 @@
           <div class="fix-p"></div>
         </myscroll>
       </div>
-      <bottomtool class="bottomtool"></bottomtool>
+      <bottomtool class="bottomtool" @addToCart="addToCart"></bottomtool>
   </div>
 </template>
 
@@ -40,13 +40,15 @@ import {
   getCurrentInstance,
   nextTick,
   onMounted,
-  onUpdated
+  onUpdated,
 } from "vue";
+import { Store, useStore} from 'vuex'
 import { useRoute } from "vue-router";
 import { getDetails } from "@/network/goodsDetails";
 import detailnavbar from "./detailnavbar.vue";
 import goodsrecom from './goodsRecomend.vue';
-import { debounce } from '@/hooks/fangdou'
+import Toast from '@/libs/toast';
+import { SET_CARDATA } from "@/store/actionTypes";
 export default defineComponent({
   name: "malldetails",
   components: {
@@ -56,6 +58,7 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const instance = getCurrentInstance();
+    const store:Store<any> = useStore();
     const state = reactive({
       sr: null,
       swiper: [],
@@ -64,15 +67,18 @@ export default defineComponent({
       gid: null,
       parmlist: [], //color,sizi,params,describe,desimgs
       falg: false,
-      dpy:[],
-      cindex:0
+      dpy:[],//记录组件位置
+      cindex:0,
+      product:{}
     });
+    //监听组件加载情况 更新组件高度
     const parmalready = ()=>{
       state.dpy[0] = 0;
       state.dpy[2] = (instance.refs.comm as any).vH;
       state.dpy[1] = (instance.refs.parm as any).vH;
       state.dpy[3] = (instance.refs.recom as any).vH;
     }
+    //监听页面滚动，记录滚动位置
     const detailScrollMove = (p)=>{
       let yy = -p.y;
       let len = state.dpy.length;
@@ -88,6 +94,15 @@ export default defineComponent({
           changein(i);
         }
       } 
+    }
+    const addToCart = ()=>{
+      //购物车需要展示的数据  图片 名称 价格 数量
+      Toast({
+        message:'加入购物车成功~',
+        delay:1000
+      })
+      //给action 派发事件 调取localStorage//数据库请求
+      store.dispatch(SET_CARDATA,state.product);
     }
     onUpdated(async()=>{
       await nextTick();
@@ -123,6 +138,16 @@ export default defineComponent({
         state.parmlist[3] = d.describe_text;
         state.parmlist[4] = d.describe_imgs.split(",");
         state.falg = true;
+        //购物车参数
+        state.product = {
+          gid:state.gid,
+          faceimg:state.swiper[0].image,
+          gname:state.brief[0],
+          price:state.brief[1],
+          num:1,
+          checked:true,
+          bid:''
+        }
       } catch (err) {
         console.log("details请求有问题：" + err);
       }
@@ -131,7 +156,8 @@ export default defineComponent({
     return {
       ...toRefs(state),
       parmalready,
-      detailScrollMove
+      detailScrollMove,
+      addToCart
     };
   },
 });

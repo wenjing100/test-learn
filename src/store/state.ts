@@ -1,5 +1,7 @@
+import { Istate } from '@/typings'
 
-
-export default {
-    carData:[]
+export default <Istate>{
+    cartData:[],
+    isAllchecked:0
 }
+    

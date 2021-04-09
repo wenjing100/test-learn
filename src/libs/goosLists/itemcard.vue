@@ -34,19 +34,13 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const goodsclick = ()=>{
-      console.log(route.path);
-      router.beforeEach((to,from,next)=>{
-        if(from.path.includes('details')){
-          // console.log(route.params);
-          router.replace('/details/'+props.goodsitem.iid);
-        }else{
-          // console.log('哈哈')
-          router.push('/details/'+props.goodsitem.iid);
-        }
-        next();
-      })
-
-      
+      if(route.path.includes('details')){
+        // console.log(route.params);
+        router.replace('/details/'+props.goodsitem.iid);
+      }else{
+        // console.log('哈哈')
+        router.push('/details/'+props.goodsitem.iid);
+      }
     }
     let ii = props.goodsitem.top_imgs.split(',')[0];
     let imgsrc = ii.trim() ==""?props.goodsitem.top_imgs.split(',')[1]:ii;

@@ -42,6 +42,7 @@
           ref="sortbar2"
           v-show="!is_fixed"
         ></sortbar>
+        
         <goodscon
           :goods_data="goods_pop.data"
           v-if="goods_con_type === 0"
@@ -66,14 +67,14 @@
 
 <script lang='ts'>
 import {
-  computed,
   defineComponent,
   getCurrentInstance,
   onBeforeMount,
   reactive,
   ref,
   toRefs,
-  watch,
+  onActivated,
+  onDeactivated
 } from "vue";
 import { IhomeReactive, Iscroll } from "@/typings";
 import { gethomeMulti } from "@/network/homeNet";
@@ -83,12 +84,14 @@ import recommend from "@/components/recommend/Recommend.vue";
 import thweek from "@/components/thisweek/Thisweek.vue";
 import sortbar from "@/components/sort-bar/SortBar.vue";
 import { debounce } from '@/hooks/fangdou'
+import Comments from "@/libs/goods_detail/comments.vue";
 export default defineComponent({
   name: "homePage",
   components: {
     recommend,
     thweek,
     sortbar,
+    Comments,
   },
   setup() {
     const instance = getCurrentInstance();
@@ -151,7 +154,12 @@ export default defineComponent({
         console.log("请求数据出错" + error);
       }
     });
-
+    onActivated(()=>{
+      console.log('keepalive')
+    },instance)
+    onDeactivated(()=>{
+      console.log('bbbb')
+    })
     const switchgoodscon = (index:number) => {
       state.goods_con_type = index;
       //让两个sortbar 显示一致
