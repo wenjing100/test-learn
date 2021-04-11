@@ -1,13 +1,16 @@
 <template>
-  <div class="cartitem">
-    <cartcheck
-      @checkclick="checkClick"
-      :itemchecked="itemdata.checked"
-    ></cartcheck>
-    
+  <sliddel @slidDelClick="slidDelClick">
+  <div class="cartitem" @click="itemclick">
+    <div class="left">
+      <cartcheck
+        @checkclick="checkClick"
+        :itemchecked="itemdata.checked"
+        ref="itemcheck"
+      ></cartcheck>
+    </div>
     <div class="itemimg"><img :src="itemdata.faceimg" alt="" /></div>
     <div class="info">
-      <span class="gn">{{ itemdata.gname }}</span>
+      <span class="gn"><span>{{ itemdata.gname }}</span></span>
       <div class="p-num">
         <span class="p">￥{{ itemdata.price }}</span>
         <div class="num">
@@ -18,12 +21,13 @@
       </div>
     </div>
   </div>
+  </sliddel> 
 </template>
 	
 <script lang='ts'>
-import { SET_NUM_SUB, SET_NUM_ADD, SET_CARDATA_CHECK } from "@/store/actionTypes";
+import { SET_NUM_SUB, SET_NUM_ADD, SET_CARDATA_CHECK, DEL_ITEM } from "@/store/actionTypes";
 import { useStore } from "vuex";
-import { defineComponent, PropType, reactive, toRefs } from "vue";
+import { defineComponent, PropType, reactive, ref, toRefs, watch } from "vue";
 import cartcheck from './cart-check.vue'
 import { IviewCartItem } from "@/typings";
 export default defineComponent({
@@ -36,54 +40,76 @@ export default defineComponent({
       type: Object as PropType<IviewCartItem>,
     },
   },
-  setup(props) {
+  setup(props,{ emit }) {
     const store = useStore();
+    const itemcheck = ref(null);
     const state = reactive({
-      isDisable: false,
+      isDisable: props.itemdata.num>1?false:true,
+      mycheck:props.itemdata.checked,
+      lognum:props.itemdata.num,
     });
+    //监听全选
+    watch(()=>{
+      return store.state.isAllchecked
+    },(val)=>{
+      if(val == 1){
+        itemcheck.value.checked = val;
+      }
+    })
+    //监听全不选
+    watch(()=>{
+      return store.state.disChecked
+    },(val)=>{
+      if(val == 1){
+        itemcheck.value.checked = 0;
+      }
+    })
     const add = (gid) => {
       store.dispatch(SET_NUM_ADD,{gid,num:1});
+      state.lognum++;
 			state.isDisable = false;
     };
     const sub = (gid) => {
       store.dispatch(SET_NUM_SUB,{gid,num:1});
-      let n = 0;
-      store.state.cartData.map(item=>{
-        if(item.gid == gid){
-          n = item.num
-        }
-        return item
-      });
-      if (n < 2 ){
+      state.lognum--;
+      if (state.lognum < 2 ){
         state.isDisable = true;
       } 
     };
     const checkClick = (ck:number)=>{
+      state.mycheck = ck;
       store.dispatch(SET_CARDATA_CHECK,{gid:props.itemdata.gid,status:ck})
+    }
+    const slidDelClick = ()=>{
+      store.dispatch(DEL_ITEM,{gid:props.itemdata.gid,bid:''});
     }
     return {
       ...toRefs(state),
       add,
       sub,
-      checkClick
+      checkClick,
+      itemcheck,
+      slidDelClick,
     };
   },
 });
 </script>
 
 <style lang='scss' scoped>
-
 .cartitem {
   width: 100%;
-  border: 10px solid var(--color-background-light);
-  border-radius: 20px;
+  border: 5px solid var(--color-background-light);
   background: var(--color-background);
   padding: 5px;
-  border-bottom: 5px;
+  border-bottom: 2.5px;
+  border-left: 0;
+  border-right: 0;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	
+	.left{
+    width: 44px;
+  }
 	.itemimg{
 		img{
 			width: 5rem;
@@ -94,15 +120,25 @@ export default defineComponent({
 	.info{
 		display: flex;
 		flex-direction: column;
+    justify-content: space-between;
 		.gn{
-			padding: 5px;
-			color: #000;
+      overflow: hidden;
+      height: 40px;
+      padding-left: 5px;
+      span{
+        width: 100%;
+        padding: 5px;
+			  color: #000;
+        line-height: 20px;
+        text-overflow:ellipsis;
+      }
 		}
 		.p-num{
 			display: flex;
 			flex-direction: row;
-			justify-content: space-around;
+			justify-content: space-between;
 			padding: 10px 5px;
+      margin-left: 3px;
 			.num{
 				button{
           border: none;
@@ -123,6 +159,7 @@ export default defineComponent({
           text-align: center;
         }
 			}
+        
 		}
 	}
 }

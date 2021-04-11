@@ -60,7 +60,7 @@ export default defineComponent({
 }
 
 .check{
-		width: 4rem;
+		width: 100%;
 		padding-right:0 5px;
     .checkbox{
       width: 20px;

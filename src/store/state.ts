@@ -2,6 +2,9 @@ import { Istate } from '@/typings'
 
 export default <Istate>{
     cartData:[],
-    isAllchecked:0
+    isAllchecked:0,
+    disChecked:0,
+    selectNum:0,
+    totalPrice:0,
 }
     

@@ -1,7 +1,7 @@
-import { ALL_CHECKED, GET_CARDATA, SET_CARDATA, SET_CARDATA_CHECK, SET_NUM_ADD, SET_NUM_SUB } from './actionTypes';
+import { ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, GET_CARDATA, SET_CARDATA, SET_CARDATA_CHECK, SET_NUM_ADD, SET_NUM_SUB } from './actionTypes';
 import { Commit, mapActions } from 'vuex';
 import { Istate, IviewCartItem } from '../typings';
-import { getCartList, CartList_add, CartList_sub, setCheck, AddTocart, allCheck } from '@/network/cartNet';
+import { getCartList, CartList_add, CartList_sub, setCheck, AddTocart, allCheck, delItem } from '@/network/cartNet';
 
 interface ICtx {
     commit: Commit,
@@ -36,6 +36,8 @@ export default {
         })
       });
       commit(GET_CARDATA,productList);
+      commit(COUNT_SELECTNUM);
+      commit(COUNT_TOTALPRICE);
     },
     // add
     async [SET_NUM_ADD]({commit}:ICtx,pload){
@@ -43,6 +45,7 @@ export default {
       let { gid, num } = pload;
       await CartList_add(gid,bid,num);
       commit(SET_NUM_ADD,gid);
+      commit(COUNT_TOTALPRICE);
     },
     // sub
     async [SET_NUM_SUB]({commit}:ICtx,pload){
@@ -50,17 +53,30 @@ export default {
       let { gid, num } = pload;
       await CartList_sub(gid,bid,num);
       commit(SET_NUM_SUB,gid);
+      commit(COUNT_TOTALPRICE);
     },
     async [SET_CARDATA_CHECK]({commit}:ICtx,pload){
       let bid = BID;
       let { gid, status } = pload;
-      await setCheck( gid, bid, status);
+      await setCheck( bid, gid, status);
       commit(SET_CARDATA_CHECK,{gid,status});
+      commit(COUNT_SELECTNUM);
+      commit(COUNT_TOTALPRICE);
     },
     async [ALL_CHECKED]({commit}:ICtx,status){
       let bid = BID;
       await allCheck( bid, status);
-      commit(SET_CARDATA_CHECK,status);
+      commit(ALL_CHECKED,status);
+      commit(COUNT_SELECTNUM);
+      commit(COUNT_TOTALPRICE);
+    },
+    async [DEL_ITEM]({commit}:ICtx,pload){
+      let { gid,bid } = pload
+      bid = BID;
+      await delItem( bid, gid);
+      commit(DEL_ITEM,gid);
+      commit(COUNT_SELECTNUM);
+      commit(COUNT_TOTALPRICE);
     },
 
 }

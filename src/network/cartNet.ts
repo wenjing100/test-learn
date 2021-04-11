@@ -91,11 +91,27 @@ async function allCheck(bid: string, status: number) {
   // let res = await laxrequest(option);
   return res
 }
+//删除购物车
+async function delItem(bid: string, gid: string) {
+  let option = {
+    method: 'post',
+    url: '/api/cart/del',
+    params: {
+      bid,
+      gid
+    }
+  }
+  let res = await local_axrequest(option);
+  // let res = await laxrequest(option);
+  return res
+}
+
 export {
   CartList_add,
   getCartList,
   CartList_sub,
   setCheck,
   AddTocart,
-  allCheck
+  allCheck,
+  delItem
 }

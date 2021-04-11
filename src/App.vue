@@ -1,9 +1,5 @@
 <template>
-  <router-view v-slot="{ Component }">
-    <keep-alive include="goodscon">
-      <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive"/>
-    </keep-alive>
-    <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive"/>
+  <router-view>
   </router-view>
 
   <tabbar v-if="!isdetails"></tabbar>
@@ -28,7 +24,6 @@ export default {
         }
       }
     );
-    
     
     return {
       isdetails,

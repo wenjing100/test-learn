@@ -7,7 +7,10 @@
         </span>
       </template>
     </navbar>
-    <h2>Me</h2>
+    <div class="gaodu">
+      
+    </div>
+    
   </div>
 </template>
 
@@ -24,5 +27,6 @@ import { defineComponent} from 'vue'
   .nav-span{
     color: #fff;
   }
+  
 }
 </style>

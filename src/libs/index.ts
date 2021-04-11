@@ -11,7 +11,8 @@ import detailbrief from './goods_detail/brief.vue';
 import shopbrief from './goods_detail/shop.vue';
 import goodsparams from './goods_detail/goodsparams.vue';
 import buyercomments from './goods_detail/comments.vue';
-import bottomtool from './bottom_tool/index.vue'
+import bottomtool from './bottom_tool/index.vue';
+import swipDel from './swip-del/index.vue'
 
 const POOL = [
     tabbar,
@@ -26,7 +27,8 @@ const POOL = [
     shopbrief,
     goodsparams,
     buyercomments,
-    bottomtool
+    bottomtool,
+    swipDel
 ]
     
 let wenjingUI = {

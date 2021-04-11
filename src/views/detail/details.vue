@@ -145,7 +145,7 @@ export default defineComponent({
           gname:state.brief[0],
           price:state.brief[1],
           num:1,
-          checked:true,
+          checked:1,
           bid:''
         }
       } catch (err) {

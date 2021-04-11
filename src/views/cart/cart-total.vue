@@ -5,18 +5,19 @@
         <cartcheck
           @checkclick="checkClick"
           :itemchecked="totalcheck"
+          ref="checkallcon"
         ></cartcheck>
       </div>
       <span>全选</span>
     </div>
-    <div class="sum"><span>总计：￥{{}}</span></div>
-    <div class="paybill">去结算</div>
+    <div class="sum"><span>总计：￥{{tprice}}</span></div>
+    <div class="paybill">去结算({{snum}})</div>
   </div>
 </template>
 
 <script lang='ts'>
 import { useStore } from "vuex";
-import { defineComponent, onBeforeMount, reactive, toRefs } from "vue";
+import { defineComponent, onBeforeMount, reactive, toRefs, watch, ref } from "vue";
 import cartcheck from "./cart-check.vue";
 import { ALL_CHECKED } from "@/store/actionTypes";
 export default defineComponent({
@@ -26,12 +27,32 @@ export default defineComponent({
   },
   setup(){
     const store = useStore();
+    const checkallcon = ref(null);
     const state = reactive({
-      totalcheck:0
+      totalcheck:0,
+      tprice:store.state.totalPrice,
+      snum:store.state.selectNum
     })
     const checkClick = (ck)=>{
       store.dispatch(ALL_CHECKED,ck)
     }
+    watch(()=>{
+      return store.state.isAllchecked
+    },(val)=>{
+      checkallcon.value.checked = val;
+    })
+    //监听数量
+    watch(()=>{
+      return store.state.selectNum
+    },(val)=>{
+      state.snum = val;
+    })
+    //监听总价
+    watch(()=>{
+      return store.state.totalPrice
+    },(val)=>{
+      state.tprice = val;
+    })
     onBeforeMount(()=>{
       let len = store.state.cartData.length;
       let i = 0;
@@ -46,7 +67,8 @@ export default defineComponent({
     })
     return {
       ...toRefs(state),
-      checkClick
+      checkClick,
+      checkallcon
     }
   }
 });
@@ -66,7 +88,7 @@ export default defineComponent({
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    width: 26%;
+    width:80px;
     .box{
       width: 20px;
     }
@@ -84,11 +106,12 @@ export default defineComponent({
     }
   }
   .paybill{
-    width: 100px;
+    width: 120px;
     background: tomato;
     color: #fff;
     line-height: 44px;
     text-align: center;
+    padding: 0 3px;
   }
 }
 </style>

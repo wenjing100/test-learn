@@ -5,3 +5,6 @@ export const SET_NUM_ADD:string = 'set_num_add';
 export const SET_NUM_SUB:string = 'set_num_sub';
 export const SET_CARDATA_CHECK:string = 'set_cardata_check';
 export const ALL_CHECKED:string = 'all_checked';
+export const COUNT_SELECTNUM:string = 'count_selectnum';
+export const COUNT_TOTALPRICE:string = 'count_totalprice';
+export const DEL_ITEM:string = 'del_item';

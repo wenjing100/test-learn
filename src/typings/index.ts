@@ -22,6 +22,9 @@ interface IviewCartItem{
 interface Istate{
     cartData:IviewCartItem []
     isAllchecked:number
+    disChecked:number
+    selectNum:number
+    totalPrice:number
 }
 interface Igoods_list_item{
     iid:string

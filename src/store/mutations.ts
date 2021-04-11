@@ -1,59 +1,90 @@
 import { Istate, IviewCartItem } from '@/typings'
-import { SET_CARDATA, SET_NUM_ADD, SET_NUM_SUB, SET_CARDATA_CHECK, GET_CARDATA, ALL_CHECKED } from './actionTypes';
+import { SET_CARDATA, SET_NUM_ADD, SET_NUM_SUB, SET_CARDATA_CHECK, GET_CARDATA, ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM } from './actionTypes';
 import _ from 'lodash';
-import { addLocalStorage } from '@/hooks/cartLocalStorage';
-
+// import { addLocalStorage } from '@/hooks/cartLocalStorage';
 
 export default {
   [SET_CARDATA](state: Istate, cardata: IviewCartItem) {
     let has = false;
     state.cartData.forEach(item => {
       if (item.gid == cardata.gid) {
-        item.num ++;
+        item.num++;
         has = true;
       }
     })
-    if(!has){
-     state.cartData.push(cardata); 
+    if (!has) {
+      state.cartData.push(cardata);
     }
   },
-  [GET_CARDATA](state: Istate, cardatalist){
+  [GET_CARDATA](state: Istate, cardatalist) {
     state.cartData = cardatalist;
     // addLocalStorage();
   },
   [SET_NUM_ADD](state: Istate, gid: string,) {
     state.cartData.forEach(item => {
       if (item.gid == gid) {
-        item.num ++;
+        item.num++;
       }
     });
   },
-  [SET_NUM_SUB](state: Istate, gid: string,){
+  [SET_NUM_SUB](state: Istate, gid: string,) {
     state.cartData.forEach(item => {
       if (item.gid == gid) {
-        item.num --;
+        item.num--;
       }
     });
   },
-  [SET_CARDATA_CHECK](state: Istate, pload){
-    let {gid,status} = pload;
+  [SET_CARDATA_CHECK](state: Istate, pload) {
+    let { gid, status } = pload;
     let k = 1;
     state.cartData.forEach(item => {
       if (item.gid == gid) {
         item.checked = status;
       }
-      if(item.checked == 0){
+      if (item.checked == 0) {
         k = 0;
       }
     });
-    if(k){
-      state.isAllchecked = 1;
-    }
+    state.isAllchecked = k;
   },
-  [ALL_CHECKED](state: Istate, status){
-    state.isAllchecked = status == 1? 1: 0;
+  [ALL_CHECKED](state: Istate, status) {
+    if (status == 1) {
+      state.isAllchecked = 1;
+      state.disChecked = 0;
+    } else {
+      state.isAllchecked = 0;
+      state.disChecked = 1;
+    }
     state.cartData.forEach(item => {
       item.checked = status;
     });
+  },
+  [COUNT_SELECTNUM](state: Istate) {
+    state.selectNum = 0;
+    state.cartData.forEach(item=>{
+      if(item.checked === 1){
+        state.selectNum ++;
+      }
+    })
+  },
+  [COUNT_TOTALPRICE](state: Istate) {
+    let len = state.cartData.length;
+    let sum = 0;
+    for(let i = 0; i < len; i++){
+      if(state.cartData[i].checked == 1){
+        sum = sum + Math.round(state.cartData[i].price*100)*state.cartData[i].num;
+      }
+    }
+    state.totalPrice = sum/100;
+  },
+  [DEL_ITEM](state: Istate, gid:string) {
+    let i = 0 ;
+    for(let j = 0; j < state.cartData.length; j++){
+      if(state.cartData[j].gid === gid){
+        i = j;
+        break;
+      }
+    }
+    state.cartData.splice(i,1);
   },
 }

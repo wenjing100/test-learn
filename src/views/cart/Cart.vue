@@ -23,7 +23,7 @@
 <script lang='ts'>
 import { useStore } from "vuex";
 import cartitem from './cart-item.vue'
-import { defineComponent, onBeforeMount, reactive, ref, toRefs } from "vue";
+import { defineComponent, onBeforeMount, reactive, ref, toRefs, watch } from "vue";
 import carttotal from './cart-total.vue'
 export default defineComponent({
   name: "cartPage",
@@ -49,7 +49,11 @@ export default defineComponent({
       }
       state.count = state.goodList.length;
     });
-  
+    watch(()=>{
+      return store.state.cartData.length
+    },(val)=>{
+      state.count = val;
+    })
     return {
       ...toRefs(state),
     };

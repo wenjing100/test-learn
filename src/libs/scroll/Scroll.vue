@@ -51,8 +51,6 @@ export default defineComponent({
           ctx.emit("pullupload");
           state.bs.refresh();
           state.wraperHeight = document.documentElement.clientHeight -44 + 'px';
-          console.log(document.documentElement.clientHeight)
-          console.log(state.wraperHeight)
         });
         state.bs.refresh();
       });
