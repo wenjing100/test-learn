@@ -101,7 +101,6 @@ export default defineComponent({
   border: 5px solid var(--color-background-light);
   background: var(--color-background);
   padding: 5px;
-  border-bottom: 2.5px;
   border-left: 0;
   border-right: 0;
 	display: flex;
@@ -124,6 +123,7 @@ export default defineComponent({
 		.gn{
       overflow: hidden;
       height: 40px;
+      width: 100%;
       padding-left: 5px;
       span{
         width: 100%;
@@ -139,6 +139,7 @@ export default defineComponent({
 			justify-content: space-between;
 			padding: 10px 5px;
       margin-left: 3px;
+      width: 100%;
 			.num{
 				button{
           border: none;

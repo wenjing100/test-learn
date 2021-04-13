@@ -13,7 +13,6 @@
         <div v-else class="cartbody" v-for="(item,index) in goodList" :key="item.gid">
           <cartitem :itemdata="item"></cartitem>
         </div>
-        <div class="p"></div>
       </div>
     </myscroll>
     <carttotal class="cartotal" ></carttotal>
@@ -33,7 +32,6 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const BID = 'vght1c';//模拟用户
     const state = reactive({
       count: 0,
       goodList: [],
@@ -53,6 +51,9 @@ export default defineComponent({
       return store.state.cartData.length
     },(val)=>{
       state.count = val;
+      if(val === 0){
+        state.isEmpty = true;
+      }
     })
     return {
       ...toRefs(state),
@@ -66,7 +67,6 @@ export default defineComponent({
 #cart {
   padding-top: 44px;
   width: 100%;
-  background: var(--color-background-light);
   .cartotal{
     position: absolute;
     bottom: 44px;
@@ -76,10 +76,6 @@ export default defineComponent({
   }
   .cartCon {
     width: 100%;
-    .p{
-      /*height: 103px;*/
-      width: 100%;
-    }
     .empty{
       width: 100%;
       height: 150px;

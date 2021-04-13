@@ -50,7 +50,7 @@ export default defineComponent({
 <style lang='scss' scoped>
 .slidcon {
   width: 100%;
-  min-height: 120px;
+  min-height: 110px;
   overflow: hidden;
   height: inherit;
   .slid-del-content {

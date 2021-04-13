@@ -1,7 +1,7 @@
 <template>
     <div id="gdetails" class="wrapper">
       <detailnavbar :dpy="dpy"></detailnavbar>
-      <div v-if="falg">
+      <div v-if="falg" >
         <myscroll
           class="content"
           :probtype="3"
@@ -19,7 +19,7 @@
               @car_img_load="parmalready"
             ></my-carsousel>
           </div>
-          <detailbrief :briefdata="brief"></detailbrief>
+          <detailbrief :briefdata="brief" ></detailbrief>
           <shopbrief :sid="sid"></shopbrief>
           <goodsparams :parms="parmlist" ref="parm" @parmalready="parmalready"></goodsparams>
           <buyercomments :gid="gid" ref="comm"></buyercomments>
@@ -41,9 +41,11 @@ import {
   nextTick,
   onMounted,
   onUpdated,
+  watch,
+  ref
 } from "vue";
 import { Store, useStore} from 'vuex'
-import { useRoute } from "vue-router";
+import { useRoute, useRouter} from "vue-router";
 import { getDetails } from "@/network/goodsDetails";
 import detailnavbar from "./detailnavbar.vue";
 import goodsrecom from './goodsRecomend.vue';
@@ -57,7 +59,9 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const instance = getCurrentInstance();
+    const scroll = ref(null)
     const store:Store<any> = useStore();
     const state = reactive({
       sr: null,
@@ -69,7 +73,7 @@ export default defineComponent({
       falg: false,
       dpy:[],//记录组件位置
       cindex:0,
-      product:{}
+      product:{},
     });
     //监听组件加载情况 更新组件高度
     const parmalready = ()=>{
@@ -95,6 +99,57 @@ export default defineComponent({
         }
       } 
     }
+    //监听路由改变
+    watch(()=>{
+      return route.params.id
+    },async (val)=>{
+      try {
+        let dd = await getDetails(route.params.id as string);
+        let d = dd.data[0];
+        let topimgs = d.top_imgs.split(",");
+        let gname = d.g_name;
+        //brief[gname,price,marketprice,likes,grand_total]
+        state.brief.push(
+          d.g_name,
+          d.price,
+          d.marketprice,
+          d.likes,
+          d.grand_total
+        );
+        //形成swiper数据格式
+        state.sid = d.shop_id;
+        state.gid = d.iid;
+        for (let i = 0; i < topimgs.length; i++) {
+          state.swiper.push({
+            link: "",
+            title: gname,
+            image: topimgs[i],
+          });
+        }
+        //params参数
+        state.parmlist[0] = d.colors;
+        state.parmlist[1] = d.sizes;
+        state.parmlist[2] = d.params.split(",");
+        state.parmlist[3] = d.describe_text;
+        state.parmlist[4] = d.describe_imgs.split(",");
+        state.falg = true;
+        //购物车参数
+        state.product = {
+          gid:state.gid,
+          faceimg:state.swiper[0].image,
+          gname:state.brief[0],
+          price:state.brief[1],
+          num:1,
+          checked:1,
+          bid:''
+        }
+      } catch (err) {
+        console.log("details请求有问题：" + err);
+      }
+      console.log(val);
+      window.location.reload();
+      scroll.value?.scrollPosition(0,0,100);
+    })
     const addToCart = ()=>{
       //购物车需要展示的数据  图片 名称 价格 数量
       Toast({
@@ -157,7 +212,8 @@ export default defineComponent({
       ...toRefs(state),
       parmalready,
       detailScrollMove,
-      addToCart
+      addToCart,
+      scroll
     };
   },
 });
