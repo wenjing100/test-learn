@@ -1,7 +1,8 @@
-import { ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, GET_CARDATA, SET_CARDATA, SET_CARDATA_CHECK, SET_NUM_ADD, SET_NUM_SUB } from './actionTypes';
+import { ALL_CHECKED, CAT_CURRENT, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, GET_CARDATA, SET_CARDATA, SET_CARDATA_CHECK, SET_NUM_ADD, SET_NUM_SUB } from './actionTypes';
 import { Commit, mapActions } from 'vuex';
 import { Istate, IviewCartItem } from '../typings';
 import { getCartList, CartList_add, CartList_sub, setCheck, AddTocart, allCheck, delItem } from '@/network/cartNet';
+import { fetchCat } from '@/network/catagoryNet';
 
 interface ICtx {
     commit: Commit,
@@ -77,6 +78,11 @@ export default {
       commit(DEL_ITEM,gid);
       commit(COUNT_SELECTNUM);
       commit(COUNT_TOTALPRICE);
+    },
+    async [CAT_CURRENT]({commit}:ICtx,pload){
+      let { id,size } = pload;
+      commit(CAT_CURRENT,id);
+      await fetchCat( id, size);
     },
 
 }

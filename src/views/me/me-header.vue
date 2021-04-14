@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div id="mehead">
     <div class="nav">
       <span>我的档案</span>
     </div>
@@ -63,10 +63,12 @@ export default defineComponent({
 .icon-huiyuan:before {
   content: "\e62c";
 }
-.login {
+
+#mehead {
   width: 100%;
   background: var(--color-tint);
   height: 132px;
+  z-index: 100;
   .nav{
     height: 44px;
     width: 100%;

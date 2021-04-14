@@ -6,5 +6,6 @@ export default <Istate>{
     disChecked:0,
     selectNum:0,
     totalPrice:0,
+    cat_current:3,
 }
     

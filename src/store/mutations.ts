@@ -1,5 +1,5 @@
 import { Istate, IviewCartItem } from '@/typings'
-import { SET_CARDATA, SET_NUM_ADD, SET_NUM_SUB, SET_CARDATA_CHECK, GET_CARDATA, ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM } from './actionTypes';
+import { SET_CARDATA, SET_NUM_ADD, SET_NUM_SUB, SET_CARDATA_CHECK, GET_CARDATA, ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, CAT_CURRENT } from './actionTypes';
 import _ from 'lodash';
 // import { addLocalStorage } from '@/hooks/cartLocalStorage';
 
@@ -86,5 +86,8 @@ export default {
       }
     }
     state.cartData.splice(i,1);
+  },
+  [CAT_CURRENT](state: Istate, n:number) {
+    state.cat_current = n;
   },
 }

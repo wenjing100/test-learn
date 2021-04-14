@@ -1,19 +1,36 @@
 <template>
-  <div class="catli" :class="{active:isactive}">
+  <div class="catli" :class="{active:index===current}" @click="catliclick">
     <span><slot></slot></span>
   </div>
 </template>
 
 <script lang='ts'>
-import { defineComponent, reactive, toRefs } from "vue";
+import { useStore } from "vuex";
+import { defineComponent, reactive, toRefs, watch } from "vue";
 export default defineComponent({
   name: "catli",
-  setup() {
+  emits:['catliclick'],
+  props:{
+    index:{
+      type:Number
+    }
+  },
+  setup(p,{emit}){
+    const store = useStore();
     const state = reactive({
-      isactive: false,
+      current: 1,
     });
+    const catliclick = ()=>{
+      emit('catliclick');
+    }
+    watch(()=>{
+      return store.state.cat_current;
+    },val=>{
+      state.current = val;
+    })
     return {
-      ...toRefs(state)
+      ...toRefs(state),
+      catliclick
     };
   },
 });

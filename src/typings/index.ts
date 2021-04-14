@@ -25,6 +25,7 @@ interface Istate{
     disChecked:number
     selectNum:number
     totalPrice:number
+    cat_current:number
 }
 interface Igoods_list_item{
     iid:string

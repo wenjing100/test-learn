@@ -1,6 +1,9 @@
 <template>
   <div id="me">
     <meheader></meheader>
+    <myscroll
+      :probtype="3"
+    >
     <measset></measset>
     <memoreone>
       <meitem>
@@ -36,6 +39,7 @@
         <template #msg> 下载购物app </template>
       </meitem>
     </div>
+    </myscroll>
   </div>
 </template>
 
