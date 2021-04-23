@@ -8,7 +8,6 @@ interface ICtx {
     commit: Commit,
     state : Istate
 }
-
 // 模拟使用的用户b_id vght1c 
 const BID = 'vght1c';
 

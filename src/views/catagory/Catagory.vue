@@ -23,11 +23,9 @@
           class="scroll"
         >
       <div class="catlist">
-        <div v-if="n===1">
-          <catbox :boxlist="catlistData"></catbox>
-        </div>
-        <div class="goodsli">
-          <goodscon :goods_data="glist"></goodscon>
+        <catbox :boxlist="catlistData"></catbox>
+        <div class="goodsli" >
+            <goodscon :goods_data="glist"></goodscon>
         </div>
       </div>
       </myscroll>
@@ -60,7 +58,13 @@ import { getgoodsList } from '@/network/goodsList';
         onBeforeMount(async ()=>{
           let dd = await getSideList();
           let cc = await fetchCat(1,0);
-          let ee = await getgoodsList();
+          let ee = await getgoodsList({
+            pageSize: 8,
+            pageIndex:1,
+            sortType:'',
+            hotPoint:'',
+            cat:21
+          });
           dd.data.forEach(item=>{
             state.sidelist.push(item);
           });
@@ -72,7 +76,7 @@ import { getgoodsList } from '@/network/goodsList';
           });
         })
         const catliclick = (n)=>{
-          state.n = n;
+          state.n = state.sidelist[n].id;
           store.dispatch(CAT_CURRENT,{id:n,size:15});
         }
         return{

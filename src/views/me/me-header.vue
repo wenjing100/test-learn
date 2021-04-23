@@ -5,7 +5,7 @@
     </div>
     <div class="anti-nav">
       <div class="avator">
-        <div class="inner"></div>
+        <div class="inner"><img src="../../assets/img/未登录.jpg" alt=""></div>
       </div>
       <div class="checkinfo">
         <div class="info">
@@ -92,8 +92,12 @@ export default defineComponent({
       .inner{
         height: 60px;
         width: 60px;
-        border-radius: 50%;
         background: #d8d7d7;
+        img{
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
       }
     }
     .checkinfo{

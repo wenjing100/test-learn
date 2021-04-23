@@ -98,11 +98,9 @@ export default defineComponent({
 <style lang='scss' scoped>
 .cartitem {
   width: 100%;
-  border: 5px solid var(--color-background-light);
+  border-top: 5px solid var(--color-background-light);
   background: var(--color-background);
   padding: 5px;
-  border-left: 0;
-  border-right: 0;
 	display: flex;
 	flex-direction: row;
 	align-items: center;

@@ -1,7 +1,8 @@
 import { local_axrequest,axrequest } from './request'
 
 
-    async function getgoodsList(pageSize = 8,pageIndex = 1,sortType = '',hotPoint = '流行'){
+    async function getgoodsList(pload){
+        let { pageSize,pageIndex,sortType,hotPoint,cat} = pload;
         let option = {
             method:'get',
             url:'/api/home/multidata/list',
@@ -9,7 +10,8 @@ import { local_axrequest,axrequest } from './request'
                 pageSize,
                 pageIndex,
                 sortType,
-                hotPoint
+                hotPoint,
+                cat
             }
         }
         let res = await local_axrequest(option);

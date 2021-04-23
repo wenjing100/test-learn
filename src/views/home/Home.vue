@@ -123,29 +123,32 @@ export default defineComponent({
         state.recomlist = _data.data.recommend.list;
         state.thweek = _data.data.thisWeek;
         //请求商品列表数据
-        let goods_pop = await getgoodsList(
-          8,
-          state.goods_pop.index,
-          "asc",
-          "流行"
-        );
+        let goods_pop = await getgoodsList({
+            pageSize: 8,
+            pageIndex:1,
+            sortType:'',
+            hotPoint:'流行',
+            cat:21
+          });
         state.goods_pop.data = goods_pop.data;
         state.goods_pop.index++;
-        let goods_new = await getgoodsList(
-          8,
-          state.goods_new.index,
-          "asc",
-          "新款"
-        );
+        let goods_new = await getgoodsList({
+            pageSize: 8,
+            pageIndex:1,
+            sortType:'',
+            hotPoint:'新款',
+            cat:21
+          });
         state.goods_new.data = goods_new.data;
         state.goods_new.index++;
 
-        let goods_sell = await getgoodsList(
-          8,
-          state.goods_sell.index,
-          "asc",
-          "精选"
-        );
+        let goods_sell = await getgoodsList({
+            pageSize: 8,
+            pageIndex:1,
+            sortType:'',
+            hotPoint:'精选',
+            cat:21
+          });
         state.goods_sell.data = goods_sell.data;
         state.goods_sell.index++;
         state.flag = true;
@@ -191,9 +194,14 @@ export default defineComponent({
       let index = 0;
       switch(state.goods_con_type){
         case 0:
-          hotpoint = '流行';
           index = state.goods_pop.index;
-          goods = (await getgoodsList(8,index,'asc',hotpoint)).data;
+          goods = (await getgoodsList({
+            pageSize: 8,
+            pageIndex:index,
+            sortType:'',
+            hotPoint:'流行',
+            cat:21
+          })).data;
           goods.forEach(item=>{
             state.goods_pop.data.push(item);
           })
@@ -202,9 +210,14 @@ export default defineComponent({
           (instance.refs.scroll as Iscroll).pull_refresh();
           break;
         case 1:
-          hotpoint = '新款';
           index = state.goods_new.index;
-          goods = (await getgoodsList(8,index,'asc',hotpoint)).data;
+          goods = (await getgoodsList({
+            pageSize: 8,
+            pageIndex:index,
+            sortType:'',
+            hotPoint:'新款',
+            cat:21
+          })).data;
           goods.forEach(item=>{
             state.goods_new.data.push(item);
           })
@@ -213,9 +226,14 @@ export default defineComponent({
           (instance.refs.scroll as Iscroll).pull_refresh();
           break;
         case 2:
-          hotpoint = '精选';
           index = state.goods_sell.index;
-          goods = (await getgoodsList(8,index,'asc',hotpoint)).data;
+          goods = (await getgoodsList({
+            pageSize: 8,
+            pageIndex:index,
+            sortType:'',
+            hotPoint:'精选',
+            cat:21
+          })).data;
           goods.forEach(item=>{
             state.goods_sell.data.push(item);
           })

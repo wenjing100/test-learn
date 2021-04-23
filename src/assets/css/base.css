@@ -30,7 +30,8 @@ body{
     overflow: auto;
     background: var(--color-background);
     color: var(--color-text);
-    width: 100vw;
+    min-width: 320px;
+    max-width: 750px;
 }
 img{
     vertical-align: middle;
