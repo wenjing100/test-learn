@@ -1,19 +1,30 @@
-# mymall
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### 关于本次项目
+- 首先这是一个**移动端项目**
+- 项目展示地址：http://47.110.38.241/  （暂时）
+- 这个项目是本人学习用
+- 这个项目有后端支持
+#### 这个商城项目包含什么？
+   ==包含了商城了部分功能，仅供参考==
+- 登陆及相关 
+     - 登陆界面
+     - 登陆验证--token通行证
+- 商城首页  
+    - 首页轮播
+    - 商品推荐
+    - 商品懒加载展示
+- 商品详情页
+    - 详情轮播
+    - 数据详情
+    - 店铺详情
+    - 评论
+    - 推荐
+- 分类页面
+     - 分类选项 （左）
+     - 分类细节 （右）
+- 购物车页面
+    - 购物车 增改查
+    - 购物车 左滑删除
+    - 购物车 统计
+- 我的页面
+    - 登陆情况
+    - 会员情况 

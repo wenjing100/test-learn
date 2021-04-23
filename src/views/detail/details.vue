@@ -61,7 +61,7 @@ export default defineComponent({
     const route = useRoute();
     const router = useRouter();
     const instance = getCurrentInstance();
-    const scroll = ref(null)
+    const scroll = ref(null);
     const store:Store<any> = useStore();
     const state = reactive({
       sr: null,
@@ -213,7 +213,7 @@ export default defineComponent({
       parmalready,
       detailScrollMove,
       addToCart,
-      scroll
+      scroll,
     };
   },
 });

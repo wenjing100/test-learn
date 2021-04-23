@@ -1,6 +1,6 @@
 <template>
-  <div class="wraper" ref="myscroll" :style="{height:wraperHeight}" >
-    <div class="content">
+  <div class="wraper" ref="myscroll" :style="{height:wraperHeight}">
+    <div class="content" >
       <slot></slot>
     </div>
   </div>
@@ -9,6 +9,7 @@
 <script lang='ts'>
 import { defineComponent, nextTick, onMounted, reactive, ref, toRefs, watch } from "vue";
 import BScroll from "better-scroll";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "myscroll",
   props: {
@@ -27,7 +28,7 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const myscroll = ref(null);
-    //   let bs = ref(null);
+    const store = useStore();
     let state = reactive<{ bs: BScroll, wraperHeight:string}>({
       bs: null,
       wraperHeight: '812px'
@@ -50,7 +51,7 @@ export default defineComponent({
         state.bs.on("pullingUp", () => {
           ctx.emit("pullupload");
           state.bs.refresh();
-          state.wraperHeight = document.documentElement.clientHeight -44 + 'px';
+          // state.wraperHeight = document.documentElement.clientHeight -44 + 'px';
         });
         state.bs.refresh();
       });
@@ -63,17 +64,28 @@ export default defineComponent({
     const finishpullup = (): void => {
       state.bs.finishPullUp();
     };
+    //刷新
     const pull_refresh = (): void => {
-      nextTick(()=>{
-        state.bs.refresh();
-      })
+      state.bs.refresh();
     };
+    //滚动到指定元素方法-----
+    const scroll_to_elem = (el)=>{
+      state.bs.scrollToElement(el,300,0,0);
+    }
+    //监视 store中的view-port值
+    watch(()=>{
+      return store.state.viewport_height;
+    },(val)=>{
+      state.wraperHeight = val;
+      state.bs.refresh();
+    })
     return {
       ...toRefs(state),
       myscroll,
       scrollPosition,
       finishpullup,
       pull_refresh,
+      scroll_to_elem
     };
   },
 });

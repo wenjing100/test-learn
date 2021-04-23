@@ -25,6 +25,9 @@ body{
     font-family: '微软雅黑',Arial, Helvetica, sans-serif,'PingFang SC','Microsoft YaHei';
     user-select: none;/*禁止用户鼠标选中页面上的文字或图片*/
     -webkit-tap-highlight-color: transparent;
+    /* 解决移动端滚动卡顿 */
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
     background: var(--color-background);
     color: var(--color-text);
     width: 100vw;

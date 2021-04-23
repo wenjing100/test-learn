@@ -43,6 +43,7 @@ export default defineComponent({
 
     const spanclick = (index) => {
       state.currentIndex = index;
+      // ctx.emit('toElem',index)
       goscroll(index);
     };
     const goscroll = (indx)=>{

@@ -7,10 +7,14 @@
 <script lang="ts">
 import { watch, ref, } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from 'vuex';
+import { SET_VIEWPORT } from './store/actionTypes';
 export default {
   setup() {
     const isdetails = ref(false);
+    const store = useStore();
     let route = useRoute();
+    //判断路由，在detail页面隐藏tabbar
     watch(
       () => {
         return route.path;
@@ -24,7 +28,12 @@ export default {
         }
       }
     );
-    
+    //监视视口高度
+    window.onresize = ()=>{
+      let h = document.documentElement.clientHeight;
+      store.commit(SET_VIEWPORT,h);
+      console.log('h:',h)
+    }
     return {
       isdetails,
     };
@@ -32,4 +41,5 @@ export default {
 };
 </script>
 <style lang="scss">
+
 </style>

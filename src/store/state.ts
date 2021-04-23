@@ -7,5 +7,6 @@ export default <Istate>{
     selectNum:0,
     totalPrice:0,
     cat_current:3,
+    viewport_height:812
 }
     

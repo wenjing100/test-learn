@@ -9,3 +9,4 @@ export const COUNT_SELECTNUM:string = 'count_selectnum';
 export const COUNT_TOTALPRICE:string = 'count_totalprice';
 export const DEL_ITEM:string = 'del_item';
 export const CAT_CURRENT:string = 'cat_current';
+export const SET_VIEWPORT:string = 'set_viewport';

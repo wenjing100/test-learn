@@ -7,6 +7,7 @@
     </navbar>
     <myscroll
       :probtype="3"
+      ref="cartScroll"
     >
       <div class="cartCon">
         <div v-if="isEmpty" class="empty">您的购物车为空哦~</div>
@@ -32,6 +33,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const cartScroll = ref(null)
     const state = reactive({
       count: 0,
       goodList: [],
@@ -46,17 +48,23 @@ export default defineComponent({
         state.isEmpty = true;
       }
       state.count = state.goodList.length;
+
     });
     watch(()=>{
       return store.state.cartData.length
     },(val)=>{
       state.count = val;
-      if(val === 0){
-        state.isEmpty = true;
-      }
+      let iidd = setTimeout(()=>{
+        clearTimeout(iidd);
+        if(val === 0){
+          state.isEmpty = true;
+        }
+      },500)
     })
+   
     return {
       ...toRefs(state),
+      cartScroll,
     };
   },
 });

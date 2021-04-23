@@ -26,6 +26,7 @@ interface Istate{
     selectNum:number
     totalPrice:number
     cat_current:number
+    viewport_height:number
 }
 interface Igoods_list_item{
     iid:string

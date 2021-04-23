@@ -1,12 +1,13 @@
 <template>
   <div class="slidcon">
-    <div class="slid-del-content">
-      <div class="slotarea"
+    <div class="slid-content">
+      <div class="slid-content-slotarea"
         @touchstart="tstart($event)"
         @touchend="tend($event)"
-      ><slot>这里是内容</slot></div>
-      <div class="delbtn">
-        <div class="del" @click="slidDelClick">删除</div>
+      ><slot>这里是内容</slot>
+      </div>
+      <div class="slid-content-delbtn">
+        <div class="slid-content-delbtn-del" @click="slidDelClick">删除</div>
       </div>
     </div>
   </div> 
@@ -24,6 +25,7 @@ export default defineComponent({
     const tstart = (e) => {
       state.startX = e.touches[0].clientX;
       e.currentTarget.parentElement.removeAttribute('swip');
+      console.log('tttt')
     };
     const tend = (e)=>{
       let x = e.changedTouches[0].clientX;
@@ -33,6 +35,7 @@ export default defineComponent({
       }else if(x - state.startX > 20){
         e.currentTarget.parentElement.removeAttribute('swip');
       }
+      console.log('endend')
     }
     const slidDelClick = ()=>{
       emit('slidDelClick')
@@ -53,44 +56,47 @@ export default defineComponent({
   min-height: 110px;
   overflow: hidden;
   height: inherit;
-  .slid-del-content {
+  .slid-content {
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
-
     position: relative;
     width: calc(100% + 40px);
     height: inherit;
-
     transition: all .2s;
+    /* 动画偏移定位 */
     margin-left: -40px;
     transform: translateX(40px);
-    .slotarea{
+    &-slotarea{
       position: absolute;
+      height: inherit;
       width: calc(100% - 40px);
       left:0;
+      border: 1px solid black;
     }
-    .delbtn {
+    &-delbtn {
       position: absolute;
       right: 0;
-      top: 2.5px;
+      top: 0;
       background: crimson;
       transition: all .2s;
       color: #fff;
       width: 40px;
-      min-height: 110px;
+      height: inherit;
       display: flex;
       justify-content: center;
       align-items: center;
-      .del{
+      border: 1px solid orange;
+      &-del{
         width: 100%;
         height: 100%;
         text-align: center;
       }
     }
+    &[swip]{
+      transform: translateX(0);
+    }
   }
-  .slid-del-content[swip]{
-    transform: translateX(0);
-  }
+  
 }
 </style>
