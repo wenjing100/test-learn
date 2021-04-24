@@ -4,6 +4,9 @@
       <template v-slot:center>
         <span class="navbar-span">购物街</span>
       </template>
+      <template #right>
+        <span class="navbar-right">{{checkinStatus}}</span>
+      </template>
     </navbar>
     <sortbar
       :sortTitle="sortbarData"
@@ -85,6 +88,7 @@ import thweek from "@/components/thisweek/Thisweek.vue";
 import sortbar from "@/components/sort-bar/SortBar.vue";
 import { debounce } from '@/hooks/fangdou'
 import Comments from "@/libs/goods_detail/comments.vue";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "homePage",
   components: {
@@ -97,6 +101,7 @@ export default defineComponent({
     const instance = getCurrentInstance();
     const sortbar1 = ref(null);
     const sortbar2 = ref(null);
+    const store = useStore();
     const state = reactive<IhomeReactive>({
       cardata: null,
       recomlist: null,
@@ -110,7 +115,9 @@ export default defineComponent({
       sb_offsettop:0,
       is_fixed:false,
       stay_position:0,
+      checkinStatus:'未登录'
     });
+    state.checkinStatus = store.state.is_login?'已登录':'未登录';
     onBeforeMount(async () => {
       try {
         //请求 轮播图，推荐，本周  数据
@@ -269,6 +276,9 @@ export default defineComponent({
   padding-top: 44px;
   height: 100vh;
   .navbar-span{
+    color:#fff;
+  }
+  .navbar-right{
     color:#fff;
   }
   .no_01{

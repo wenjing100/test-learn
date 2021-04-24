@@ -10,3 +10,5 @@ export const COUNT_TOTALPRICE:string = 'count_totalprice';
 export const DEL_ITEM:string = 'del_item';
 export const CAT_CURRENT:string = 'cat_current';
 export const SET_VIEWPORT:string = 'set_viewport';
+export const TOKEN_FROM_LOCAL:string = 'token_form_local';
+

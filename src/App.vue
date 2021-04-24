@@ -8,7 +8,8 @@
 import { watch, ref, } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from 'vuex';
-import { SET_VIEWPORT } from './store/actionTypes';
+import { SET_VIEWPORT, TOKEN_FROM_LOCAL } from './store/actionTypes';
+import { getToken } from './hooks/checkLogin'
 export default {
   setup() {
     const isdetails = ref(false);
@@ -21,7 +22,7 @@ export default {
       },
       (val) => {
         //判断路由，如果进入详情页就隐藏tabbar
-        if (val.includes("details")) {
+        if (val.includes("details") || val.includes("login")) {
           isdetails.value = true;
         } else {
           isdetails.value = false;
@@ -32,7 +33,12 @@ export default {
     window.onresize = ()=>{
       let h = document.documentElement.clientHeight;
       store.commit(SET_VIEWPORT,h);
-      console.log('h:',h)
+
+    }
+    let tk = localStorage.getItem('token');
+    if(tk){
+        store.commit(TOKEN_FROM_LOCAL, true);
+        console.log(tk)
     }
     return {
       isdetails,
@@ -43,3 +49,11 @@ export default {
 <style lang="scss">
 
 </style>
+
+function getToken() {
+  throw new Error('Function not implemented.');
+}
+
+function getToken() {
+  throw new Error('Function not implemented.');
+}

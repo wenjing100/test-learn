@@ -1,6 +1,7 @@
 import { Istate } from '@/typings'
 
 export default <Istate>{
+    is_login:false,
     cartData:[],
     isAllchecked:0,
     disChecked:0,

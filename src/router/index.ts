@@ -18,6 +18,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/cart',
     name: 'Cart',
+    meta:{
+      //路由保护
+      auth:true
+    },
     component: () => import( '../views/cart/Cart.vue')
   },
   {
@@ -30,11 +34,36 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Details',
     component: () => import( '../views/detail/details.vue')
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import( '../views/login/login.vue')
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+// 路由守卫
+router.beforeEach((to,from,next)=>{
+  //判断下路去的路由 有没有保护 auth是否为true
+  if(to.meta.auth){
+    //查看 本地token，判断是否已经登陆
+    const token = localStorage.getItem('token');
+    if(token){
+      next()
+    }else{
+      next({
+        path:'/login',
+        query:{redirect:to.path}//浏览器参数形式，表示重定向的路径
+      })
+    }
+  }else{
+    next();
+  }
+
 })
 
 export default router

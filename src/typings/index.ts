@@ -27,6 +27,7 @@ interface Istate{
     totalPrice:number
     cat_current:number
     viewport_height:number
+    is_login:boolean
 }
 interface Igoods_list_item{
     iid:string
@@ -53,6 +54,7 @@ interface IhomeReactive{
     sb_offsettop:number
     is_fixed:boolean
     stay_position:number
+    checkinStatus:string
 }
 interface Iscroll{
     scrollPosition: (x:number,y:number,time:number) => void
