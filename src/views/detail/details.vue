@@ -150,6 +150,7 @@ export default defineComponent({
       window.location.reload();
       scroll.value?.scrollPosition(0,0,100);
     })
+    //加入购物车
     const addToCart = ()=>{
       //购物车需要展示的数据  图片 名称 价格 数量
       Toast({

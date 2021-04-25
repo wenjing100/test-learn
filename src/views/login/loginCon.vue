@@ -14,6 +14,7 @@
 
 <script lang='ts'>
 import { defineComponent, reactive, toRefs, ref} from 'vue';
+import { useRouter } from 'vue-router';
 import psword from './psword_input.vue';
 import uname from './uname_input.vue';
   export default defineComponent({
@@ -23,6 +24,7 @@ import uname from './uname_input.vue';
         uname
       },
       setup(){
+        const router = useRouter();
         const state = reactive({
          psword:'',
          uname:'',
@@ -36,7 +38,7 @@ import uname from './uname_input.vue';
         }
         //点击注册
         const ckClick = ()=>{
-
+          router.replace('/register');
         }
         //点击登陆
         const loinClick = ()=>{
@@ -94,7 +96,7 @@ import uname from './uname_input.vue';
     padding: 30px 30px;
     background:#fc4d6d;
     border-radius: 10px;
-    box-shadow: 1px 1px 10px 1px #fcc6cf;
+    /* box-shadow: 1px 1px 10px 1px #fcc6cf; */
     .ckinstal{
       display: flex;
       flex-direction: row;

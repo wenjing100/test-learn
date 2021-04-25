@@ -86,7 +86,6 @@ import sortbarData from "@/data/sortbar";
 import recommend from "@/components/recommend/Recommend.vue";
 import thweek from "@/components/thisweek/Thisweek.vue";
 import sortbar from "@/components/sort-bar/SortBar.vue";
-import { debounce } from '@/hooks/fangdou'
 import Comments from "@/libs/goods_detail/comments.vue";
 import { useStore } from "vuex";
 export default defineComponent({

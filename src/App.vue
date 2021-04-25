@@ -22,7 +22,7 @@ export default {
       },
       (val) => {
         //判断路由，如果进入详情页就隐藏tabbar
-        if (val.includes("details") || val.includes("login")) {
+        if (val.includes("details") || val.includes("login") || val.includes("register")) {
           isdetails.value = true;
         } else {
           isdetails.value = false;
