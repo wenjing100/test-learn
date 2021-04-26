@@ -33,12 +33,13 @@ export default {
     window.onresize = ()=>{
       let h = document.documentElement.clientHeight;
       store.commit(SET_VIEWPORT,h);
-
     }
+    //检查本地登陆 状态
     let tk = localStorage.getItem('token');
     if(tk){
-        store.commit(TOKEN_FROM_LOCAL, true);
-        console.log(tk)
+      store.commit(TOKEN_FROM_LOCAL, true);
+    }else{
+      store.commit(TOKEN_FROM_LOCAL, false);
     }
     return {
       isdetails,

@@ -5,7 +5,7 @@
         <span class="navbar-span">购物街</span>
       </template>
       <template #right>
-        <span class="navbar-right">{{checkinStatus}}</span>
+        <span class="navbar-right" @click="logOrMe">{{checkinStatus}}</span>
       </template>
     </navbar>
     <sortbar
@@ -88,6 +88,7 @@ import thweek from "@/components/thisweek/Thisweek.vue";
 import sortbar from "@/components/sort-bar/SortBar.vue";
 import Comments from "@/libs/goods_detail/comments.vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "homePage",
   components: {
@@ -101,6 +102,7 @@ export default defineComponent({
     const sortbar1 = ref(null);
     const sortbar2 = ref(null);
     const store = useStore();
+    const router = useRouter();
     const state = reactive<IhomeReactive>({
       cardata: null,
       recomlist: null,
@@ -116,7 +118,8 @@ export default defineComponent({
       stay_position:0,
       checkinStatus:'未登录'
     });
-    state.checkinStatus = store.state.is_login?'已登录':'未登录';
+    let me = `Hi~${localStorage.getItem('userName')}`;
+    state.checkinStatus = store.state.is_login?me:'未登录';
     onBeforeMount(async () => {
       try {
         //请求 轮播图，推荐，本周  数据
@@ -163,12 +166,7 @@ export default defineComponent({
         console.log("请求数据出错" + error);
       }
     });
-    onActivated(()=>{
-      console.log('keepalive')
-    },instance)
-    onDeactivated(()=>{
-      console.log('bbbb')
-    })
+
     const switchgoodscon = (index:number) => {
       state.goods_con_type = index;
       //让两个sortbar 显示一致
@@ -255,6 +253,13 @@ export default defineComponent({
       //轮播图加载完第一张图的时候 计算 sortbar的offsetTop
       state.sb_offsettop = sortbar2.value.$el.offsetTop;
     }
+    const logOrMe = ()=>{
+      if(store.state.is_login){
+        router.push('/me');
+      }else{
+        router.push('/login');
+      } 
+    }
     return {
       ...toRefs(state),
       sortbarData,
@@ -264,7 +269,8 @@ export default defineComponent({
       loadmore,
       sortbar2,
       sortbar1,
-      car_img_load
+      car_img_load,
+      logOrMe
     };
   },
 });

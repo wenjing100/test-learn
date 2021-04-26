@@ -39,6 +39,10 @@
         <template #msg> 下载购物app </template>
       </meitem>
     </div>
+    <div class="btn">
+      <button class="logout" @click="logout">退出登陆</button>
+    </div>
+    
     </myscroll>
   </div>
 </template>
@@ -49,7 +53,10 @@ import meheader from "./me-header.vue";
 import measset from "./me-assets.vue";
 import memoreone from "./me-more-01.vue";
 import meitem from "./me-more-item.vue";
+import toast from "@/libs/toast"
 import { useRouter } from 'vue-router'
+import { useStore } from "vuex";
+import { LOG_OUT } from "@/store/actionTypes";
 export default defineComponent({
   name: "mePage",
   components: {
@@ -59,13 +66,22 @@ export default defineComponent({
     meitem,
   },
   setup(){
-
+    const store = useStore();
     const router = useRouter();
     const msgclick = ()=>{
       router.replace('/cart')
     }
+    const logout =()=>{
+      store.dispatch(LOG_OUT);
+      toast({
+        message:'您已退出登陆',
+        delay:2000
+      })
+      router.replace('/login');
+    }
     return{
-      msgclick
+      msgclick,
+      logout
     }
   }
 });
@@ -118,6 +134,27 @@ export default defineComponent({
     content: "\e62c";
   }
   color: #fff;
+  .btn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+    padding-bottom: 10px;
+    .logout{
+      width: 60%;
+      outline:none;
+      border: none;
+      height: 44px;
+      border-radius: 10px;
+      background: tomato;
+      color: #fff;
+      font-size: 20px;
+      box-shadow: 1px 1px 3px 1px rgb(121, 119, 119);
+      &:active{
+        box-shadow: 1px 1px 2px 1px rgb(121, 119, 119) inset;
+      }
+    }
+  }
 }
 
 </style>

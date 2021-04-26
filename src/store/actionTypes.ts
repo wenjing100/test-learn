@@ -13,5 +13,6 @@ export const SET_VIEWPORT:string = 'set_viewport';
 export const TOKEN_FROM_LOCAL:string = 'token_form_local';
 export const SET_LOGIN_STATUS:string = 'set_login_status';
 export const LOGIN:string = 'login';
+export const LOG_OUT:string = 'login_out';
 export const SIGNIN:string = 'signin';
 

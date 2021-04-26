@@ -60,7 +60,7 @@ export default defineComponent({
     const scrollPosition = (x: number, y: number, time: number): void => {
       state.bs.scrollTo(x, y, time);
     };
-    //上拉函数
+    //上拉结束必须要执行
     const finishpullup = (): void => {
       state.bs.finishPullUp();
     };

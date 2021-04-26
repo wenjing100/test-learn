@@ -1,10 +1,10 @@
-import { ALL_CHECKED, CAT_CURRENT, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, GET_CARDATA, LOGIN, SET_CARDATA, SET_CARDATA_CHECK, SET_NUM_ADD, SET_NUM_SUB } from './actionTypes';
+import { ALL_CHECKED, CAT_CURRENT, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, GET_CARDATA, LOGIN, LOG_OUT, SET_CARDATA, SET_CARDATA_CHECK, SET_NUM_ADD, SET_NUM_SUB } from './actionTypes';
 import { Commit,} from 'vuex';
 import { Istate,  } from '../typings';
 import { getCartList, CartList_add, CartList_sub, setCheck, AddTocart, allCheck, delItem } from '@/network/cartNet';
 import { fetchCat } from '@/network/catagoryNet';
 import { mallLogin } from '@/network/login';
-import { setToken } from '@/hooks/checkLogin';
+import { delToken, setToken } from '@/hooks/checkLogin';
 import { useRoute, useRouter } from 'vue-router';
 
 interface ICtx {
@@ -94,11 +94,15 @@ export default {
       // @ts-ignore 如果登陆成功
       if(log.code){
         // @ts-ignore
-        setToken(log.token);
-        commit(LOGIN,{un,islogin:true});
+        setToken({token:log.token,un:log.data[0].buyer_name});
+        commit(LOGIN,{un:log.data[0].buyer_name,islogin:true});
       }
       // @ts-ignore
       return log.code
+    },
+    async [LOG_OUT]({commit}:ICtx){
+      delToken();
+      commit(LOG_OUT);
     },
 
 }

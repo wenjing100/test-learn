@@ -5,7 +5,7 @@
         <span class="nav-span"> 购物车({{ count }}) </span>
       </template>
     </navbar>
-    <myscroll :probtype="3" ref="cartScroll">
+    <myscroll :probtype="3" ref="cartScroll" @pullupload="cartpullup">
       <div class="cartCon">
         <div v-if="isEmpty" class="empty">您的购物车为空哦~</div>
         <div
@@ -79,9 +79,17 @@ export default defineComponent({
       }
     );
 
+    const cartpullup = ()=>{
+      // let ii = setTimeout(() => {
+      //   // cartScroll.value?.finishpullup();
+      // }, 300);
+        cartScroll.value?.pull_refresh();
+      
+    }
     return {
       ...toRefs(state),
       cartScroll,
+      cartpullup
     };
   },
 });

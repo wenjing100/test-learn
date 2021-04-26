@@ -48,18 +48,25 @@ import { LOGIN } from '@/store/actionTypes';
         }
         //点击登陆
         const loinClick = ()=>{
-          store.dispatch(LOGIN,{un:state.uname,psw:state.psword}).then((code)=>{
-            if(code){
-              let pth = (route.query.redirect as string) || '/';
-              router.push(pth);
-            }
-          }).catch(err=>{
+          console.log(state.psword + '   ' + state.uname)
+          if(state.psword.trim().length > 5 && state.uname.trim().length >= 1){
+            store.dispatch(LOGIN,{un:state.uname,psw:state.psword}).then((code)=>{
+              if(code){
+                let pth = (route.query.redirect as string) || '/';
+                router.push(pth);
+              }
+            }).catch(err=>{
+              toast({
+                message: '用户名或密码错误',
+                delay:2000
+              })
+            });
+          }else{
             toast({
-              message: err || '登陆失败',
-              delay:1000
+              message:'用户名和密码不能为空',
+              delay:2000
             })
-          });
-          
+          }
         }
         //点击去首页
         const gotov = ()=>{

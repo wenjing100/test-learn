@@ -5,13 +5,16 @@ import store from './store'
 import wenjingUI from './libs'
 import vuelazyload from 'vue3-lazy'
 import { GET_CARDATA } from './store/actionTypes'
+import interceptors from './network/interceptor'
 
 import './assets/css/base.css'
 import './assets/css/iconfont.css'
 
 
 const app = createApp(App);
-app.use(store).use(router).use(wenjingUI).mount('#app')
+app.use(store).use(router).use(wenjingUI).mount('#app');
+// 请求拦截添加请求头
+interceptors();
 app.use(vuelazyload,{
     loading: 'loading.png',
     error: 'error.png'

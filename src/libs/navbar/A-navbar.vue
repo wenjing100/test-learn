@@ -30,17 +30,16 @@
     justify-content: space-between;
     box-shadow: 0 1px 0 rgba(0, 0, 0, .2);
     background: var(--color-tint);
-
+    padding: 0 10px;
     .left{
-        width: 20%;
+        min-width: 20%;
     }
     .right{
-        width: 20%;
+        min-width: 20%;
     }
     .center{
-        flex-grow: 1;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
         text-align: center;
     }
     

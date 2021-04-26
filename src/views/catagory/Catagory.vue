@@ -24,9 +24,9 @@
         >
       <div class="catlist">
         <catbox :boxlist="catlistData"></catbox>
-        <div class="goodsli" >
+        <!-- <div class="goodsli" >
             <goodscon :goods_data="glist"></goodscon>
-        </div>
+        </div> -->
       </div>
       </myscroll>
     </div>

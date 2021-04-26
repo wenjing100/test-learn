@@ -70,8 +70,6 @@ import { defineComponent, reactive, toRefs, ref} from 'vue'
               state.isWrongP = true;
               state.pTips = '密码过短'
             }
-          }else{
-            emit('receiveP',state.p);
           }
         }
         //输入
@@ -84,6 +82,7 @@ import { defineComponent, reactive, toRefs, ref} from 'vue'
           if(/\w/g.test(e.key) && e.key.length == 1){
             state.p += e.key;
             changePS();
+            if(state.l > 5) emit('receiveP',state.p);
           }
           test();
         }

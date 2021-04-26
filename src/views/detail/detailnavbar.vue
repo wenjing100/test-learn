@@ -11,7 +11,7 @@
         <span
           v-for="(item, index) of data"
           :key="index"
-          :class="{ active: currentIndex === index }"
+          :class="['dtitle',{ active: currentIndex === index }]"
           @click="spanclick(index)"
         >
           {{ item }}
@@ -101,7 +101,9 @@ export default defineComponent({
 .icon-left:before {
   content: "\e62d";
 }
-
+.dtitle{
+  margin: 0 3px;
+}
 .active {
   color: var(--color-high-text);
 }

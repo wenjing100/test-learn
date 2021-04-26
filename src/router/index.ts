@@ -44,6 +44,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Register',
     component: () => import( '../views/register/register.vue')
   },
+  {
+    path: '/set',
+    name: 'Set',
+    component: () => import( '../views/setpage/setpage.vue')
+  },
 ]
 
 const router = createRouter({

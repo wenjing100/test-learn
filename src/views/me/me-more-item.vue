@@ -52,6 +52,7 @@ export default defineComponent({
     padding: 8px 5px;
     border-bottom: 1px solid #cecece;
     box-sizing: border-box;
+
   }
 }
 </style>

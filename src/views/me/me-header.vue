@@ -3,14 +3,14 @@
     <div class="nav">
       <span>我的档案</span>
     </div>
-    <div class="anti-nav">
+    <div class="anti-nav" @click="infoclick">
       <div class="avator">
         <div class="inner"><img src="../../assets/img/未登录.jpg" alt=""></div>
       </div>
       <div class="checkinfo">
-        <div class="info">
-          <span class="info-a">登陆/注册</span>
-          <span class="info-b"><i class="iconfont icon-shouji"></i> 暂无绑定手机号</span>
+        <div class="info" >
+          <span class="info-a">{{info_a}}</span>
+          <span class="info-b"><i class="iconfont icon-shouji"></i>{{info_b}}</span>
         </div>
         <div class="goto"><i class="iconfont icon-arrow-right-copy-copy"></i></div>
       </div>
@@ -19,9 +19,30 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent } from "vue";
+import { useStore } from "vuex";
+import { defineComponent, reactive,toRefs } from "vue";
+import router from "@/router";
 export default defineComponent({
   name: "meheader",
+  setup(){
+    const store = useStore();
+    const state = reactive({
+      info_a:localStorage.getItem('token')?localStorage.getItem('userName'):'登陆/注册',
+      info_b:localStorage.getItem('token')?'18*********':'未绑定手机号'
+    })
+
+    const infoclick = ()=>{
+      if(store.state.is_login){
+        router.push('/set')
+      }else{
+        router.push('/login')
+      }
+    }
+    return{
+      ...toRefs(state),
+      infoclick
+    }
+  }
 });
 </script>
 
