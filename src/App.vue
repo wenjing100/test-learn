@@ -49,11 +49,3 @@ export default {
 <style lang="scss">
 
 </style>
-
-function getToken() {
-  throw new Error('Function not implemented.');
-}
-
-function getToken() {
-  throw new Error('Function not implemented.');
-}

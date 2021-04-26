@@ -9,7 +9,10 @@ const getToken = ()=>{
         store.commit(TOKEN_FROM_LOCAL, tk);
     }
 }
-
+const setToken = (token)=>{
+    localStorage.setItem('token',token);
+}
 export {
-    getToken 
+    getToken,
+    setToken 
 }

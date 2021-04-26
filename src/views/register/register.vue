@@ -13,6 +13,7 @@
       
       <button class="sign-in" @click="regiClick">点击注册</button>
       <button class="already-has" @click="gotoLogin">已有账号？去登陆</button>
+      <span class="asvisitor" @click="visit">游客身份先去逛逛</span>
     </div>
   </div>
 </template>
@@ -58,12 +59,17 @@ import nameinput from './reg-input.vue'
         const gotoLogin = ()=>{
           router.replace('/login');
         }
+        //点击去首页
+        const visit = ()=>{
+          router.replace('/')
+        }
         return{
           ...toRefs(state),
           nameValue,
           psValue,
           regiClick,
-          gotoLogin
+          gotoLogin,
+          visit
         }
       }
   })
@@ -73,6 +79,7 @@ import nameinput from './reg-input.vue'
 @mixin clk{
   width: 100%;
   height: 35px;
+  padding:2px 0;
   border-radius: 8px;
   margin: 5px 0;
   outline:none;
@@ -119,6 +126,14 @@ import nameinput from './reg-input.vue'
     .sign-in{
       @include clk;
       font-weight: bold;
+    }
+    .asvisitor{
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      text-decoration: underline;
+      color:#5f5e5e;
+      padding:5px 0;
     }
   }
 

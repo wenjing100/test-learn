@@ -11,4 +11,7 @@ export const DEL_ITEM:string = 'del_item';
 export const CAT_CURRENT:string = 'cat_current';
 export const SET_VIEWPORT:string = 'set_viewport';
 export const TOKEN_FROM_LOCAL:string = 'token_form_local';
+export const SET_LOGIN_STATUS:string = 'set_login_status';
+export const LOGIN:string = 'login';
+export const SIGNIN:string = 'signin';
 

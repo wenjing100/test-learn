@@ -13,7 +13,7 @@ export default function Toast ({ message, delay = 2000}:Ioption){
   document.body.append(container);
   //调用 组件中方法 nextTick 等待组件渲染完成后调用
   nextTick(()=>{
-    // @ts-ignore:在nextTick中 ctx已经有了，且存在组件中定义的方法
+    // @ts-ignore:在nextTick中 ctx已经存在，且存在组件中定义的方法
     vm.component.ctx.open();
     let id = null;
     id = setTimeout(()=>{

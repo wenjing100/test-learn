@@ -1,5 +1,5 @@
 import { Istate, IviewCartItem } from '@/typings'
-import { SET_CARDATA, SET_NUM_ADD, SET_NUM_SUB, SET_CARDATA_CHECK, GET_CARDATA, ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, CAT_CURRENT, SET_VIEWPORT, TOKEN_FROM_LOCAL } from './actionTypes';
+import { SET_CARDATA, SET_NUM_ADD, SET_NUM_SUB, SET_CARDATA_CHECK, GET_CARDATA, ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, CAT_CURRENT, SET_VIEWPORT, TOKEN_FROM_LOCAL, LOGIN } from './actionTypes';
 import _ from 'lodash';
 // import { addLocalStorage } from '@/hooks/cartLocalStorage';
 
@@ -93,7 +93,9 @@ export default {
   [SET_VIEWPORT](state: Istate, n:number) {
     state.viewport_height = n;
   },
-  [TOKEN_FROM_LOCAL](state: Istate, token:boolean) {
-    state.is_login = token;
+  [LOGIN](state: Istate, pload) {
+    const { un,islogin } = pload;
+    state.userName = un;
+    state.is_login = islogin;
   },
 }

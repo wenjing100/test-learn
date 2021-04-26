@@ -8,15 +8,19 @@
           <div class="ck" @click="ckClick">未注册？点我</div>
           <div class="loin" @click="loinClick">登陆</div>
         </div>
+        <span class="gov" @click="gotov">先逛逛</span>
       </div>
     </div>
 </template>
 
 <script lang='ts'>
+import { useStore } from 'vuex';
 import { defineComponent, reactive, toRefs, ref} from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter,useRoute } from 'vue-router';
 import psword from './psword_input.vue';
 import uname from './uname_input.vue';
+import toast from '@/libs/toast'
+import { LOGIN } from '@/store/actionTypes';
   export default defineComponent({
       name: 'mymall-login',
       components:{
@@ -25,6 +29,8 @@ import uname from './uname_input.vue';
       },
       setup(){
         const router = useRouter();
+        const route = useRoute();
+        const store = useStore();
         const state = reactive({
          psword:'',
          uname:'',
@@ -42,14 +48,30 @@ import uname from './uname_input.vue';
         }
         //点击登陆
         const loinClick = ()=>{
-
+          store.dispatch(LOGIN,{un:state.uname,psw:state.psword}).then((code)=>{
+            if(code){
+              let pth = (route.query.redirect as string) || '/';
+              router.push(pth);
+            }
+          }).catch(err=>{
+            toast({
+              message: err || '登陆失败',
+              delay:1000
+            })
+          });
+          
+        }
+        //点击去首页
+        const gotov = ()=>{
+          router.replace('/');
         }
         return{
           ...toRefs(state),
           psw,
           un,
           ckClick,
-          loinClick
+          loinClick,
+          gotov,
         }
       }
   })
@@ -112,6 +134,12 @@ import uname from './uname_input.vue';
         @include btn;
       }
     } 
+    .gov{
+      width: 100%;
+      text-decoration: underline;
+      text-align: center;
+      color:rgb(63, 62, 62);
+    }
   }
 
 }

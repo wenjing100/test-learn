@@ -28,6 +28,7 @@ interface Istate{
     cat_current:number
     viewport_height:number
     is_login:boolean
+    userName:String
 }
 interface Igoods_list_item{
     iid:string

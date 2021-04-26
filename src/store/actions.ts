@@ -1,8 +1,11 @@
-import { ALL_CHECKED, CAT_CURRENT, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, GET_CARDATA, SET_CARDATA, SET_CARDATA_CHECK, SET_NUM_ADD, SET_NUM_SUB } from './actionTypes';
-import { Commit, mapActions } from 'vuex';
-import { Istate, IviewCartItem } from '../typings';
+import { ALL_CHECKED, CAT_CURRENT, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, GET_CARDATA, LOGIN, SET_CARDATA, SET_CARDATA_CHECK, SET_NUM_ADD, SET_NUM_SUB } from './actionTypes';
+import { Commit,} from 'vuex';
+import { Istate,  } from '../typings';
 import { getCartList, CartList_add, CartList_sub, setCheck, AddTocart, allCheck, delItem } from '@/network/cartNet';
 import { fetchCat } from '@/network/catagoryNet';
+import { mallLogin } from '@/network/login';
+import { setToken } from '@/hooks/checkLogin';
+import { useRoute, useRouter } from 'vue-router';
 
 interface ICtx {
     commit: Commit,
@@ -10,7 +13,8 @@ interface ICtx {
 }
 // 模拟使用的用户b_id vght1c 
 const BID = 'vght1c';
-
+const route = useRoute();
+const router = useRouter();
 export default {
     //加入购物车
     async [SET_CARDATA]({commit}:ICtx,pload){
@@ -82,6 +86,19 @@ export default {
       let { id,size } = pload;
       commit(CAT_CURRENT,id);
       await fetchCat( id, size);
+    },
+    async [LOGIN]({commit}:ICtx,pload){
+      let { un,psw } = pload;
+      
+      let log = await mallLogin(un, psw);
+      // @ts-ignore 如果登陆成功
+      if(log.code){
+        // @ts-ignore
+        setToken(log.token);
+        commit(LOGIN,{un,islogin:true});
+      }
+      // @ts-ignore
+      return log.code
     },
 
 }
