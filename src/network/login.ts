@@ -10,7 +10,7 @@ async function mallLogin(un,psw){
       psw
     }
   }
-  let res = await local_axrequest(option)
+  let res = await axrequest(option)
   return res
 }
  

@@ -14,8 +14,8 @@ import { local_axrequest,axrequest } from './request'
                 cat
             }
         }
-        let res = await local_axrequest(option);
-        // let res = await laxrequest(option);
+        // let res = await local_axrequest(option);
+        let res = await axrequest(option);
         return res
     }
     async function getrecomList(pageSize = 16,pageIndex = 1,sortType = ''){
@@ -28,8 +28,8 @@ import { local_axrequest,axrequest } from './request'
                 sortType,
             }
         }
-        let res = await local_axrequest(option);
-        // let res = await laxrequest(option);
+        // let res = await local_axrequest(option);
+        let res = await axrequest(option);
         return res
     }
 

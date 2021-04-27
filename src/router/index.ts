@@ -49,6 +49,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Set',
     component: () => import( '../views/setpage/setpage.vue')
   },
+  {
+    path: '/shop',
+    name: 'Shop',
+    component: () => import( '../views/shopPage/shopPage.vue')
+  },
 ]
 
 const router = createRouter({

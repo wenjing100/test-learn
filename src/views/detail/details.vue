@@ -20,7 +20,7 @@
             ></my-carsousel>
           </div>
           <detailbrief :briefdata="brief" ></detailbrief>
-          <shopbrief :sid="sid"></shopbrief>
+          <shopbrief :sid="sid" @gotoShop="gotoShop"></shopbrief>
           <goodsparams :parms="parmlist" ref="parm" @parmalready="parmalready"></goodsparams>
           <buyercomments :gid="gid" ref="comm"></buyercomments>
           <goodsrecom ref="recom" @carImgload="parmalready"></goodsrecom>
@@ -208,13 +208,16 @@ export default defineComponent({
         console.log("details请求有问题：" + err);
       }
     });
-
+    const gotoShop = ()=>{
+      router.push('/shop')
+    }
     return {
       ...toRefs(state),
       parmalready,
       detailScrollMove,
       addToCart,
       scroll,
+      gotoShop
     };
   },
 });

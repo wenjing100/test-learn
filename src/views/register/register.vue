@@ -12,7 +12,7 @@
       </nameinput>
       
       <button class="sign-in" @click="regiClick">点击注册</button>
-      <button class="already-has" @click="gotoLogin">已有账号？去登陆</button>
+      <button class="already-has" @click="gotoLogin">{{showloginfo}}</button>
       <span class="asvisitor" @click="visit">游客身份先去逛逛</span>
     </div>
   </div>
@@ -23,6 +23,7 @@ import { useRouter } from 'vue-router';
 import { defineComponent, reactive, toRefs, ref} from 'vue';
 import Toast from '@/libs/toast';
 import nameinput from './reg-input.vue'
+import { useStore } from 'vuex';
   export default defineComponent({
       name: 'mallregister',
       components:{
@@ -30,11 +31,14 @@ import nameinput from './reg-input.vue'
       },
       setup(){
         const router = useRouter();
+        const store = useStore();
         const state = reactive({
           minlength:6,
           reName:'',
-          ps:''
+          ps:'',
+          showloginfo:'已有账号？去登陆'
         })
+        state.showloginfo = store.state.is_login === true?"您已经登陆，去我的主页":'已有账号？去登陆'
         //用户名
         const nameValue = (nv)=>{
           state.reName = nv;
@@ -57,7 +61,12 @@ import nameinput from './reg-input.vue'
         }
         //点击去登陆页面
         const gotoLogin = ()=>{
-          router.replace('/login');
+          if(store.state.is_login){
+            router.replace('/me');
+          }else{
+            router.replace('/login');
+          }
+          
         }
         //点击去首页
         const visit = ()=>{

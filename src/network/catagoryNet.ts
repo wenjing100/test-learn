@@ -6,8 +6,8 @@ async function getSideList() {
     method: 'get',
     url: '/api/catagory/side',
   }
-  let res = await local_axrequest(option);
-  // let res = await laxrequest(option);
+  // let res = await local_axrequest(option);
+  let res = await axrequest(option);
   return res
 }
 
@@ -20,8 +20,8 @@ async function fetchCat(id:number,size:number) {
       size
     }
   }
-  let res = await local_axrequest(option);
-  // let res = await laxrequest(option);
+  // let res = await local_axrequest(option);
+  let res = await axrequest(option);
   return res
 }
 async function fetchCatOne() {
@@ -29,8 +29,8 @@ async function fetchCatOne() {
     method: 'get',
     url: '/api/catagory/one',
   }
-  let res = await local_axrequest(option);
-  // let res = await laxrequest(option);
+  // let res = await local_axrequest(option);
+  let res = await axrequest(option);
   return res
 }
 

@@ -5,7 +5,6 @@ import { getCartList, CartList_add, CartList_sub, setCheck, AddTocart, allCheck,
 import { fetchCat } from '@/network/catagoryNet';
 import { mallLogin } from '@/network/login';
 import { delToken, setToken } from '@/hooks/checkLogin';
-import { useRoute, useRouter } from 'vue-router';
 
 interface ICtx {
     commit: Commit,
@@ -13,8 +12,7 @@ interface ICtx {
 }
 // 模拟使用的用户b_id vght1c 
 const BID = 'vght1c';
-const route = useRoute();
-const router = useRouter();
+
 export default {
     //加入购物车
     async [SET_CARDATA]({commit}:ICtx,pload){

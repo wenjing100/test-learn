@@ -125,10 +125,6 @@ export default defineComponent({
         //请求 轮播图，推荐，本周  数据
         let _data = await gethomeMulti();
         state.cardata = _data.data.banner.list;
-        state.cardata.map(item=>{
-          let a = 'http://47.110.38.241/';
-          item.image = a + item.image;
-        })
         state.recomlist = _data.data.recommend.list;
         state.thweek = _data.data.thisWeek;
         //请求商品列表数据

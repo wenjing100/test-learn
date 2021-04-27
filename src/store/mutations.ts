@@ -67,6 +67,9 @@ export default {
         state.selectNum ++;
       }
     })
+    if(state.selectNum == state.cartData.length){
+      state.isAllchecked = 1;
+    }
   },
   [COUNT_TOTALPRICE](state: Istate) {
     let len = state.cartData.length;

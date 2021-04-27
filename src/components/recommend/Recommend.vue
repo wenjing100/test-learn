@@ -4,7 +4,7 @@
             v-for="(item,index) in recomlist"
         >
             <a :href="item.link" target="_blank">
-                <img :src="`http://47.110.38.241/${item.image}`" :alt="item.title">
+                <img :src="item.image" :alt="item.title">
                 <span>{{item.title}}</span>
             </a>
         </div>

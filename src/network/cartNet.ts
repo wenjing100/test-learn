@@ -12,8 +12,8 @@ async function AddTocart(gid: string, bid: string, num: number) {
       num
     }
   }
-  let res = await local_axrequest(option);
-  // let res = await laxrequest(option);
+  // let res = await local_axrequest(option);
+  let res = await axrequest(option);
   return res
 }
 
@@ -28,8 +28,8 @@ async function CartList_add(gid: string, bid: string, num: number) {
       num
     }
   }
-  let res = await local_axrequest(option);
-  // let res = await laxrequest(option);
+  // let res = await local_axrequest(option);
+  let res = await axrequest(option);
   return res
 }
 // sub商品数
@@ -43,8 +43,8 @@ async function CartList_sub(gid: string, bid: string, num: number) {
       num
     }
   }
-  let res = await local_axrequest(option);
-  // let res = await laxrequest(option);
+  // let res = await local_axrequest(option);
+  let res = await axrequest(option);
   return res
 }
 
@@ -57,8 +57,8 @@ async function getCartList(bid: string) {
       bid,
     }
   }
-  let res = await local_axrequest(option);
-  // let res = await laxrequest(option);
+  // let res = await local_axrequest(option);
+  let res = await axrequest(option);
   return res
 }
 
@@ -73,8 +73,8 @@ async function setCheck(bid: string, gid: string, status: number) {
       status
     }
   }
-  let res = await local_axrequest(option);
-  // let res = await laxrequest(option);
+  // let res = await local_axrequest(option);
+  let res = await axrequest(option);
   return res
 }
 //全选修改
@@ -87,8 +87,8 @@ async function allCheck(bid: string, status: number) {
       status
     }
   }
-  let res = await local_axrequest(option);
-  // let res = await laxrequest(option);
+  // let res = await local_axrequest(option);
+  let res = await axrequest(option);
   return res
 }
 //删除购物车
@@ -101,8 +101,8 @@ async function delItem(bid: string, gid: string) {
       gid
     }
   }
-  let res = await local_axrequest(option);
-  // let res = await laxrequest(option);
+  // let res = await local_axrequest(option);
+  let res = await axrequest(option);
   return res
 }
 

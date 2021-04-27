@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="gointoshop">
-      <button class="btn">进店逛逛</button>
+      <button class="btn" @click="gotoShop">进店逛逛</button>
     </div>
   </div>
 </template>
@@ -46,7 +46,7 @@ import { defineComponent, onBeforeMount, reactive, toRefs } from "vue";
 import { getShopBrief } from "@/network/goodsDetails";
 export default defineComponent({
   name: "shopbrief",
-  emits:['shopliked'],
+  emits:['shopliked','gotoShop'],
   props: {
     sid: {
       type: String,
@@ -90,9 +90,14 @@ export default defineComponent({
       state.isLiked = !state.isLiked;
       emit('shopliked',state.isLiked);
     }
+    const gotoShop = ()=>{
+      emit('gotoShop',props.sid);
+      console.log('进店逛逛')
+    }
     return {
       ...toRefs(state),
-      likeshop
+      likeshop,
+      gotoShop
     };
   },
 });

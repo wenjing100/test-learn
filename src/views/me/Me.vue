@@ -22,7 +22,7 @@
         <template #icon>
           <i class="iconfont icon-huiyuan"></i>
         </template>
-        <template #msg> 会员卡 </template>
+        <template #msg><span class="vip"> 会员卡 </span></template>
       </meitem>
     </memoreone>
     <div class="moretwo">
@@ -41,7 +41,7 @@
     </div>
     <div>
       <div class="btn-out">
-        <button class="logout" @click="logout">退出登陆</button>
+        <button :class="['logout',{islogin:isNotlogin}]" @click="logout">{{logmsg}}</button>
       </div>
       <div class="btn-regi">
         <button class="regi" @click="toregi">注册新用户</button>
@@ -52,7 +52,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent } from "vue";
+import { defineComponent, reactive, toRefs } from "vue";
 import meheader from "./me-header.vue";
 import measset from "./me-assets.vue";
 import memoreone from "./me-more-01.vue";
@@ -72,21 +72,30 @@ export default defineComponent({
   setup(){
     const store = useStore();
     const router = useRouter();
+    const state = reactive({
+      logmsg:'点击登录',
+      isNotlogin:false
+    })
+    state.logmsg = store.state.is_login == true?'退出登陆':'点击登录';
+    state.isNotlogin = store.state.is_login == true?false:true;
     const msgclick = ()=>{
       router.replace('/cart')
     }
     const logout =()=>{
-      store.dispatch(LOG_OUT);
-      toast({
-        message:'您已退出登陆',
-        delay:2000
-      })
+      if(store.state.is_login){
+        store.dispatch(LOG_OUT);
+        toast({
+          message:'您已退出登陆',
+          delay:2000
+        })
+      }
       router.replace('/login');
     }
     const toregi = ()=>{
       router.replace('/register');
     }
     return{
+      ...toRefs(state),
       msgclick,
       logout,
       toregi
@@ -155,7 +164,7 @@ export default defineComponent({
       border: none;
       height: 44px;
       border-radius: 10px;
-      background: rgb(178, 233, 247);
+      background: tomato;
       color: rgb(197, 194, 194);
       font-size: 20px;
       box-shadow: 1px 1px 3px 1px rgb(121, 119, 119);
@@ -163,11 +172,14 @@ export default defineComponent({
         box-shadow: 1px 1px 2px 1px rgb(121, 119, 119) inset;
       }
   }
+  .vip{
+    font-weight: bold;
+    color: rgb(214, 186, 27);
+  }
   .btn-regi{
     @include btn; 
     .regi{
       @include btn-inner;
-      background: tomato;
       color: #fff;
     }
   }
@@ -175,8 +187,12 @@ export default defineComponent({
     @include btn;
     .logout{
       @include btn-inner;
+      background: rgb(178, 233, 247);
       box-shadow: 1px 1px 3px 1px rgb(226, 222, 222);
       color: #fff;
+    }
+    .islogin{
+      background: tomato;
     }
   }
 }
