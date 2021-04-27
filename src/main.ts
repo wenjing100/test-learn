@@ -1,10 +1,10 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './network/store'
 import wenjingUI from './libs'
 import vuelazyload from 'vue3-lazy'
-import { GET_CARDATA } from './store/actionTypes'
+import { GET_CARDATA } from './network/store/actionTypes'
 import interceptors from './network/interceptor'
 
 import './assets/css/base.css'

@@ -24,9 +24,9 @@
         >
       <div class="catlist">
         <catbox :boxlist="catlistData"></catbox>
-        <!-- <div class="goodsli" >
+        <div class="goodsli" v-show="n !== 1">
             <goodscon :goods_data="glist"></goodscon>
-        </div> -->
+        </div>
       </div>
       </myscroll>
     </div>
@@ -35,7 +35,7 @@
 
 <script lang='ts'>
 import { defineComponent, onBeforeMount, reactive, toRefs} from 'vue';
-import { fetchCat, getSideList } from '@/network/catagoryNet'
+import { fetchCat, fetchCatOne, getSideList } from '@/network/catagoryNet'
 import { useStore } from 'vuex';
 import { CAT_CURRENT } from '@/store/actionTypes';
 import catli from './cat-li.vue';
@@ -57,7 +57,7 @@ import { getgoodsList } from '@/network/goodsList';
         })
         onBeforeMount(async ()=>{
           let dd = await getSideList();
-          let cc = await fetchCat(1,0);
+          
           let ee = await getgoodsList({
             pageSize: 8,
             pageIndex:1,
@@ -68,9 +68,7 @@ import { getgoodsList } from '@/network/goodsList';
           dd.data.forEach(item=>{
             state.sidelist.push(item);
           });
-          cc.data.forEach(item =>{
-            state.catlistData.push(item);
-          });
+
           ee.data.forEach(item =>{
             state.glist.push(item);
           });
@@ -90,7 +88,8 @@ import { getgoodsList } from '@/network/goodsList';
 <style lang='scss' scoped>
 #catagory{
   padding-top: 44px;
-  height: 812px;
+  max-height: 736px;
+  min-height: 568px;
   .nav-span{
     color:#fff;
   }

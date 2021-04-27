@@ -3,16 +3,16 @@
     <div class="nav">
       <span>我的档案</span>
     </div>
-    <div class="anti-nav" @click="infoclick">
-      <div class="avator">
+    <div class="anti-nav">
+      <div class="avator" @click="infoclick">
         <div class="inner"><img src="../../assets/img/未登录.jpg" alt=""></div>
       </div>
       <div class="checkinfo">
         <div class="info" >
-          <span class="info-a">{{info_a}}</span>
+          <span class="info-a" @click="infoclick">{{info_a}}</span>
           <span class="info-b"><i class="iconfont icon-shouji"></i>{{info_b}}</span>
         </div>
-        <div class="goto"><i class="iconfont icon-arrow-right-copy-copy"></i></div>
+        <div class="goto" @click="infoclick"><i class="iconfont icon-arrow-right-copy-copy"></i></div>
       </div>
     </div>
   </div>

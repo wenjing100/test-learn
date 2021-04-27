@@ -8,24 +8,23 @@
 </template>
 
 <script lang='ts'>
+import { fetchCatOne } from "@/network/catagoryNet";
 import { defineComponent, onBeforeMount, reactive, toRefs } from "vue";
 export default defineComponent({
   name: "catbox",
-  props:{
-    boxlist:{
-      type:Array
-    }
-  },
-  setup(props){
+  setup(){
     const state = reactive({
+      datalist:[],
       url:[]
     })
-    console.log(props.boxlist)
-    props.boxlist.forEach(item=>{
-      state.url.push({
-        url:"url('"+(item as any).pic+"')",
-        cat_name:(item as any).cat_name
+    onBeforeMount(async ()=>{
+      let cc = await fetchCatOne();
+      cc.data.forEach(item =>{
+        state.url.push({
+          url:"url('"+(item as any).pic+"')",
+          cat_name:(item as any).cat_name
         })
+      });
     })
     return{
       ...toRefs(state)
@@ -39,6 +38,7 @@ export default defineComponent({
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding-top: 20px;
+  min-height: 568px;
   .boxcon{
     display: flex;
     flex-direction: column;

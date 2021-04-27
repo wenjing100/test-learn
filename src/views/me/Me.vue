@@ -39,10 +39,14 @@
         <template #msg> 下载购物app </template>
       </meitem>
     </div>
-    <div class="btn">
-      <button class="logout" @click="logout">退出登陆</button>
+    <div>
+      <div class="btn-out">
+        <button class="logout" @click="logout">退出登陆</button>
+      </div>
+      <div class="btn-regi">
+        <button class="regi" @click="toregi">注册新用户</button>
+      </div>
     </div>
-    
     </myscroll>
   </div>
 </template>
@@ -79,9 +83,13 @@ export default defineComponent({
       })
       router.replace('/login');
     }
+    const toregi = ()=>{
+      router.replace('/register');
+    }
     return{
       msgclick,
-      logout
+      logout,
+      toregi
     }
   }
 });
@@ -134,25 +142,41 @@ export default defineComponent({
     content: "\e62c";
   }
   color: #fff;
-  .btn{
+  @mixin btn{
     width: 100%;
     display: flex;
     justify-content: center;
-    padding-top: 60px;
+    padding-top: 30px;
     padding-bottom: 10px;
-    .logout{
+  }
+  @mixin btn-inner{
       width: 60%;
       outline:none;
       border: none;
       height: 44px;
       border-radius: 10px;
-      background: tomato;
-      color: #fff;
+      background: rgb(178, 233, 247);
+      color: rgb(197, 194, 194);
       font-size: 20px;
       box-shadow: 1px 1px 3px 1px rgb(121, 119, 119);
       &:active{
         box-shadow: 1px 1px 2px 1px rgb(121, 119, 119) inset;
       }
+  }
+  .btn-regi{
+    @include btn; 
+    .regi{
+      @include btn-inner;
+      background: tomato;
+      color: #fff;
+    }
+  }
+  .btn-out{
+    @include btn;
+    .logout{
+      @include btn-inner;
+      box-shadow: 1px 1px 3px 1px rgb(226, 222, 222);
+      color: #fff;
     }
   }
 }

@@ -1,6 +1,9 @@
 <template>
     <div id="mm-l">
-      <div class="cap">mymall~我喜欢的商城！</div>
+      <div class="cap">
+        <span class="mymall">mymall~我喜欢的商城！</span>
+        <span class="test-tip">测试：用户名：vght1c  密码：123456</span>
+      </div>
       <div class="mmCon">
         <uname @receiveN="un"></uname>
         <psword @receiveP="psw"></psword>
@@ -48,7 +51,6 @@ import { LOGIN } from '@/store/actionTypes';
         }
         //点击登陆
         const loinClick = ()=>{
-          console.log(state.psword + '   ' + state.uname)
           if(state.psword.trim().length > 5 && state.uname.trim().length >= 1){
             store.dispatch(LOGIN,{un:state.uname,psw:state.psword}).then((code)=>{
               if(code){
@@ -107,12 +109,20 @@ import { LOGIN } from '@/store/actionTypes';
   flex-direction: column;
   padding-bottom: 60px;
   .cap{
-    font-size: 26px;
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 60px;
     width: 100%;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 60px;
+    .mymall{
+      font-size: 26px;
+      font-weight: bold;
+      color: #fff;
+      text-align: center;
+    }
+    .test-tip{
+      font-size: 16px;
+      text-align: center;
+    }
   }
   .mmCon{
     min-width: 300px;

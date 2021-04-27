@@ -6,8 +6,8 @@
       </a>
       <div class="info">
         <span class="sname">{{ shopname }}</span>
-        <span class="like"
-          ><i class="iconfont icon-shoucang"></i>{{ likes }}</span
+        <span class="like" @click="likeshop"
+          ><i :class="['iconfont','icon-shoucang',{'liked':isLiked}]"></i>{{ likes }}</span
         >
       </div>
     </div>
@@ -46,13 +46,14 @@ import { defineComponent, onBeforeMount, reactive, toRefs } from "vue";
 import { getShopBrief } from "@/network/goodsDetails";
 export default defineComponent({
   name: "shopbrief",
+  emits:['shopliked'],
   props: {
     sid: {
       type: String,
       required: true,
     },
   },
-  setup(props) {
+  setup(props,{emit}) {
     const state = reactive({
       shopname: "",
       shoplogo: null,
@@ -63,6 +64,7 @@ export default defineComponent({
       rate: null,
       isbetter: false,
       hl: "",
+      isLiked:false
     });
     onBeforeMount(async () => {
       try {
@@ -84,8 +86,13 @@ export default defineComponent({
         console.log("shop请求出问题了：" + err);
       }
     });
+    const likeshop = ()=>{
+      state.isLiked = !state.isLiked;
+      emit('shopliked',state.isLiked);
+    }
     return {
       ...toRefs(state),
+      likeshop
     };
   },
 });
@@ -152,6 +159,9 @@ export default defineComponent({
       .sname {
         margin: 0 20px 0 10px;
         font-size: 18px;
+      }
+      .liked{
+        color:red;
       }
     }
   }

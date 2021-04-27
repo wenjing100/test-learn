@@ -100,6 +100,7 @@ export default {
   },
   [LOGIN](state: Istate, pload) {
     const { un,islogin } = pload;
+    console.log(un)
     state.userName = un;
     state.is_login = islogin;
   },

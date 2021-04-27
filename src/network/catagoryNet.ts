@@ -24,8 +24,18 @@ async function fetchCat(id:number,size:number) {
   // let res = await laxrequest(option);
   return res
 }
+async function fetchCatOne() {
+  let option = {
+    method: 'get',
+    url: '/api/catagory/one',
+  }
+  let res = await local_axrequest(option);
+  // let res = await laxrequest(option);
+  return res
+}
 
 export {
   getSideList,
-  fetchCat
+  fetchCat,
+  fetchCatOne
 }

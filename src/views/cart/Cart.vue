@@ -14,11 +14,11 @@
           v-for="(item, index) in goodList"
           :key="item.gid"
         >
-        <div class="cartbody-insider">
+          <div class="cartbody-insider">
             <cartitem
               :itemdata="item"
             ></cartitem>
-        </div>
+          </div>
         </div>
       </div>
     </myscroll>
@@ -108,11 +108,15 @@ export default defineComponent({
   }
   .cartCon {
     width: 100%;
-    .cartbody-insider{
-      width: 100%;
-      height: 110px;
-      overflow: hidden;
+    .cartbody{
+      max-height: 680px;
+      .cartbody-insider{
+        width: 100%;
+        height: 110px;
+        overflow: hidden;
+      }
     }
+   
     .empty {
       width: 100%;
       height: 150px;
