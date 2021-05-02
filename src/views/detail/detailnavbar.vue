@@ -22,7 +22,7 @@
 </template>
 
 <script lang='ts'>
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { defineComponent, getCurrentInstance, reactive, ref, toRefs, watch } from "vue";
 export default defineComponent({
   name: "detailnavbar",
@@ -34,6 +34,7 @@ export default defineComponent({
   setup(p,ctx) {
     const data = ref(["商品", "参数", "评论", "推荐"]);
     const router = useRouter();
+    const route = useRoute();
     const instance = getCurrentInstance();
     const state = reactive({
       currentIndex: 0,
@@ -56,6 +57,7 @@ export default defineComponent({
       state.currentIndex = index;
     }
     const backclick = () => {
+      
       router.back();
     };
     

@@ -15,4 +15,5 @@ export const SET_LOGIN_STATUS:string = 'set_login_status';
 export const LOGIN:string = 'login';
 export const LOG_OUT:string = 'login_out';
 export const SIGNIN:string = 'signin';
+export const CHANGE_GOODSCON_POSITION:string = 'change_goodscon_position';
 

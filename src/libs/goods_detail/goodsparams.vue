@@ -23,7 +23,7 @@
     </div>
 		<span class="ptitle">产品细节</span>
 		<div class="parmimgs" v-for="(item,index) in parms[4]" :key="index">
-			<img :src="item" @load="deimgload()" alt="产品描述">
+			<img :src="item" @load="deimgload(index)" alt="产品描述">
 		</div>
   </div>
 </template>
@@ -48,10 +48,13 @@ export default defineComponent({
       moreparm: [],
       vH:null
     });
-    const deimgload =async ()=>{
+    const deimgload =async (index)=>{
       await nextTick();
-      state.vH = pcon.value.offsetTop;
-      ctx.emit('parmalready');
+      let l = (props.parms[4] as Array<string>).length;
+      if(index = l - 1){
+        state.vH = pcon.value.offsetTop;
+        ctx.emit('parmalready');
+      } 
     }
     onUpdated(async ()=>{
       await nextTick()

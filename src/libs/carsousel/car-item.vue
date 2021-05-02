@@ -15,14 +15,8 @@
     } from 'vue'
   export default {
       name: 'car-item',
-      // props:{
-      //   currentIndex:{
-      //     type:Number
-      //   }
-      // },
       setup(props){
           const instance = getCurrentInstance();
-
           const state = reactive({
               selfIndex:instance.vnode.key,
               currentIndex:instance.parent.ctx.currentIndex

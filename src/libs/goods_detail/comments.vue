@@ -94,6 +94,7 @@ export default defineComponent({
         state.ismore = false;
       }
       // (instance.parent.parent as any).ctx.parmalready();
+      state.vH = commentcon.value.offsetTop;
       (instance.parent as any).ctx.pull_refresh();
     };
     const vroll = () => {

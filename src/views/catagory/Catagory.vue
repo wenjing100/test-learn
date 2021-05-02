@@ -21,11 +21,13 @@
       <myscroll
           :probtype="3"
           class="scroll"
+          ref="right_scroll"
+          @pullupload="catagory_pullup"
         >
       <div class="catlist">
-        <catbox :boxlist="catlistData"></catbox>
-        <div class="goodsli" v-show="n !== 1">
-            <goodscon :goods_data="glist"></goodscon>
+        <catbox :boxlist="catlistData" v-show="n == 1 || n == 3"></catbox>
+        <div class="goodsli" >
+            <goodscon :goods_data="glist" @carImgload="carImgload" ></goodscon>
         </div>
       </div>
       </myscroll>
@@ -34,7 +36,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, onBeforeMount, reactive, toRefs} from 'vue';
+import { defineComponent, onBeforeMount, reactive, toRefs, ref} from 'vue';
 import { fetchCat, fetchCatOne, getSideList } from '@/network/catagoryNet'
 import { useStore } from 'vuex';
 import { CAT_CURRENT } from '@/store/actionTypes';
@@ -49,11 +51,12 @@ import { getgoodsList } from '@/network/goodsList';
       },
       setup(){
         const store = useStore();
+        const right_scroll = ref(null)
         const state = reactive({
           sidelist:[{id:1,name:'正在流行',pid:0,level:0}],
           catlistData:[],
           glist:[],
-          n:1
+          n:3
         })
         onBeforeMount(async ()=>{
           let dd = await getSideList();
@@ -77,9 +80,23 @@ import { getgoodsList } from '@/network/goodsList';
           state.n = state.sidelist[n].id;
           store.dispatch(CAT_CURRENT,{id:n,size:15});
         }
+        const carImgload = ()=>{
+          // console.log(right_scroll.value)
+          //图片加载完毕也刷新
+          right_scroll.value.pull_refresh();
+          console.log('load img')
+        }
+        const catagory_pullup = ()=>{
+          //上拉的时候刷新一下 scroll
+          console.log('上拉');
+          right_scroll.value.pull_refresh();
+        }
         return{
           ...toRefs(state),
-          catliclick
+          catliclick,
+          carImgload,
+          right_scroll,
+          catagory_pullup
         }
       }
   })

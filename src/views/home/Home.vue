@@ -76,8 +76,6 @@ import {
   reactive,
   ref,
   toRefs,
-  onActivated,
-  onDeactivated
 } from "vue";
 import { IhomeReactive, Iscroll } from "@/typings";
 import { gethomeMulti } from "@/network/homeNet";
@@ -89,6 +87,7 @@ import sortbar from "@/components/sort-bar/SortBar.vue";
 import Comments from "@/libs/goods_detail/comments.vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { CHANGE_GOODSCON_POSITION } from "@/store/actionTypes";
 export default defineComponent({
   name: "homePage",
   components: {
@@ -170,12 +169,19 @@ export default defineComponent({
       sortbar2.value.currentIndex = index;
       (instance.refs.scroll as Iscroll).finishpullup();
       (instance.refs.scroll as Iscroll).pull_refresh();
+      //切换后滚动到 记录的位置
+      let a = 0;
+      //判断 当前con是否滚动过
+      a = store.state.goods_con_position[index]==0?state.stay_position
+      :store.state.goods_con_position[index];
+      (instance.refs.scroll as Iscroll)
+        .scrollPosition(0,a, 500);
     };
     const backtopclick = () => {
       (instance.refs.scroll as Iscroll).scrollPosition(0, 0, 500);
+      //回到顶部后，记录的位置清零
     };
-    const scrollmove = (p) => {
-      state.stay_position = p.y;
+    const scrollmove = (p) => {      
       if (p.y < -500) {
         state.bt_show = true;
       } else {
@@ -184,6 +190,9 @@ export default defineComponent({
       if((-p.y + 43)<state.sb_offsettop){
         state.is_fixed = false
       }else{
+        state.stay_position = p.y;
+        //记录每个goods con 的滚动位
+        store.commit(CHANGE_GOODSCON_POSITION,{index:state.goods_con_type,p:p.y - 43})
         state.is_fixed = true
       }
     };
@@ -285,7 +294,6 @@ export default defineComponent({
   .no_01{
     position: relative;
     z-index: 10;
-    
   }
   .scroll {
     height: calc(100vh - 93px);

@@ -1,4 +1,4 @@
-import { TOKEN_FROM_LOCAL } from '@/network/store/actionTypes';
+import { TOKEN_FROM_LOCAL } from '@/store/actionTypes';
 import { useStore } from 'vuex'
 
 const store = useStore();

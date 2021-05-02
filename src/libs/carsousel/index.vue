@@ -6,7 +6,7 @@
   >
     <div class="inner">
       <car-item v-for="(item, index) in cardata" :key="index">
-          <a href="http://47.110.38.241" target="_blank">
+          <a href="#" target="_blank">
             <img :src="`${item.image}`"
               alt="item.title"
               @load="car_img_load"

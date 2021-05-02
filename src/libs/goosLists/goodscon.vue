@@ -16,6 +16,9 @@ export default defineComponent({
           type:Array as PropType<Igoods_list_item[]>
       }
   },
+  emits:[
+    'carImgload'
+  ],
   setup(p,ctx){
     const carImgload = ()=> {
       ctx.emit('carImgload');

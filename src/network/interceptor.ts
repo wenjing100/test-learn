@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { LOG_OUT } from '@/network/store/actionTypes';
+import { LOG_OUT } from '@/store/actionTypes';
 
 const store = useStore();
 const router = useRouter();

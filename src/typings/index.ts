@@ -29,6 +29,7 @@ interface Istate{
     viewport_height:number
     is_login:boolean
     userName:String
+    goods_con_position:Array<number>
 }
 interface Igoods_list_item{
     iid:string
