@@ -31,6 +31,8 @@
 <script lang='ts'>
 import { defineComponent, onMounted, reactive, ref, toRefs, onUpdated, nextTick } from "vue";
 import parmitem from "./parms___item.vue";
+import { useStore } from 'vuex';
+import { VH_PARMS } from "@/store/actionTypes";
 export default defineComponent({
   name: "goodsparams",
   components: {
@@ -44,6 +46,7 @@ export default defineComponent({
   },
   setup(props,ctx) {
     const pcon = ref(null);
+    const store = useStore();
     const state = reactive({
       moreparm: [],
       vH:null
@@ -53,6 +56,8 @@ export default defineComponent({
       let l = (props.parms[4] as Array<string>).length;
       if(index = l - 1){
         state.vH = pcon.value.offsetTop;
+        //传递高度
+        store.commit(VH_PARMS,pcon.value.offsetTop);
         ctx.emit('parmalready');
       } 
     }

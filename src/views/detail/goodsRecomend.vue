@@ -7,32 +7,35 @@
 </template>
 
 <script lang='ts'>
-import { getCurrentInstance, nextTick, onBeforeMount, onUpdated, reactive, ref, toRefs, watch } from "vue";
+import { nextTick, onBeforeMount, onMounted, onUpdated, reactive, ref, toRefs} from "vue";
 import { getrecomList } from "@/network/goodsList";
-import { Iscroll } from '@/typings';
+import { useStore } from 'vuex';
+import { VH_RECOM } from '@/store/actionTypes';
 export default{
   name: "goodsrecom",
   setup(p,ctx) {
     // iid g_name price marketprice inventory top_imgs
     const grecom = ref(null);
+    const store = useStore();
     const state = reactive({
       gdata: [],
-      vH:0
     });
+    let count = 0;
     const carImgload = ()=>{
-      ctx.emit('carImgload')
-      state.vH = grecom.value.offsetTop;
+      count++;
+      if(count>10){
+        count = 0;
+        ctx.emit('carImgload');
+        console.log(grecom.value.offsetTop)
+        store.commit(VH_RECOM,grecom.value.offsetTop);
+      }
     }
-    onUpdated(async ()=>{
-      await nextTick();
-  
-    })
-    const instance = getCurrentInstance();
-    onBeforeMount(async () => {
+    onMounted(async () => {
       try{
         let dd = await getrecomList();
-        state.gdata = dd.data;
-        // (instance.parent as any).ctx.pull_refresh()
+        dd.data.forEach(item =>{
+          state.gdata.push(item);
+        })
       }catch(err){
         console.log('recomlist请求出错：'+err)
       }

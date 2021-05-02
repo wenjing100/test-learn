@@ -26,11 +26,6 @@ export default defineComponent({
     const carImgload = ()=> {
       ctx.emit('carImgload');
     }
-    // watch(()=>{
-    //   return p.goods_data;
-    // },(val)=>{
-    //   state.g_data = val;
-    // })
     return{
       ...toRefs(state),
       carImgload

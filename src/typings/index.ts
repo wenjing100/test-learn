@@ -30,7 +30,21 @@ interface Istate{
     is_login:boolean
     userName:String
     goods_con_position:Array<number>
+    detail_heights:{goods:I_vh_goods,parms:I_vh_parms,comments:I_vh_comments,recom:I_vh_recom}
 }
+interface I_vh_goods{
+  vh:number
+}
+interface I_vh_comments{
+  vh:number
+}
+interface I_vh_recom{
+  vh:number
+}
+interface I_vh_parms{
+  vh:number
+}
+//产品展示接口
 interface Igoods_list_item{
     iid:string
     g_name:string

@@ -1,7 +1,5 @@
+import store from '@/store';
 import { TOKEN_FROM_LOCAL } from '@/store/actionTypes';
-import { useStore } from 'vuex'
-
-const store = useStore();
 
 const getToken = ()=>{
     let tk = localStorage.getItem('token');

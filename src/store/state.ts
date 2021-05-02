@@ -10,6 +10,7 @@ export default <Istate>{
     totalPrice:0,//购物车总价
     cat_current:3,//商品默认分类
     viewport_height:812,
-    goods_con_position:new Array(3)//主页 goods_con各自滚动的高度
+    goods_con_position:new Array(3),//主页 goods_con各自滚动的高度
+    detail_heights:{goods:{vh:0},parms:{vh:0},comments:{vh:0},recom:{vh:0}}//detail页各个部分的高度
 }
     

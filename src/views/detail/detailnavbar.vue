@@ -12,7 +12,7 @@
           v-for="(item, index) of data"
           :key="index"
           :class="['dtitle',{ active: currentIndex === index }]"
-          @click="spanclick(index)"
+          @click="spanclick(item,index)"
         >
           {{ item }}
         </span>
@@ -24,13 +24,9 @@
 <script lang='ts'>
 import { useRoute, useRouter } from 'vue-router';
 import { defineComponent, getCurrentInstance, reactive, ref, toRefs, watch } from "vue";
+import store from '@/store';
 export default defineComponent({
   name: "detailnavbar",
-  props:{
-    dpy:{
-      type:Array
-    }
-  },
   setup(p,ctx) {
     const data = ref(["商品", "参数", "评论", "推荐"]);
     const router = useRouter();
@@ -39,18 +35,31 @@ export default defineComponent({
     const state = reactive({
       currentIndex: 0,
       isMousedown:false,
-      p_y:p.dpy,
     });
 
-    const spanclick = (index) => {
+    const spanclick = (title,index) => {
+      let h = 0;
+      switch(title){
+        case '商品':
+          h = store.state.detail_heights.goods.vh;
+          break;
+        case '参数':
+          h = store.state.detail_heights.parms.vh;
+          break;
+        case '评论':
+          h = store.state.detail_heights.comments.vh;
+          break;
+        case '推荐':
+          h = store.state.detail_heights.recom.vh;
+          break;
+      }
       state.currentIndex = index;
-      // ctx.emit('toElem',index)
-      goscroll(index);
+      goscroll(h);
     };
-    const goscroll = (indx)=>{
+    const goscroll = (height)=>{
       let scrollP = (instance.parent.subTree.children[1] as any).children[0].component.ctx.scrollPosition;
       let refresh = (instance.parent.subTree.children[1] as any).children[0].component.ctx.pull_refresh;
-      scrollP(0,-state.p_y[indx],100);
+      scrollP(0,-height,100);
       refresh();
     }
     const changeindex = (index)=>{

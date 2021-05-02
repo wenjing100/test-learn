@@ -31,8 +31,10 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, getCurrentInstance, onBeforeMount, reactive, toRefs, ref, onUpdated } from "vue";
+import { defineComponent, getCurrentInstance, onBeforeMount, reactive, toRefs, ref, onUpdated, onMounted } from "vue";
+import { useStore } from 'vuex'
 import { getComments } from "@/network/goodsDetails";
+import { VH_COMMENTS } from "@/store/actionTypes";
 export default defineComponent({
   name: "buyercomments",
   props: {
@@ -43,7 +45,8 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const instance = getCurrentInstance();
-    const commentcon = ref(null)
+    const commentcon = ref(null);
+    const store = useStore();
     const state = reactive({
       comments: [], //{buyer_id,goods_parms,comments}
       total: [],
@@ -51,8 +54,9 @@ export default defineComponent({
       vshow: false,
       vH:null,
     });
-    onUpdated(()=>{
+    onMounted(()=>{
       state.vH = commentcon.value.offsetTop;
+      store.commit(VH_COMMENTS,commentcon.value.offsetTop);
     })
     onBeforeMount(async () => {
       try {

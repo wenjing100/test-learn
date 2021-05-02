@@ -1,10 +1,8 @@
 import axios from 'axios';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
 import { LOG_OUT } from '@/store/actionTypes';
+import store from '@/store';
+import router from '@/router';
 
-const store = useStore();
-const router = useRouter();
 
 export default ()=>{
   //请求拦截  给每次请求头 加上token

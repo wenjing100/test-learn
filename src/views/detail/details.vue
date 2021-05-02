@@ -1,6 +1,6 @@
 <template>
     <div id="gdetails" class="wrapper">
-      <detailnavbar :dpy="dpy"></detailnavbar>
+      <detailnavbar></detailnavbar>
       <div v-if="falg" >
         <myscroll
           class="content"
@@ -16,14 +16,13 @@
               :hasDirector="false"
               dotBgColor="#ff5777"
               :cardata="swiper"
-              @car_img_load="parmalready"
             ></my-carsousel>
           </div>
           <detailbrief :briefdata="brief" ></detailbrief>
           <shopbrief :sid="sid" @gotoShop="gotoShop"></shopbrief>
-          <goodsparams :parms="parmlist" ref="parm" @parmalready="parmalready"></goodsparams>
-          <buyercomments :gid="gid" ref="comm"></buyercomments>
-          <goodsrecom ref="recom" @carImgload="parmalready"></goodsrecom>
+          <goodsparams :parms="parmlist" ></goodsparams>
+          <buyercomments :gid="gid" ></buyercomments>
+          <goodsrecom ></goodsrecom>
           <div class="fix-p"></div>
         </myscroll>
       </div>
@@ -39,7 +38,6 @@ import {
   toRefs,
   getCurrentInstance,
   nextTick,
-  onMounted,
   onUpdated,
   watch,
   ref
@@ -71,33 +69,16 @@ export default defineComponent({
       gid: null,
       parmlist: [], //color,sizi,params,describe,desimgs
       falg: false,
-      dpy:[],//记录组件位置
       cindex:0,
       product:{},
     });
-    //监听组件加载情况 更新组件高度
-    const parmalready = ()=>{
-      state.dpy[0] = 0;
-      state.dpy[2] = (instance.refs.comm as any).vH;
-      state.dpy[1] = (instance.refs.parm as any).vH;
-      state.dpy[3] = (instance.refs.recom as any).vH;
-    }
     //监听页面滚动，记录滚动位置
     const detailScrollMove = (p)=>{
       let yy = -p.y;
-      let len = state.dpy.length;
       //组件中修改 currentIndex的方法
       let changein = instance.subTree.children[0].component.ctx.changeindex;
       //滚动到 区域产生唯一一个 i 
-      for(let i = 0; i < len; i++){
-        if(state.cindex !== i && (
-          (i<len-1 && yy >= state.dpy[i] && yy<state.dpy[i+1])||
-          (i===len - 1 && yy >= state.dpy[i])
-          )){
-          state.cindex = i;
-          changein(i);
-        }
-      } 
+      // console.log(store.state.detail_heights)
     }
     //监听路由改变
     watch(()=>{
@@ -160,9 +141,6 @@ export default defineComponent({
       //给action 派发事件 调取localStorage//数据库请求
       store.dispatch(SET_CARDATA,state.product);
     }
-    onUpdated(async()=>{
-      await nextTick();
-    })
     onBeforeMount(async () => {
       try {
         let dd = await getDetails(route.params.id as string);
@@ -213,7 +191,6 @@ export default defineComponent({
     }
     return {
       ...toRefs(state),
-      parmalready,
       detailScrollMove,
       addToCart,
       scroll,

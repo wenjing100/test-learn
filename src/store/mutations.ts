@@ -1,5 +1,5 @@
 import { Istate, IviewCartItem } from '@/typings'
-import { SET_CARDATA, SET_NUM_ADD, SET_NUM_SUB, SET_CARDATA_CHECK, GET_CARDATA, ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, CAT_CURRENT, SET_VIEWPORT, TOKEN_FROM_LOCAL, LOGIN, LOG_OUT, CHANGE_GOODSCON_POSITION } from './actionTypes';
+import { SET_CARDATA, SET_NUM_ADD, SET_NUM_SUB, SET_CARDATA_CHECK, GET_CARDATA, ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, CAT_CURRENT, SET_VIEWPORT, TOKEN_FROM_LOCAL, LOGIN, LOG_OUT, CHANGE_GOODSCON_POSITION, VH_COMMENTS, VH_PARMS, VH_RECOM } from './actionTypes';
 import _ from 'lodash';
 import { mallLogin } from '@/network/login';
 // import { addLocalStorage } from '@/hooks/cartLocalStorage';
@@ -113,5 +113,14 @@ export default {
   [CHANGE_GOODSCON_POSITION](state: Istate, pload) {
     let { index, p} = pload
     state.goods_con_position[index]= p;
+  },
+  [VH_COMMENTS](state: Istate, vh) {
+    state.detail_heights.comments.vh = vh;
+  },
+  [VH_PARMS](state: Istate, vh) {
+    state.detail_heights.parms.vh = vh;
+  },
+  [VH_RECOM](state: Istate, vh) {
+    state.detail_heights.recom.vh = vh;
   },
 }
