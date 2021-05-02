@@ -1,6 +1,9 @@
 import { IviewCartItem } from '@/typings';
 import { local_axrequest, axrequest } from './request';
 
+// let REQUEST_NET = 'local_axrequest';
+let REQUEST_NET = 'axrequest';
+
 //加入购物车
 async function AddTocart(gid: string, bid: string, num: number) {
   let option = {

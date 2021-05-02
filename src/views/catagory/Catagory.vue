@@ -25,9 +25,9 @@
           @pullupload="catagory_pullup"
         >
       <div class="catlist">
-        <catbox :boxlist="catlistData" v-show="n == 1 || n == 3"></catbox>
-        <div class="goodsli" >
-            <goodscon :goods_data="glist" @carImgload="carImgload" ></goodscon>
+        <catbox :boxlist="catlistData" v-if="n == 1 || n==3"></catbox>
+        <div class="goodsli" v-if="n !==1 ">
+            <goodscon :goods_data="glist" @carImgload="carImgload" :key="n" ></goodscon>
         </div>
       </div>
       </myscroll>
@@ -61,7 +61,6 @@ import { getgoodsList } from '@/network/goodsList';
         })
         onBeforeMount(async ()=>{
           let dd = await getSideList();
-          
           let ee = await getgoodsList({
             pageSize: 8,
             pageIndex:1,
@@ -72,26 +71,30 @@ import { getgoodsList } from '@/network/goodsList';
           dd.data.forEach(item=>{
             state.sidelist.push(item);
           });
-
           ee.data.forEach(item =>{
             state.glist.push(item);
           });
         })
+        //点击左侧导航，右侧更新数据
         const catliclick =async (n)=>{
-          state.n = state.sidelist[n].id;
-          await store.dispatch(CAT_CURRENT,{id:n,size:15});
+          state.n = n;
+          //请求数据
+          console.log(n)
+          state.glist = [];
+          let cc = await fetchCat( n, 20);
+          cc.data.forEach(item =>{
+            state.glist.push(item);
+          });
           //点击左边导航，右侧显示的内容需要 刷新一下betterscroll
           (instance.proxy.$refs.right_scroll as any).pull_refresh();
+          store.dispatch(CAT_CURRENT,n);
         }
+        //图片加载完毕也刷新
         const carImgload = ()=>{
-          // console.log(right_scroll.value)
-          //图片加载完毕也刷新
           right_scroll.value.pull_refresh();
-          console.log('load img')
         }
+        //上拉的时候刷新一下 scroll
         const catagory_pullup = ()=>{
-          //上拉的时候刷新一下 scroll
-          console.log('上拉');
           right_scroll.value.pull_refresh();
         }
         return{

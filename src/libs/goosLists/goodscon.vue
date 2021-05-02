@@ -1,6 +1,6 @@
 <template>
   <div class="goodscon">
-      <div v-for="(item,index) of goods_data" :key="index" class="singleitem">
+      <div v-for="(item,index) of g_data" :key="index" class="singleitem">
           <goodsitem :goodsitem="item" @carImgload="carImgload"></goodsitem>
       </div>
   </div>
@@ -8,22 +8,31 @@
 
 <script lang='ts'>
 import { Igoods_list_item } from "@/typings";
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, reactive, toRefs, watch } from "vue";
 export default defineComponent({
   name: "goodscon",
   props:{
       goods_data:{
-          type:Array as PropType<Igoods_list_item[]>
+        type:Array as PropType<Igoods_list_item[]>
       }
   },
   emits:[
     'carImgload'
   ],
   setup(p,ctx){
+    const state = reactive({
+      g_data:p.goods_data
+    })
     const carImgload = ()=> {
       ctx.emit('carImgload');
     }
+    // watch(()=>{
+    //   return p.goods_data;
+    // },(val)=>{
+    //   state.g_data = val;
+    // })
     return{
+      ...toRefs(state),
       carImgload
     }
   }

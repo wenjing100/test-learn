@@ -80,10 +80,8 @@ export default {
       commit(COUNT_SELECTNUM);
       commit(COUNT_TOTALPRICE);
     },
-    async [CAT_CURRENT]({commit}:ICtx,pload){
-      let { id,size } = pload;
+    async [CAT_CURRENT]({commit}:ICtx,id){
       commit(CAT_CURRENT,id);
-      await fetchCat( id, size);
     },
     async [LOGIN]({commit}:ICtx,pload){
       let { un,psw } = pload;
