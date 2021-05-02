@@ -36,7 +36,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, onBeforeMount, reactive, toRefs, ref} from 'vue';
+import { defineComponent, onBeforeMount, reactive, toRefs, ref, getCurrentInstance} from 'vue';
 import { fetchCat, fetchCatOne, getSideList } from '@/network/catagoryNet'
 import { useStore } from 'vuex';
 import { CAT_CURRENT } from '@/store/actionTypes';
@@ -51,7 +51,8 @@ import { getgoodsList } from '@/network/goodsList';
       },
       setup(){
         const store = useStore();
-        const right_scroll = ref(null)
+        const right_scroll = ref(null);
+        const instance = getCurrentInstance();
         const state = reactive({
           sidelist:[{id:1,name:'正在流行',pid:0,level:0}],
           catlistData:[],
@@ -76,9 +77,11 @@ import { getgoodsList } from '@/network/goodsList';
             state.glist.push(item);
           });
         })
-        const catliclick = (n)=>{
+        const catliclick =async (n)=>{
           state.n = state.sidelist[n].id;
-          store.dispatch(CAT_CURRENT,{id:n,size:15});
+          await store.dispatch(CAT_CURRENT,{id:n,size:15});
+          //点击左边导航，右侧显示的内容需要 刷新一下betterscroll
+          (instance.proxy.$refs.right_scroll as any).pull_refresh();
         }
         const carImgload = ()=>{
           // console.log(right_scroll.value)
