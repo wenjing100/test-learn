@@ -19,6 +19,7 @@ export default defineComponent({
     })
     onBeforeMount(async ()=>{
       let cc = await fetchCatOne();
+      console.log(cc.data)
       cc.data.forEach(item =>{
         state.url.push({
           url:"url('"+(item as any).pic+"')",
@@ -38,7 +39,7 @@ export default defineComponent({
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding-top: 20px;
-  min-height: 568px;
+ /*  min-height: 568px; */
   .boxcon{
     display: flex;
     flex-direction: column;

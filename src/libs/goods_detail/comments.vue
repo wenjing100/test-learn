@@ -52,10 +52,8 @@ export default defineComponent({
       total: [],
       ismore: false,
       vshow: false,
-      vH:null,
     });
     onMounted(()=>{
-      state.vH = commentcon.value.offsetTop;
       store.commit(VH_COMMENTS,commentcon.value.offsetTop);
     })
     onBeforeMount(async () => {
@@ -97,14 +95,14 @@ export default defineComponent({
       } else {
         state.ismore = false;
       }
-      // (instance.parent.parent as any).ctx.parmalready();
-      state.vH = commentcon.value.offsetTop;
+      store.commit(VH_COMMENTS,commentcon.value.offsetTop);
       (instance.parent as any).ctx.pull_refresh();
     };
     const vroll = () => {
       state.comments.length = 2;
       state.vshow = false;
       state.ismore = true;
+      store.commit(VH_COMMENTS,commentcon.value.offsetTop);
       (instance.parent as any).ctx.pull_refresh();
     };
     return {

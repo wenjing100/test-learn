@@ -78,6 +78,17 @@ export default defineComponent({
       //组件中修改 currentIndex的方法
       let changein = instance.subTree.children[0].component.ctx.changeindex;
       //滚动到 区域产生唯一一个 i 
+      let i = 0;
+      if(yy>=0 && yy<store.state.detail_heights.parms.vh){
+        i = 0 ;
+      }else if(yy>=store.state.detail_heights.parms.vh && yy<store.state.detail_heights.comments.vh){
+        i = 1;
+      }else if(yy>=store.state.detail_heights.comments.vh && yy < store.state.detail_heights.recom.vh){
+        i = 2;
+      }else{
+        i = 3;
+      }
+      changein(i);
       // console.log(store.state.detail_heights)
     }
     //监听路由改变

@@ -20,15 +20,13 @@ export default{
     const state = reactive({
       gdata: [],
     });
-    let count = 0;
     const carImgload = ()=>{
-      count++;
-      if(count>10){
-        count = 0;
-        ctx.emit('carImgload');
-        console.log(grecom.value.offsetTop)
-        store.commit(VH_RECOM,grecom.value.offsetTop);
-      }
+      ctx.emit('carImgload');
+      store.commit(VH_RECOM,grecom.value.offsetTop);
+    }
+    //暴露一个重新计算高度的函数
+    const recoHeight = ()=>{
+      store.commit(VH_RECOM,grecom.value.offsetTop);
     }
     onMounted(async () => {
       try{
@@ -43,7 +41,8 @@ export default{
     return {
       ...toRefs(state),
       carImgload,
-      grecom
+      grecom,
+      recoHeight
     }
   },
 };

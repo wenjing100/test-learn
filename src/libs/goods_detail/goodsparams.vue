@@ -52,18 +52,13 @@ export default defineComponent({
       vH:null
     });
     const deimgload =async (index)=>{
-      await nextTick();
       let l = (props.parms[4] as Array<string>).length;
-      if(index = l - 1){
+      if(index == l - 1 ){
         state.vH = pcon.value.offsetTop;
         //传递高度
         store.commit(VH_PARMS,pcon.value.offsetTop);
-        ctx.emit('parmalready');
-      } 
+      }
     }
-    onUpdated(async ()=>{
-      await nextTick()
-    })
     onMounted(() => {
       (props.parms[2] as Array<String>).forEach((item) => {
         let title = item.split(":")[1] ? item.split(":")[0] : "";

@@ -25,7 +25,7 @@
           @pullupload="catagory_pullup"
         >
       <div class="catlist">
-        <catbox :boxlist="catlistData" v-if="n == 1 || n==3"></catbox>
+        <catbox v-if="n == 1 || n==3"></catbox>
         <div class="goodsli" v-if="n !==1 ">
             <goodscon :goods_data="glist" @carImgload="carImgload" :key="n" ></goodscon>
         </div>
@@ -37,7 +37,7 @@
 
 <script lang='ts'>
 import { defineComponent, onBeforeMount, reactive, toRefs, ref, getCurrentInstance} from 'vue';
-import { fetchCat, fetchCatOne, getSideList } from '@/network/catagoryNet'
+import { fetchCat, getSideList } from '@/network/catagoryNet'
 import { useStore } from 'vuex';
 import { CAT_CURRENT } from '@/store/actionTypes';
 import catli from './cat-li.vue';
@@ -55,7 +55,6 @@ import { getgoodsList } from '@/network/goodsList';
         const instance = getCurrentInstance();
         const state = reactive({
           sidelist:[{id:1,name:'正在流行',pid:0,level:0}],
-          catlistData:[],
           glist:[],
           n:3
         })
@@ -79,7 +78,6 @@ import { getgoodsList } from '@/network/goodsList';
         const catliclick =async (n)=>{
           state.n = n;
           //请求数据
-          console.log(n)
           state.glist = [];
           let cc = await fetchCat( n, 20);
           cc.data.forEach(item =>{

@@ -30,13 +30,11 @@ export default defineComponent({
   setup(p,ctx) {
     const data = ref(["商品", "参数", "评论", "推荐"]);
     const router = useRouter();
-    const route = useRoute();
     const instance = getCurrentInstance();
     const state = reactive({
       currentIndex: 0,
       isMousedown:false,
     });
-
     const spanclick = (title,index) => {
       let h = 0;
       switch(title){
@@ -51,6 +49,8 @@ export default defineComponent({
           break;
         case '推荐':
           h = store.state.detail_heights.recom.vh;
+          break;
+        default:
           break;
       }
       state.currentIndex = index;
