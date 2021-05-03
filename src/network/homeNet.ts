@@ -10,7 +10,6 @@ import { axrequest } from './request'
         return res
     }
  
-
 export {
     gethomeMulti
 }

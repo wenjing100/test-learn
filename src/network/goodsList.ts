@@ -1,4 +1,4 @@
-import { local_axrequest,axrequest } from './request'
+import { axrequest } from './request'
 
 
     async function getgoodsList(pload){
@@ -14,7 +14,6 @@ import { local_axrequest,axrequest } from './request'
                 cat
             }
         }
-        // let res = await local_axrequest(option);
         let res = await axrequest(option);
         return res
     }
@@ -28,7 +27,6 @@ import { local_axrequest,axrequest } from './request'
                 sortType,
             }
         }
-        // let res = await local_axrequest(option);
         let res = await axrequest(option);
         return res
     }

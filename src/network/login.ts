@@ -1,5 +1,4 @@
-import { axrequest, local_axrequest } from './request'
-
+import { axrequest, } from './request'
 
 async function mallLogin(un,psw){
   let option = {
@@ -14,7 +13,6 @@ async function mallLogin(un,psw){
   return res
 }
  
-
 export {
   mallLogin
 }

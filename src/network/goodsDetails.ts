@@ -1,4 +1,4 @@
-import { local_axrequest,axrequest } from './request'
+import { axrequest } from './request'
 
 
 async function getDetails(goodsiid:string){
@@ -9,7 +9,6 @@ async function getDetails(goodsiid:string){
             id:goodsiid
         }
     }
-    // let res = await local_axrequest(option);
     let res = await axrequest(option);
     return res
 }
@@ -21,7 +20,6 @@ async function getShopBrief(sid:string){
             id:sid
         }
     }
-    // let res = await local_axrequest(option);
     let res = await axrequest(option);
     return res
 }
@@ -33,7 +31,6 @@ async function getComments(goodsiid:string){
             id:goodsiid
         }
     }
-    // let res = await local_axrequest(option);
     let res = await axrequest(option);
     return res
 }

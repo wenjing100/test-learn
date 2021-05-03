@@ -1,8 +1,4 @@
-import { IviewCartItem } from '@/typings';
-import { local_axrequest, axrequest } from './request';
-
-// let REQUEST_NET = 'local_axrequest';
-let REQUEST_NET = 'axrequest';
+import {  axrequest } from './request';
 
 //加入购物车
 async function AddTocart(gid: string, bid: string, num: number) {
@@ -15,7 +11,6 @@ async function AddTocart(gid: string, bid: string, num: number) {
       num
     }
   }
-  // let res = await local_axrequest(option);
   let res = await axrequest(option);
   return res
 }
@@ -31,7 +26,7 @@ async function CartList_add(gid: string, bid: string, num: number) {
       num
     }
   }
-  // let res = await local_axrequest(option);
+ 
   let res = await axrequest(option);
   return res
 }
@@ -46,7 +41,7 @@ async function CartList_sub(gid: string, bid: string, num: number) {
       num
     }
   }
-  // let res = await local_axrequest(option);
+
   let res = await axrequest(option);
   return res
 }
@@ -60,7 +55,7 @@ async function getCartList(bid: string) {
       bid,
     }
   }
-  // let res = await local_axrequest(option);
+ 
   let res = await axrequest(option);
   return res
 }
@@ -76,7 +71,7 @@ async function setCheck(bid: string, gid: string, status: number) {
       status
     }
   }
-  // let res = await local_axrequest(option);
+ 
   let res = await axrequest(option);
   return res
 }
@@ -90,7 +85,7 @@ async function allCheck(bid: string, status: number) {
       status
     }
   }
-  // let res = await local_axrequest(option);
+ 
   let res = await axrequest(option);
   return res
 }
@@ -104,7 +99,7 @@ async function delItem(bid: string, gid: string) {
       gid
     }
   }
-  // let res = await local_axrequest(option);
+ 
   let res = await axrequest(option);
   return res
 }
