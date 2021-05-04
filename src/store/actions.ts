@@ -40,6 +40,7 @@ export default {
       commit(GET_CARDATA,productList);
       commit(COUNT_SELECTNUM);
       commit(COUNT_TOTALPRICE);
+      return dd.data.data.length
     },
     // add
     async [SET_NUM_ADD]({commit}:ICtx,pload){
@@ -85,15 +86,13 @@ export default {
     },
     async [LOGIN]({commit}:ICtx,pload){
       let { un,psw } = pload;
-      
       let log = (await mallLogin(un, psw)).data;
-      // @ts-ignore 如果登陆成功
+      console.log(log)
+      // 如果登陆成功
       if(log.code){
-        // @ts-ignore
-        setToken({token:log.token,un:log.data[0].buyer_name});
-        commit(LOGIN,{un:log.data[0].buyer_name,islogin:true});
+        setToken({token:log.token,un:log.data[0].buyer_name,uid:log.data[0].b_id});
+        commit(LOGIN,{un:log.data[0].buyer_name,islogin:true,uid:log.data[0].b_id});
       }
-      // @ts-ignore
       return log.code
     },
     async [LOG_OUT]({commit}:ICtx){

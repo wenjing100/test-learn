@@ -21,8 +21,8 @@
           <detailbrief :briefdata="brief" ></detailbrief>
           <shopbrief :sid="sid" @gotoShop="gotoShop"></shopbrief>
           <goodsparams :parms="parmlist" ></goodsparams>
-          <buyercomments :gid="gid" ></buyercomments>
-          <goodsrecom ></goodsrecom>
+          <buyercomments :gid="gid" ref="comments"></buyercomments>
+          <goodsrecom ref="recommend"></goodsrecom>
           <div class="fix-p"></div>
         </myscroll>
       </div>

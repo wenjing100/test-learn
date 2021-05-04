@@ -3,6 +3,7 @@ import { Istate } from '@/typings'
 export default <Istate>{
     is_login:false,//记录是否登陆
     userName:'',//记录用户名
+    userid:'',
     cartData:[],
     isAllchecked:0,//购物车是否全选
     disChecked:0,

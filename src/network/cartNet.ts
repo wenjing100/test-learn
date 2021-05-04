@@ -49,13 +49,12 @@ async function CartList_sub(gid: string, bid: string, num: number) {
 //获取购物车列表
 async function getCartList(bid: string) {
   let option = {
-    method: 'post',
+    method: 'get',
     url: '/api/cart',
     params: {
       bid,
     }
   }
- 
   let res = await axrequest(option);
   return res
 }

@@ -97,18 +97,22 @@ export default {
   [SET_VIEWPORT](state: Istate, n:number) {
     state.viewport_height = n;
   },
-  [TOKEN_FROM_LOCAL](state: Istate, islogin:boolean) {
-    state.is_login = islogin;
-    
+  [TOKEN_FROM_LOCAL](state: Istate, pload) {
+    let { token,un,uid } = pload;
+    state.is_login = true;
+    state.userName = un;
+    state.userid = uid;
   },
   [LOGIN](state: Istate, pload) {
-    const { un,islogin } = pload;
+    const { un,islogin,uid } = pload;
     state.userName = un;
     state.is_login = islogin;
+    state.userid = uid;
   },
   [LOG_OUT](state: Istate) {
     state.is_login = false;
     state.userName = '';
+    state.userid = '';
   },
   [CHANGE_GOODSCON_POSITION](state: Istate, pload) {
     let { index, p} = pload

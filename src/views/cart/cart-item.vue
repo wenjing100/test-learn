@@ -1,26 +1,26 @@
 <template>
   <sliddel @slidDelClick="slidDelClick">
-  <div class="cartitem" @click="itemclick">
-    <div class="left">
-      <cartcheck
-        @checkclick="checkClick"
-        :itemchecked="itemdata.checked"
-        ref="itemcheck"
-      ></cartcheck>
-    </div>
-    <div class="itemimg"><img :src="itemdata.faceimg" alt="" /></div>
-    <div class="info">
-      <span class="gn"><span>{{ itemdata.gname }}</span></span>
-      <div class="p-num">
-        <span class="p">￥{{ itemdata.price }}</span>
-        <div class="num">
-          <button @click="add(itemdata.gid)">+</button>
-          <span>{{ itemdata.num }}</span>
-          <button @click="sub(itemdata.gid)" :disabled="isDisable">-</button>
+    <div class="cartitem">
+      <div class="left">
+        <cartcheck
+          @checkclick="checkClick"
+          :itemchecked="itemdata.checked"
+          ref="itemcheck"
+        ></cartcheck>
+      </div>
+      <div class="itemimg"><img :src="itemdata.faceimg" alt="" /></div>
+      <div class="info">
+        <span class="gn"><span>{{ itemdata.gname }}</span></span>
+        <div class="p-num">
+          <span class="p">￥{{ itemdata.price }}</span>
+          <div class="num">
+            <button @click="add(itemdata.gid)">+</button>
+            <span>{{ itemdata.num }}</span>
+            <button @click="sub(itemdata.gid)" :disabled="isDisable">-</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </sliddel> 
 </template>
 	

@@ -36,6 +36,7 @@ export default defineComponent({
       isMousedown:false,
     });
     const spanclick = (title,index) => {
+      console.log(instance.parent);
       let h = 0;
       switch(title){
         case '商品':

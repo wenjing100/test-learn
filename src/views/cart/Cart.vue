@@ -40,6 +40,7 @@ import {
   watch,
 } from "vue";
 import carttotal from "./cart-total.vue";
+import { GET_CARDATA } from "@/store/actionTypes";
 export default defineComponent({
   name: "cartPage",
   components: {
@@ -52,17 +53,22 @@ export default defineComponent({
     const state = reactive({
       count: 0,
       goodList: [],
-      isEmpty: true,
+      isEmpty: false,
     });
     onBeforeMount(async () => {
-      if (store.state.cartData.length) {
-        state.isEmpty = false;
-        state.goodList = store.state.cartData;
-        state.count = store.state.cartData.length;
-      } else {
-        state.isEmpty = true;
+      try {
+        let cartOk = await store.dispatch(GET_CARDATA,store.state.userid);
+        if(cartOk){
+          state.isEmpty = false;
+          state.goodList = store.state.cartData;
+          state.count = store.state.cartData.length;
+          state.count = state.goodList.length;
+        }else {
+          state.isEmpty = true;
+        }
+      } catch (error) {
+        console.log('购物车请求出错'+error)
       }
-      state.count = state.goodList.length;
     });
     watch(
       () => {
@@ -80,11 +86,7 @@ export default defineComponent({
     );
 
     const cartpullup = ()=>{
-      // let ii = setTimeout(() => {
-      //   // cartScroll.value?.finishpullup();
-      // }, 300);
-        cartScroll.value?.pull_refresh();
-      
+      cartScroll.value?.pull_refresh(); 
     }
     return {
       ...toRefs(state),
