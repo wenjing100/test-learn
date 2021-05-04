@@ -30,8 +30,8 @@ export default{
     }
     onMounted(async () => {
       try{
-        let dd = await getrecomList();
-        dd.data.forEach(item =>{
+        let dd = (await getrecomList()).data.data;
+        dd.forEach(item =>{
           state.gdata.push(item);
         })
       }catch(err){

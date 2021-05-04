@@ -59,18 +59,18 @@ import { getgoodsList } from '@/network/goodsList';
           n:3
         })
         onBeforeMount(async ()=>{
-          let dd = await getSideList();
-          let ee = await getgoodsList({
+          let dd = (await getSideList()).data.data;
+          let ee = (await getgoodsList({
             pageSize: 8,
             pageIndex:1,
             sortType:'',
             hotPoint:'',
             cat:21
-          });
-          dd.data.forEach(item=>{
+          })).data.data;
+          dd.forEach(item=>{
             state.sidelist.push(item);
           });
-          ee.data.forEach(item =>{
+          ee.forEach(item =>{
             state.glist.push(item);
           });
         })
@@ -79,8 +79,8 @@ import { getgoodsList } from '@/network/goodsList';
           state.n = n;
           //请求数据
           state.glist = [];
-          let cc = await fetchCat( n, 20);
-          cc.data.forEach(item =>{
+          let cc = (await fetchCat( n, 20)).data.data;
+          cc.forEach(item =>{
             state.glist.push(item);
           });
           //点击左边导航，右侧显示的内容需要 刷新一下betterscroll

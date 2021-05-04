@@ -154,7 +154,7 @@ export default defineComponent({
     }
     onBeforeMount(async () => {
       try {
-        let dd = await getDetails(route.params.id as string);
+        let dd = (await getDetails(route.params.id as string)).data;
         let d = dd.data[0];
         let topimgs = d.top_imgs.split(",");
         let gname = d.g_name;

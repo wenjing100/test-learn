@@ -1,6 +1,5 @@
 import { axrequest } from './request'
 
-
 async function getSideList() {
   let option = {
     method: 'get',

@@ -1,7 +1,7 @@
 <template>
   <div class="goodscon">
       <div v-for="(item,index) of g_data" :key="index" class="singleitem">
-          <goodsitem :goodsitem="item" @carImgload="carImgload"></goodsitem>
+          <goodsitem :goodsitem="item" @carImgload.native="carImgload"></goodsitem>
       </div>
   </div>
 </template>

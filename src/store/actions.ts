@@ -26,7 +26,7 @@ export default {
       bid = BID;
       let dd = await getCartList(bid);
       let productList = [];
-      dd.data?.forEach(prod => {
+      (dd.data.data).forEach(prod => {
         let {g_id,goods_num,g_name,price,top_imgs,g_status} = prod;
         productList.push({
           gid:g_id,

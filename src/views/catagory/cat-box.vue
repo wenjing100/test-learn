@@ -19,8 +19,7 @@ export default defineComponent({
     })
     onBeforeMount(async ()=>{
       let cc = await fetchCatOne();
-      console.log(cc.data)
-      cc.data.forEach(item =>{
+      cc.data.data.forEach(item =>{
         state.url.push({
           url:"url('"+(item as any).pic+"')",
           cat_name:(item as any).cat_name
