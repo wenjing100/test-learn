@@ -58,7 +58,7 @@ export default defineComponent({
     })
     onBeforeMount(async () => {
       try {
-        let cc = await getComments(props.gid);
+        let cc = (await getComments(props.gid)).data;
         state.total = cc.data;
         let ll = 0;
         if (state.total.length > 2) {
