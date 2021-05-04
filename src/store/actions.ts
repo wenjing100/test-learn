@@ -86,7 +86,7 @@ export default {
     async [LOGIN]({commit}:ICtx,pload){
       let { un,psw } = pload;
       
-      let log = await mallLogin(un, psw);
+      let log = (await mallLogin(un, psw)).data;
       // @ts-ignore 如果登陆成功
       if(log.code){
         // @ts-ignore

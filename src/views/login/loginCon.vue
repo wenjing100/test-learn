@@ -55,7 +55,7 @@ import { LOGIN } from '@/store/actionTypes';
             store.dispatch(LOGIN,{un:state.uname,psw:state.psword}).then((code)=>{
               if(code){
                 let pth = (route.query.redirect as string) || '/';
-                router.push(pth);
+                router.replace(pth);
               }
             }).catch(err=>{
               toast({
