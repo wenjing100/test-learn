@@ -109,8 +109,7 @@ import { getgoodsList } from '@/network/goodsList';
 <style lang='scss' scoped>
 #catagory{
   padding-top: 44px;
-  max-height: 736px;
-  min-height: 568px;
+  height: 100vh;
   .nav-span{
     color:#fff;
   }
@@ -120,12 +119,16 @@ import { getgoodsList } from '@/network/goodsList';
     height: 100%;
     .navscroll{
       width: 30%;
+      height: calc(100vh - 93px);
+      overflow: hidden;
      .sidenav{
         height: 100%;
       }     
     }
     .scroll{
       width: 70%;
+      height: calc(100vh - 93px);
+      overflow: hidden;
       .catlist{
         .goodsli{
           width: 100%;

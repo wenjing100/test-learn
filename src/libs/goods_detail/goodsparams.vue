@@ -51,6 +51,7 @@ export default defineComponent({
       moreparm: [],
       vH:null
     });
+    console.log(props.parms[4]);
     const deimgload =async (index)=>{
       let l = (props.parms[4] as Array<string>).length;
       if(index == l - 1 ){

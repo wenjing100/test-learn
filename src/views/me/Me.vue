@@ -3,6 +3,7 @@
     <meheader></meheader>
     <myscroll
       :probtype="3"
+      class="meScroll"
     >
     <measset></measset>
     <memoreone>
@@ -151,6 +152,7 @@ export default defineComponent({
     content: "\e62c";
   }
   color: #fff;
+  height: 100vh;
   @mixin btn{
     width: 100%;
     display: flex;
@@ -171,6 +173,10 @@ export default defineComponent({
       &:active{
         box-shadow: 1px 1px 2px 1px rgb(121, 119, 119) inset;
       }
+  }
+  .meScroll{
+    height: calc(100vh - 93px);
+    overflow: hidden;
   }
   .vip{
     font-weight: bold;

@@ -69,7 +69,6 @@ export default defineComponent({
     onBeforeMount(async () => {
       try {
         let dd = (await getShopBrief(props.sid)).data;
-        console.log(dd);
         let d = dd.data[0];
         state.shopname = d.s_name;
         state.shoplogo = d.s_logo;
@@ -93,7 +92,6 @@ export default defineComponent({
     }
     const gotoShop = ()=>{
       emit('gotoShop',props.sid);
-      console.log('进店逛逛')
     }
     return {
       ...toRefs(state),

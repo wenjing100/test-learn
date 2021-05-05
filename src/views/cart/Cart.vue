@@ -101,6 +101,7 @@ export default defineComponent({
 #cart {
   padding-top: 44px;
   width: 100%;
+  height: 100vh;
   .cartotal {
     position: absolute;
     bottom: 44px;
@@ -111,7 +112,7 @@ export default defineComponent({
   .cartCon {
     width: 100%;
     .cartbody{
-      max-height: 680px;
+      max-height: calc(100vh - 93px);
       .cartbody-insider{
         width: 100%;
         height: 110px;
