@@ -46,6 +46,7 @@ export default defineComponent({
   grid-template-columns: repeat(3,1fr);
   color: var(--color-text);
   border-bottom: 15px solid var(--color-background-light);
+  font-size: 18px;
   .left,.center,.right{
     @include item;
     border-right: 1px solid #cecece;

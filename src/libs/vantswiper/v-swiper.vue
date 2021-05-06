@@ -1,6 +1,6 @@
 <template>
   <van-swipe class="my-swipe" :autoplay="3000"
-    indicator-color="#ff8198" lazy-render
+    indicator-color="#ff8198" 
     :stop-propagation="false"
   >
     <van-swipe-item v-for="(image,index) in images" :key="image" @click="vSwiperClick(index)">

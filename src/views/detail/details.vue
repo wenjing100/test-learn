@@ -208,10 +208,14 @@ export default defineComponent({
  /*  .swiper {
 
   } */
-  .fix-p{
-    width: 100%;
-    height: 49px;
+  .content{
+    overflow: hidden;
+    .fix-p{
+      width: 100%;
+      height: 49px;
+    }
   }
+
   .bottomtool{
     position: fixed;
     bottom: 0;

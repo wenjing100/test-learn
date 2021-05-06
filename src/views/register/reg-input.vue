@@ -177,6 +177,7 @@ import { defineComponent, reactive, toRefs, ref} from 'vue'
   width: 100%;
   display: flex;
   flex-direction: row;
+  font-size: 18px;
   .reaside{
     display: inline-block;
     width: 70px;
@@ -215,6 +216,7 @@ import { defineComponent, reactive, toRefs, ref} from 'vue'
   input{
     width:100%;
     height: 45px;
+    line-height: 45px;
     outline-color: none;
     border: none;
     border-radius: 5px;

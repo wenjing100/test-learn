@@ -31,6 +31,7 @@
     box-shadow: 0 1px 0 rgba(0, 0, 0, .2);
     background: var(--color-tint);
     padding: 0 10px;
+    font-size: 16px;
     .left{
         min-width: 20%;
     }

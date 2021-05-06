@@ -38,6 +38,7 @@ export default defineComponent({
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding-top: 20px;
+  font-size: 18px;
  /*  min-height: 568px; */
   .boxcon{
     display: flex;

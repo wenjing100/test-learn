@@ -5,7 +5,7 @@
         <span class="nav-span"> 购物车({{ count }}) </span>
       </template>
     </navbar>
-    <myscroll :probtype="3" ref="cartScroll" @pullupload="cartpullup">
+    <myscroll :probtype="3" ref="cartScroll" @pullupload="cartpullup" class="cartScroll">
       <div class="cartCon">
         <div v-if="isEmpty" class="empty">您的购物车为空哦~</div>
         <div
@@ -105,36 +105,40 @@ export default defineComponent({
   width: 100%;
   height: 100vh;
   position: relative;
-  .cartotal {
-    position: absolute;
-    bottom: 44px;
-  }
   .nav-span {
     color: #fff;
   }
-  .cartCon {
-    width: 100%;
-    .cartbody{
-      /* max-height: calc(100vh - 137px); */
-      max-height:100vh;
-      .cartbody-insider{
+  .cartScroll{
+    overflow: hidden;
+    height: 100vh;
+    .cartCon {
+      width: 100%;
+      .cartbody{
+        /* max-height: calc(100vh - 137px); */
+        /* max-height:100vh; */
+        .cartbody-insider{
+          width: 100%;
+          height: 108px;
+          overflow: hidden;
+        }
+      }
+      .empty {
         width: 100%;
-        height: 108px;
-        overflow: hidden;
+        height: 150px;
+        padding: 50px 0;
+        font-size: 25px;
+        text-align: center;
       }
     }
-   
-    .empty {
+    .fix-c{
       width: 100%;
-      height: 150px;
-      padding: 50px 0;
-      font-size: 25px;
-      text-align: center;
+      height: 120px;
     }
   }
-  .fix-c{
-    width: 100%;
-    height: 120px;
+
+  .cartotal {
+    position: absolute;
+    bottom: 44px;
   }
 }
 .void {

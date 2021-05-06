@@ -108,6 +108,7 @@ import { useStore } from 'vuex';
   flex-direction: column;
   padding-bottom: 60px;
   background-image: -webkit-linear-gradient(90deg,#6ec0d4 40%,#bff0fc 60%);
+  font-size: 18px;
   .regicon{
     min-width: 300px;
     max-width: 750px;

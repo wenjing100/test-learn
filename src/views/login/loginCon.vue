@@ -92,6 +92,7 @@ import { LOGIN } from '@/store/actionTypes';
   height: 30px;
   line-height: 30px;
   text-align: center;
+  font-size: 16px;
   border-radius: 5px;
   background: #fff;
   box-shadow: 1px 1px 2px rgb(141, 140, 140);
@@ -108,6 +109,7 @@ import { LOGIN } from '@/store/actionTypes';
   align-items: center;
   flex-direction: column;
   padding-bottom: 60px;
+  font-size: 18px;
   .cap{
     width: 100%;
     display: flex;
@@ -155,6 +157,7 @@ import { LOGIN } from '@/store/actionTypes';
       width: 100%;
       text-decoration: underline;
       text-align: center;
+      font-size: inherit;
       color:rgb(63, 62, 62);
     }
   }

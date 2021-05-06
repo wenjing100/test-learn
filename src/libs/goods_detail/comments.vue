@@ -150,6 +150,7 @@ export default defineComponent({
   padding: 5px;
   background: var(--color-background);
   border-bottom: 5px;
+  font-size: 18px;
   .cbanner {
     width: 100%;
     display: flex;

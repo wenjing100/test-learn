@@ -32,6 +32,7 @@ import { defineComponent} from 'vue'
     padding-bottom: 25px;
     margin-top: 10px;
     border-bottom: 10px solid #e0e0e0;
+    font-size: 20px;
     .recoitem{
         
         width: 80px;

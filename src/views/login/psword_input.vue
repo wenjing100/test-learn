@@ -165,6 +165,7 @@ import { defineComponent, reactive, toRefs, ref} from 'vue'
 .psword{
   width: 100%;
   position: relative;
+  font-size: 18px;
   .status{
     background: rgba(218, 217, 217, 0.3);
     font-size: 12px;
@@ -191,6 +192,7 @@ import { defineComponent, reactive, toRefs, ref} from 'vue'
   input{
     width: 100%;
     height: 45px;
+    line-height: 45px;
     outline-color: none;
     border: none;
     border-radius: 2px;

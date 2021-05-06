@@ -104,6 +104,7 @@ export default defineComponent({
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+  font-size: 16px;
 	.left{
     width: 44px;
   }

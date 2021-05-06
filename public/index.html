@@ -4,6 +4,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
+    <!-- 隐藏工具栏 地址栏 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="browsermode" content="application">
+    <meta name="full-screen" content="yes" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="x5-page-mode" content="app" />
+    <meta name="360-fullscreen" content="true" />
     <link rel="icon" href="<%= BASE_URL %>favico.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
@@ -13,5 +21,8 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <!-- 用weinre 调试 使用的script -->
+    <!-- weinre --boundHost 192.168.3.7 --httpPort 9999 -->
+    <script src="http://192.168.3.7:9999/target/target-script-min.js#anonymous" type="text/javascript"></script>
   </body>
 </html>
