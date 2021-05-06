@@ -1,9 +1,9 @@
 import fastclick from './fastclick'
 
 //设置 html font-size 让页面应用自适应 --rem
-document.documentElement.style.fontSize =
+/* document.documentElement.style.fontSize =
   document.documentElement.clientWidth / 3.75 + 'px';
-
+ */
 window.addEventListener(
   'load',
   () => {

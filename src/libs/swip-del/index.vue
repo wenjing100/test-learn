@@ -70,7 +70,6 @@ export default defineComponent({
       height: inherit;
       width: calc(100% - 40px);
       left:0;
-      border: 1px solid black;
       display: flex;
       justify-content: center;
       align-items: center;

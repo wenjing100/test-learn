@@ -175,7 +175,8 @@ export default defineComponent({
       }
   }
   .meScroll{
-    height: calc(100vh - 93px);
+    /* meheader 132px  底部tabbar 49px */
+    height: calc(100vh - 181px);
     overflow: hidden;
   }
   .vip{

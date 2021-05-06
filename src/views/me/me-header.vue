@@ -89,7 +89,7 @@ export default defineComponent({
   width: 100%;
   background: var(--color-tint);
   height: 132px;
-  z-index: 100;
+  z-index: 12;
   .nav{
     height: 44px;
     width: 100%;

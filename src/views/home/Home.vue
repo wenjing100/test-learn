@@ -27,15 +27,7 @@
         :probtype="3"
       >
         <div class="carsou">
-          <my-carsousel
-            :autoplay="true"
-            :duration="3000"
-            :hasDot="true"
-            :hasDirector="false"
-            dotBgColor="#ff5777"
-            :cardata="cardata"
-            @car_img_load="car_img_load"
-          ></my-carsousel>
+          <vswiper :images="cardata"></vswiper>
         </div>
         <recommend :recomlist="recomlist"></recommend>
         <thweek :thisweek="thweek"></thweek>
@@ -85,9 +77,10 @@ import recommend from "@/components/recommend/Recommend.vue";
 import thweek from "@/components/thisweek/Thisweek.vue";
 import sortbar from "@/components/sort-bar/SortBar.vue";
 import Comments from "@/libs/goods_detail/comments.vue";
+import vswiper from '@/libs/vantswiper/v-swiper.vue';
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { CHANGE_GOODSCON_POSITION } from "@/store/actionTypes";
+import { CHANGE_GOODSCON_POSITION, CLEAR_GOODSCON_POSITION } from "@/store/actionTypes";
 export default defineComponent({
   name: "homePage",
   components: {
@@ -95,6 +88,7 @@ export default defineComponent({
     thweek,
     sortbar,
     Comments,
+    vswiper,
   },
   setup() {
     const instance = getCurrentInstance();
@@ -103,8 +97,8 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
     const state = reactive<IhomeReactive>({
-      cardata: [],
-      recomlist: [],
+      cardata: [],//swiper数据
+      recomlist: [],//推荐数据
       flag: false,
       thweek: null,
       goods_pop: { index: 1, data: null },
@@ -114,7 +108,7 @@ export default defineComponent({
       bt_show: false,
       sb_offsettop:0,
       is_fixed:false,
-      stay_position:0,
+      stay_position:0,//记录滚动的高度
       checkinStatus:'未登录'
     });
     let me = `Hi~${localStorage.getItem('userName')}`;
@@ -124,7 +118,9 @@ export default defineComponent({
         //请求 轮播图，推荐，本周  数据
         let _data = await gethomeMulti();
         let dd =_data.data.data;
-        state.cardata =dd.banner.list;
+        dd.banner.list.forEach(item=>{
+          state.cardata.push(item.image);
+        });
         state.recomlist = dd.recommend.list;
         state.thweek = dd.thisWeek;
         //请求商品列表数据
@@ -162,23 +158,28 @@ export default defineComponent({
     });
 
     const switchgoodscon = (index:number) => {
+      //切换后滚动到 记录的位置
+      let a = 0;
+      //判断 当前con是否滚动过
+      a = store.state.goods_con_position[index]==0?state.stay_position
+      :store.state.goods_con_position[index];
+      //如果当前位置高了  就加载
+      if(a>store.state.goods_con_position[state.goods_con_type]){
+        loadmore()
+      }
+      (instance.refs.scroll as Iscroll)
+        .scrollPosition(0,a, 0);
       state.goods_con_type = index;
       //让两个sortbar 显示一致
       sortbar1.value.currentIndex = index;
       sortbar2.value.currentIndex = index;
       (instance.refs.scroll as Iscroll).finishpullup();
       (instance.refs.scroll as Iscroll).pull_refresh();
-      //切换后滚动到 记录的位置
-      let a = 0;
-      //判断 当前con是否滚动过
-      a = store.state.goods_con_position[index]==0?state.stay_position
-      :store.state.goods_con_position[index];
-      (instance.refs.scroll as Iscroll)
-        .scrollPosition(0,a, 500);
     };
     const backtopclick = () => {
       (instance.refs.scroll as Iscroll).scrollPosition(0, 0, 500);
       //回到顶部后，记录的位置清零
+      store.commit(CLEAR_GOODSCON_POSITION);
     };
     const scrollmove = (p) => {      
       if (p.y < -500) {
@@ -294,11 +295,11 @@ export default defineComponent({
   .scroll {
     height: calc(100vh - 93px);
     overflow: hidden;
-    .carsou {
+/*     .carsou {
       max-width: 650px;
       height: 150px;
       margin: 0 auto;
-    }
+    } */
   }
   .backT {
     position: fixed;

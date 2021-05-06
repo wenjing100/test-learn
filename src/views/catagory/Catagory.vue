@@ -30,6 +30,7 @@
             <goodscon :goods_data="glist" @carImgload="carImgload" :key="n" ></goodscon>
         </div>
       </div>
+      <div class="fix-ca"></div>
       </myscroll>
     </div>
   </div>
@@ -127,12 +128,17 @@ import { getgoodsList } from '@/network/goodsList';
     }
     .scroll{
       width: 70%;
-      height: calc(100vh - 93px);
+      /* height: calc(100vh - 93px); */
+      height: 100vh;
       overflow: hidden;
       .catlist{
         .goodsli{
           width: 100%;
         }
+      }
+      .fix-ca{
+        width: 100%;
+        height: 93px;
       }
     }
     

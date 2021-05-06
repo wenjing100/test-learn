@@ -21,6 +21,7 @@
           </div>
         </div>
       </div>
+      <div class="fix-c"></div>
     </myscroll>
     <carttotal class="cartotal"></carttotal>
   </div>
@@ -99,9 +100,11 @@ export default defineComponent({
 
 <style lang='scss' scoped>
 #cart {
-  padding-top: 44px;
+  /* padding-top: 44px; */
+  border-top: 44px solid transparent;
   width: 100%;
   height: 100vh;
+  position: relative;
   .cartotal {
     position: absolute;
     bottom: 44px;
@@ -112,10 +115,11 @@ export default defineComponent({
   .cartCon {
     width: 100%;
     .cartbody{
-      max-height: calc(100vh - 93px);
+      /* max-height: calc(100vh - 137px); */
+      max-height:100vh;
       .cartbody-insider{
         width: 100%;
-        height: 110px;
+        height: 108px;
         overflow: hidden;
       }
     }
@@ -127,6 +131,10 @@ export default defineComponent({
       font-size: 25px;
       text-align: center;
     }
+  }
+  .fix-c{
+    width: 100%;
+    height: 120px;
   }
 }
 .void {

@@ -109,8 +109,8 @@ export default defineComponent({
   }
 	.itemimg{
 		img{
-			width: 5rem;
-			height: 6rem;
+			width: 60px;
+			height: 80px;
 			border-radius: 5px;
 		}
 	}
@@ -142,8 +142,8 @@ export default defineComponent({
 				button{
           border: none;
           box-shadow: -1px 1px 5px 1px rgba(35, 56, 63, 0.37);
-          width: 1.5rem;;
-          height: 1.5rem;
+          width: 24px;
+          height: 24px;
 					text-align: center;
           margin: 0 6px;
           border-radius: 50%;

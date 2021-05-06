@@ -72,7 +72,6 @@ export default {
       startX:null,
       moveLength:null,
     });
-    console.log(props.cardata);
     let t = null;
     const autoplay = () => {
       if (props.autoplay) {

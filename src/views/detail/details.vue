@@ -9,14 +9,7 @@
           @scrollmove="detailScrollMove"
         >
           <div class="swiper">
-            <my-carsousel
-              :autoplay="true"
-              :duration="3000"
-              :hasDot="true"
-              :hasDirector="false"
-              dotBgColor="#ff5777"
-              :cardata="swiper"
-            ></my-carsousel>
+            <vswiper :images="swiper"></vswiper>
           </div>
           <detailbrief :briefdata="brief" ></detailbrief>
           <shopbrief :sid="sid" @gotoShop="gotoShop"></shopbrief>
@@ -37,8 +30,6 @@ import {
   reactive,
   toRefs,
   getCurrentInstance,
-  nextTick,
-  onUpdated,
   watch,
   ref
 } from "vue";
@@ -49,11 +40,13 @@ import detailnavbar from "./detailnavbar.vue";
 import goodsrecom from './goodsRecomend.vue';
 import Toast from '@/libs/toast';
 import { SET_CARDATA } from "@/store/actionTypes";
+import vswiper from '@/libs/vantswiper/v-swiper.vue';
 export default defineComponent({
   name: "malldetails",
   components: {
     detailnavbar,
-    goodsrecom
+    goodsrecom,
+    vswiper,
   },
   setup() {
     const route = useRoute();
@@ -63,7 +56,7 @@ export default defineComponent({
     const store:Store<any> = useStore();
     const state = reactive({
       sr: null,
-      swiper: [],
+      swiper: [],//轮播图数据
       brief: [],
       sid: null,
       gid: null,
@@ -157,7 +150,6 @@ export default defineComponent({
         let dd = (await getDetails(route.params.id as string)).data;
         let d = dd.data[0];
         let topimgs = d.top_imgs.split(",");
-        let gname = d.g_name;
         //brief[gname,price,marketprice,likes,grand_total]
         state.brief.push(
           d.g_name,
@@ -170,11 +162,7 @@ export default defineComponent({
         state.sid = d.shop_id;
         state.gid = d.iid;
         for (let i = 0; i < topimgs.length; i++) {
-          state.swiper.push({
-            link: "",
-            title: gname,
-            image: topimgs[i],
-          });
+          state.swiper.push(topimgs[i]);
         }
         //params参数
         state.parmlist[0] = d.colors;
@@ -217,11 +205,9 @@ export default defineComponent({
   background-color: var(--color-background-light);
   z-index: 12;
 
-  .swiper {
-    width: 100%;
-    height: 22rem;
-    margin-top: 44px;
-  }
+ /*  .swiper {
+
+  } */
   .fix-p{
     width: 100%;
     height: 49px;

@@ -166,7 +166,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: flex-start;
     .buyerinfo {
-      height: 3.5rem;
+      height: 56px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -177,8 +177,8 @@ export default defineComponent({
         flex-direction: row;
         align-items: center;
         .avator {
-          width: 2rem;
-          height: 2rem;
+          width: 32px;
+          height: 32px;
           border-radius: 50%;
           overflow: hidden;
           img {

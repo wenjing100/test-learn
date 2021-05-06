@@ -16,6 +16,7 @@ export const LOGIN:string = 'login';
 export const LOG_OUT:string = 'login_out';
 export const SIGNIN:string = 'signin';
 export const CHANGE_GOODSCON_POSITION:string = 'change_goodscon_position';
+export const CLEAR_GOODSCON_POSITION:string = 'clear_goodscon_position';
 export const VH_COMMENTS:string = 'vh_comm';
 export const VH_PARMS:string = 'vh_parms';
 export const VH_RECOM:string = 'vh_recom';
