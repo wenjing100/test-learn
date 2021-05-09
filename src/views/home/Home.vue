@@ -69,7 +69,7 @@ import {
   ref,
   toRefs,
 } from "vue";
-import { IhomeReactive, Iscroll } from "@/typings";
+import { IcarData_item, Igoods_list_item, IhomeReactive, Iscroll } from "@/typings";
 import { gethomeMulti } from "@/network/homeNet";
 import { getgoodsList } from "@/network/goodsList";
 import sortbarData from "@/data/sortbar";
@@ -81,6 +81,7 @@ import vswiper from '@/libs/vantswiper/v-swiper.vue';
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { CHANGE_GOODSCON_POSITION, CLEAR_GOODSCON_POSITION } from "@/store/actionTypes";
+import { checkLogStatus } from "@/network/login";
 export default defineComponent({
   name: "homePage",
   components: {
@@ -111,52 +112,50 @@ export default defineComponent({
       stay_position:0,//记录滚动的高度
       checkinStatus:'未登录'
     });
+    //判断是否登陆
     let me = `Hi~${localStorage.getItem('userName')}`;
     state.checkinStatus = store.state.is_login?me:'未登录';
     onBeforeMount(async () => {
       try {
+        //登陆信息的请求 确认token是否过期
+        await checkLogStatus();
         //请求 轮播图，推荐，本周  数据
         let _data = await gethomeMulti();
-        let dd =_data.data.data;
-        dd.banner.list.forEach(item=>{
-          state.cardata.push(item.image);
+        _data.bannerList.forEach(item=>{
+          return state.cardata.push(item.image);
         });
-        state.recomlist = dd.recommend.list;
-        state.thweek = dd.thisWeek;
+        state.recomlist = _data.recommend;
+        state.thweek = _data.thisweek;
         //请求商品列表数据
-        let goods_pop = await getgoodsList({
-            pageSize: 8,
-            pageIndex:1,
-            sortType:'',
-            hotPoint:'流行',
-          });
-        let popD = goods_pop.data.data;
-        state.goods_pop.data = popD;
-        state.goods_pop.index++;
-        let goods_new = await getgoodsList({
-            pageSize: 8,
-            pageIndex:1,
-            sortType:'',
-            hotPoint:'新款',
-          });
-        state.goods_new.data = goods_new.data.data;
+        state.goods_pop.data = await homeGoods_first('流行');
+        state.goods_pop.index ++;
+
+        state.goods_new.data= await homeGoods_first('新款');
         state.goods_new.index++;
 
-        let goods_sell = await getgoodsList({
-            pageSize: 8,
-            pageIndex:1,
-            sortType:'',
-            hotPoint:'精选',
-          });
-        state.goods_sell.data = goods_sell.data.data;
+        state.goods_sell.data = await homeGoods_first('精选');
         state.goods_sell.index++;
+        //数据请求完，可以渲染
         state.flag = true;
-        
       } catch (error) {
         console.log("请求数据出错" + error);
       }
     });
-
+    //工具---- goodcon 数据请求方法
+    const homeGoods_first = async (type:string,i:number = 1)=>{
+      let goods = await getgoodsList({
+            pageSize: 8,
+            pageIndex:i,
+            sortType:'',
+            hotPoint:type,
+          });
+      return goods as Igoods_list_item[]
+    }
+    //工具---- 刷新 scroll
+    const homeRefresh = ()=>{
+      (instance.refs.scroll as Iscroll).finishpullup();
+      (instance.refs.scroll as Iscroll).pull_refresh();
+    }
     const switchgoodscon = (index:number) => {
       //切换后滚动到 记录的位置
       let a = 0;
@@ -167,8 +166,7 @@ export default defineComponent({
       if(a>store.state.goods_con_position[state.goods_con_type]){
         loadmore()
       }
-      (instance.refs.scroll as Iscroll)
-        .scrollPosition(0,a, 0);
+      (instance.refs.scroll as Iscroll).scrollPosition(0,a, 0);
       state.goods_con_type = index;
       //让两个sortbar 显示一致
       sortbar1.value.currentIndex = index;
@@ -196,63 +194,39 @@ export default defineComponent({
         state.is_fixed = true
       }
     };
-
+    //加载更多
     const loadmore = async () => {
-      let hotpoint = '';
-      let goods = null
-      let index = 0;
       switch(state.goods_con_type){
         case 0:
-          index = state.goods_pop.index;
-          goods = (await getgoodsList({
-            pageSize: 8,
-            pageIndex:index,
-            sortType:'',
-            hotPoint:'流行',
-          })).data.data;
-          goods.forEach(item=>{
-            state.goods_pop.data.push(item);
-          })
+          (await homeGoods_first('流行',state.goods_pop.index))
+            .forEach(item=>{
+              state.goods_pop.data.push(item);
+            });
           state.goods_pop.index ++;
-          (instance.refs.scroll as Iscroll).finishpullup();
-          (instance.refs.scroll as Iscroll).pull_refresh();
+          homeRefresh();
           break;
         case 1:
-          index = state.goods_new.index;
-          goods = (await getgoodsList({
-            pageSize: 8,
-            pageIndex:index,
-            sortType:'',
-            hotPoint:'新款',
-          })).data.data;
-          goods.forEach(item=>{
-            state.goods_new.data.push(item);
-          })
+          (await homeGoods_first('新款',state.goods_pop.index))
+            .forEach(item=>{
+              state.goods_new.data.push(item);
+            });
           state.goods_new.index ++;
-          (instance.refs.scroll as Iscroll).finishpullup();
-          (instance.refs.scroll as Iscroll).pull_refresh();
+          homeRefresh();
           break;
         case 2:
-          index = state.goods_sell.index;
-          goods = (await getgoodsList({
-            pageSize: 8,
-            pageIndex:index,
-            sortType:'',
-            hotPoint:'精选',
-          })).data.data;
-          goods.forEach(item=>{
-            state.goods_sell.data.push(item);
-          })
+          (await homeGoods_first('精选',state.goods_pop.index))
+            .forEach(item=>{
+              state.goods_sell.data.push(item);
+            });
           state.goods_sell.index ++;
-          (instance.refs.scroll as Iscroll).finishpullup();
-          (instance.refs.scroll as Iscroll).pull_refresh();
+          homeRefresh();
           break;
         default:
           break;
       }
     }
+    //轮播图加载完第一张图的时候 计算 sortbar的offsetTop
     const car_img_load = ()=>{
-      //轮播图加载完第一张图的时候 计算 sortbar的offsetTop
       state.sb_offsettop = sortbar2.value.$el.offsetTop;
     }
     const logOrMe = ()=>{

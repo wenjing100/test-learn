@@ -17,7 +17,7 @@ export default ()=>{
   })
   //响应拦截，在token 失效，服务器返回401时候
   axios.interceptors.response.use(null,err=>{
-    if(err.response.status === 401){//没有登陆或者令牌过期
+    if(err.response.status === 500){//没有登陆或者令牌过期
       //清空本地token
       console.log('清空token')
       store.dispatch(LOG_OUT);

@@ -5,7 +5,7 @@ async function getSideList() {
     method: 'get',
     url: '/api/catagory/side',
   }
-  let res = await axrequest(option);
+  let res = (await axrequest(option)).data.data;
   return res
 }
 
@@ -18,7 +18,7 @@ async function fetchCat(id:number,size:number) {
       size
     }
   }
-  let res = await axrequest(option);
+  let res = (await axrequest(option)).data.data;
   return res
 }
 async function fetchCatOne() {

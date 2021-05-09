@@ -1,6 +1,6 @@
 <template>
-  <router-view>
-  </router-view>
+
+  <router-view></router-view>
 
   <tabbar v-if="!isdetails"></tabbar>
 </template>
@@ -9,7 +9,6 @@ import { watch, ref, } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from 'vuex';
 import { SET_VIEWPORT, TOKEN_FROM_LOCAL } from './store/actionTypes';
-import { getToken } from './hooks/checkLogin'
 export default {
   setup() {
     const isdetails = ref(false);

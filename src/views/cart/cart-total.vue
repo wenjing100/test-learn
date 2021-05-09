@@ -17,7 +17,7 @@
 
 <script lang='ts'>
 import { useStore } from "vuex";
-import { defineComponent, onBeforeMount, reactive, toRefs, watch, ref } from "vue";
+import { defineComponent, onBeforeMount, reactive, toRefs, watch, ref, computed } from "vue";
 import cartcheck from "./cart-check.vue";
 import { ALL_CHECKED } from "@/store/actionTypes";
 export default defineComponent({
@@ -30,9 +30,16 @@ export default defineComponent({
     const checkallcon = ref(null);
     const state = reactive({
       totalcheck:0,
-      tprice:store.state.totalPrice,
+      tprice:0,
       snum:store.state.selectNum
     })
+    //计算属性 计算总价？
+    computed(()=>{
+      store.state.cartData.forEach(item=>{
+        state.tprice += item.price*item.num;
+      })
+    })
+    //全选点击
     const checkClick = (ck)=>{
       store.dispatch(ALL_CHECKED,ck)
     }

@@ -88,6 +88,7 @@ export default defineComponent({
   padding: 5px;
   background: #fff;
   border-bottom: 5px;
+  font-size: 16px;
   .ptitle {
     width: 100%;
     text-align: center;

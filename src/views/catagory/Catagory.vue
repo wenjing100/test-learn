@@ -53,39 +53,40 @@ import { getgoodsList } from '@/network/goodsList';
       setup(){
         const store = useStore();
         const right_scroll = ref(null);
-        const instance = getCurrentInstance();
         const state = reactive({
           sidelist:[{id:1,name:'正在流行',pid:0,level:0}],
           glist:[],
           n:3
         })
+        //页面初始数据请求
         onBeforeMount(async ()=>{
-          let dd = (await getSideList()).data.data;
-          let ee = (await getgoodsList({
-            pageSize: 8,
-            pageIndex:1,
-            sortType:'',
-            hotPoint:'',
-            cat:21
-          })).data.data;
-          dd.forEach(item=>{
-            state.sidelist.push(item);
-          });
-          ee.forEach(item =>{
-            state.glist.push(item);
-          });
+          try {
+            (await getSideList()).forEach(item=>{
+              state.sidelist.push(item);
+            });
+            (await getgoodsList({
+              pageSize: 8,
+              pageIndex:1,
+              sortType:'',
+              hotPoint:'',
+              cat:21
+            })).forEach(item =>{
+              state.glist.push(item);
+            });
+          } catch (error) {
+            console.log('分类请求出错'+error)
+          }
         })
         //点击左侧导航，右侧更新数据
         const catliclick =async (n)=>{
           state.n = n;
           //请求数据
           state.glist = [];
-          let cc = (await fetchCat( n, 20)).data.data;
-          cc.forEach(item =>{
+          (await fetchCat( n, 20)).forEach(item =>{
             state.glist.push(item);
           });
           //点击左边导航，右侧显示的内容需要 刷新一下betterscroll
-          (instance.proxy.$refs.right_scroll as any).pull_refresh();
+          right_scroll.value.pull_refresh();
           store.dispatch(CAT_CURRENT,n);
         }
         //图片加载完毕也刷新

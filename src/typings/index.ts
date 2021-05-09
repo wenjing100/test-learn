@@ -59,7 +59,7 @@ interface Igoods_list{
     data:Igoods_list_item[]
 }
 interface IhomeReactive{
-    cardata: IcarData_item[]
+    cardata: Array<string>
     recomlist: IcarData_item[]
     flag:boolean
     thweek:Object

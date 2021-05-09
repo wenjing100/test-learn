@@ -2,9 +2,9 @@ import { ALL_CHECKED, CAT_CURRENT, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, 
 import { Commit,} from 'vuex';
 import { Istate,  } from '../typings';
 import { getCartList, CartList_add, CartList_sub, setCheck, AddTocart, allCheck, delItem } from '@/network/cartNet';
-import { fetchCat } from '@/network/catagoryNet';
 import { mallLogin } from '@/network/login';
 import { delToken, setToken } from '@/hooks/checkLogin';
+
 
 interface ICtx {
     commit: Commit,
@@ -23,24 +23,13 @@ export default {
     },
     //获取购物车列表
     async [GET_CARDATA]({commit}:ICtx,bid:string){
-      bid = BID;
-      let dd = await getCartList(bid);
-      let productList = [];
-      (dd.data.data).forEach(prod => {
-        let {g_id,goods_num,g_name,price,top_imgs,g_status} = prod;
-        productList.push({
-          gid:g_id,
-          faceimg:top_imgs.split(',')[0],
-          gname:g_name,
-          price,
-          num:goods_num,
-          checked:g_status
-        })
-      });
+      let productList = await getCartList(bid);
+      console.log(bid)
+      console.log(productList);
       commit(GET_CARDATA,productList);
       commit(COUNT_SELECTNUM);
       commit(COUNT_TOTALPRICE);
-      return dd.data.data.length
+      return productList.length
     },
     // add
     async [SET_NUM_ADD]({commit}:ICtx,pload){

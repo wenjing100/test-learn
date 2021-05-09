@@ -58,6 +58,7 @@ export default defineComponent({
   z-index: 20;
   display: flex;
   flex-direction: row;
+  font-size: 16px;
   .tool-left{
     width: 50%;
     display: flex;

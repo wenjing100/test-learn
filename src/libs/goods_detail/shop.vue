@@ -139,6 +139,7 @@ export default defineComponent({
   background: var(--color-background);
   border-bottom: 5px;
   padding: 10px;
+  font-size: 16px;
   .aboutshop {
     width: 100%;
     height: 80px;

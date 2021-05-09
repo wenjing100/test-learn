@@ -60,7 +60,7 @@ import { defineComponent} from 'vue'
     padding: 5px;
     background: var(--color-background); 
     border-bottom: 5px;
-    
+    font-size: 16px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

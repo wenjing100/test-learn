@@ -40,7 +40,7 @@ async function getgoodsList(pload) {
     url: '/api/home/multidata/list',
     params
   }
-  let res = await axrequest(option);
+  let res = (await axrequest(option)).data.data;
   return res
 }
 async function getrecomList(pageSize = 16, pageIndex = 1, sortType = '') {

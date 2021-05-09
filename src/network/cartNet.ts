@@ -26,7 +26,6 @@ async function CartList_add(gid: string, bid: string, num: number) {
       num
     }
   }
- 
   let res = await axrequest(option);
   return res
 }
@@ -55,7 +54,18 @@ async function getCartList(bid: string) {
       bid,
     }
   }
-  let res = await axrequest(option);
+  let res = [];
+  (await axrequest(option)).data.data.forEach(item=>{
+    let {g_id,goods_num,g_name,price,top_imgs,g_status} = item;
+    res.push({
+      gid:g_id,
+      faceimg:top_imgs.split(',')[0],
+      gname:g_name,
+      price,
+      num:goods_num,
+      checked:g_status
+    })
+  });
   return res
 }
 

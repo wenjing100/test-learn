@@ -23,14 +23,15 @@
       </div>
       <div class="fix-c"></div>
     </myscroll>
-    <carttotal class="cartotal"></carttotal>
+    <div class="cartotal">
+      <carttotal ></carttotal>
+    </div> 
   </div>
 </template>
 
 <script lang='ts'>
 import { useStore } from "vuex";
-// import cartitem from './cart-item.vue';
-let cartitem = defineAsyncComponent(() => import("./cart-item.vue"));
+import cartitem from '@/views/cart/cart-item.vue';
 import {
   defineAsyncComponent,
   defineComponent,
@@ -110,7 +111,7 @@ export default defineComponent({
   }
   .cartScroll{
     overflow: hidden;
-    height: 100vh;
+    height: calc(100vh - 137px);
     .cartCon {
       width: 100%;
       .cartbody{
@@ -137,8 +138,9 @@ export default defineComponent({
   }
 
   .cartotal {
+    width: 100%;
     position: absolute;
-    bottom: 44px;
+    bottom: 49px;
   }
 }
 .void {

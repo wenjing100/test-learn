@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="detail-nav">
     <navbar bgcolor="white">
       <template #left>
         <div
@@ -113,9 +113,13 @@ export default defineComponent({
 .icon-left:before {
   content: "\e62d";
 }
-.dtitle{
-  margin: 0 3px;
+.detail-nav{
+  font-size: 16px;
+  .dtitle{
+    margin: 0 3px;
+  }
 }
+
 .active {
   color: var(--color-high-text);
 }
