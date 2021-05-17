@@ -28,10 +28,8 @@ interface Istate{
     cat_current:number
     viewport_height:number
     is_login:boolean
-    userName:String
     goods_con_position:Array<number>
     detail_heights:{goods:I_vh_goods,parms:I_vh_parms,comments:I_vh_comments,recom:I_vh_recom}
-    userid:string
 }
 interface I_vh_goods{
   vh:number

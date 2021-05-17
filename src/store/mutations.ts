@@ -1,5 +1,5 @@
 import { Istate, IviewCartItem } from '@/typings'
-import { SET_CARDATA, SET_NUM_ADD, SET_NUM_SUB, SET_CARDATA_CHECK, GET_CARDATA, ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, CAT_CURRENT, SET_VIEWPORT, TOKEN_FROM_LOCAL, LOGIN, LOG_OUT, CHANGE_GOODSCON_POSITION, VH_COMMENTS, VH_PARMS, VH_RECOM, CLEAR_GOODSCON_POSITION } from './actionTypes';
+import { SET_CARDATA, SET_NUM_ADD, SET_NUM_SUB, SET_CARDATA_CHECK, GET_CARDATA, ALL_CHECKED, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, CAT_CURRENT, SET_VIEWPORT, TOKEN_FROM_LOCAL, LOGIN, LOG_OUT, CHANGE_GOODSCON_POSITION, VH_COMMENTS, VH_PARMS, VH_RECOM, CLEAR_GOODSCON_POSITION, SET_LOGIN_STATUS } from './actionTypes';
 import _ from 'lodash';
 import { mallLogin } from '@/network/login';
 // import { addLocalStorage } from '@/hooks/cartLocalStorage';
@@ -98,22 +98,16 @@ export default {
     state.viewport_height = n;
   },
   [TOKEN_FROM_LOCAL](state: Istate, pload) {
+    console.log('这个有什么用？')
     let { token,un,uid } = pload;
     state.is_login = true;
-    state.userName = un;
-    state.userid = uid;
+
   },
-  [LOGIN](state: Istate, pload) {
-    const { un,islogin,uid } = pload;
-    state.userName = un;
-    state.is_login = islogin;
-    state.userid = uid;
+  //修改登陆状态
+  [SET_LOGIN_STATUS](state: Istate, isLI) {
+    state.is_login = isLI;
   },
-  [LOG_OUT](state: Istate) {
-    state.is_login = false;
-    state.userName = '';
-    state.userid = '';
-  },
+
   [CHANGE_GOODSCON_POSITION](state: Istate, pload) {
     let { index, p} = pload
     state.goods_con_position[index]= p;

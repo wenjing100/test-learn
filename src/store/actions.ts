@@ -1,4 +1,4 @@
-import { ALL_CHECKED, CAT_CURRENT, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, GET_CARDATA, LOGIN, LOG_OUT, SET_CARDATA, SET_CARDATA_CHECK, SET_NUM_ADD, SET_NUM_SUB } from './actionTypes';
+import { ALL_CHECKED, CAT_CURRENT, COUNT_SELECTNUM, COUNT_TOTALPRICE, DEL_ITEM, GET_CARDATA, LOGIN, LOG_OUT, SET_CARDATA, SET_CARDATA_CHECK, SET_LOGIN_STATUS, SET_NUM_ADD, SET_NUM_SUB } from './actionTypes';
 import { Commit,} from 'vuex';
 import { Istate,  } from '../typings';
 import { getCartList, CartList_add, CartList_sub, setCheck, AddTocart, allCheck, delItem } from '@/network/cartNet';
@@ -75,18 +75,20 @@ export default {
     },
     async [LOGIN]({commit}:ICtx,pload){
       let { un,psw } = pload;
-      let log = (await mallLogin(un, psw)).data;
-      console.log(log)
+      let log = await mallLogin(un, psw);
       // 如果登陆成功
       if(log.code){
-        setToken({token:log.token,un:log.data[0].buyer_name,uid:log.data[0].b_id});
-        commit(LOGIN,{un:log.data[0].buyer_name,islogin:true,uid:log.data[0].b_id});
+        setToken({
+          token:log.token,
+          un:log.data[0].buyer_name,
+          uid:log.data[0].b_id});
+        commit(SET_LOGIN_STATUS,true);
       }
       return log.code
     },
     async [LOG_OUT]({commit}:ICtx){
       delToken();
-      commit(LOG_OUT);
+      commit(SET_LOGIN_STATUS,false);
     },
 
 }

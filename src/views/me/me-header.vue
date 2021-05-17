@@ -5,12 +5,12 @@
     </div>
     <div class="anti-nav">
       <div class="avator" @click="infoclick">
-        <div class="inner"><img src="../../assets/img/未登录.jpg" alt=""></div>
+        <div class="inner"><img :src="uinfos.uavator" alt=""></div>
       </div>
       <div class="checkinfo">
         <div class="info" >
-          <span class="info-a" @click="infoclick">{{info_a}}</span>
-          <span class="info-b"><i class="iconfont icon-shouji"></i>{{info_b}}</span>
+          <span class="info-a" @click="infoclick">{{uinfos.uname}}</span>
+          <span class="info-b"><i class="iconfont icon-shouji"></i>{{uinfos.uphone}}</span>
         </div>
         <div class="goto" @click="infoclick"><i class="iconfont icon-arrow-right-copy-copy"></i></div>
       </div>
@@ -24,13 +24,14 @@ import { defineComponent, reactive,toRefs } from "vue";
 import router from "@/router";
 export default defineComponent({
   name: "meheader",
+  props:{
+    uinfos:{
+      type:Object,
+      required:true
+    }
+  },
   setup(){
     const store = useStore();
-    const state = reactive({
-      info_a:localStorage.getItem('token')?localStorage.getItem('userName'):'登陆/注册',
-      info_b:localStorage.getItem('token')?'18*********':'未绑定手机号'
-    })
-
     const infoclick = ()=>{
       if(store.state.is_login){
         router.push('/set')
@@ -39,7 +40,6 @@ export default defineComponent({
       }
     }
     return{
-      ...toRefs(state),
       infoclick
     }
   }

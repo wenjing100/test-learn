@@ -2,6 +2,7 @@ import store from '@/store';
 import { TOKEN_FROM_LOCAL } from '@/store/actionTypes';
 import { SKEY } from '@/hooks/keycode';
 
+
 const getToken = ()=>{
     let tk = localStorage.getItem('token');
     let un = localStorage.getItem('userName');
@@ -12,10 +13,10 @@ const getToken = ()=>{
     }
 }
 const setToken = ({token,un,uid})=>{
-    let u = uid^(SKEY as any);
+    let u = escape(uid);
     localStorage.setItem('token',token);
-    localStorage.setItem('userName',un);
-    localStorage.setItem('uid',u.toString());
+    localStorage.setItem('userName',escape(un));
+    localStorage.setItem('uid',u);
 }
 const delToken = ()=>{
     localStorage.removeItem('token');

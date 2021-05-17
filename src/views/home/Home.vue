@@ -81,7 +81,7 @@ import vswiper from '@/libs/vantswiper/v-swiper.vue';
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { CHANGE_GOODSCON_POSITION, CLEAR_GOODSCON_POSITION } from "@/store/actionTypes";
-import { checkLogStatus } from "@/network/login";
+
 export default defineComponent({
   name: "homePage",
   components: {
@@ -110,15 +110,13 @@ export default defineComponent({
       sb_offsettop:0,
       is_fixed:false,
       stay_position:0,//记录滚动的高度
-      checkinStatus:'未登录'
+      checkinStatus:''
     });
-    //判断是否登陆
-    let me = `Hi~${localStorage.getItem('userName')}`;
-    state.checkinStatus = store.state.is_login?me:'未登录';
     onBeforeMount(async () => {
       try {
-        //登陆信息的请求 确认token是否过期
-        await checkLogStatus();
+        //检测是否登陆
+        let homeUn = unescape(localStorage.getItem('userName'));
+        state.checkinStatus = store.state.is_login?`Hi~${homeUn}`:'未登录';
         //请求 轮播图，推荐，本周  数据
         let _data = await gethomeMulti();
         _data.bannerList.forEach(item=>{

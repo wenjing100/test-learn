@@ -5,10 +5,12 @@
   <tabbar v-if="!isdetails"></tabbar>
 </template>
 <script lang="ts">
-import { watch, ref, } from "vue";
+import { watch, ref, onBeforeMount, } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from 'vuex';
-import { SET_VIEWPORT, TOKEN_FROM_LOCAL } from './store/actionTypes';
+import { SET_LOGIN_STATUS, SET_VIEWPORT, TOKEN_FROM_LOCAL } from './store/actionTypes';
+
+import { checkLogStatus } from './network/login';
 export default {
   setup() {
     const isdetails = ref(false);
@@ -33,13 +35,21 @@ export default {
       let h = document.documentElement.clientHeight;
       store.commit(SET_VIEWPORT,h);
     }
-    //检查本地登陆 状态
-    let tk = localStorage.getItem('token');
-    if(tk){
-      store.commit(TOKEN_FROM_LOCAL, true);
-    }else{
-      store.commit(TOKEN_FROM_LOCAL, false);
-    }
+    //检测登陆状态并修改
+    onBeforeMount(async()=>{
+      let homeUn = unescape(localStorage.getItem('userName')) || '';
+      console.log(homeUn)
+      if(homeUn){
+        let logQuery = await checkLogStatus(homeUn);
+        if(logQuery.code){
+          //登陆成功，修改状态
+          store.commit(SET_LOGIN_STATUS,true);
+        }else{
+          store.commit(SET_LOGIN_STATUS,false);
+        }
+      }
+    })
+    
     return {
       isdetails,
     };

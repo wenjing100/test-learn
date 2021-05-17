@@ -9,18 +9,21 @@ async function mallLogin(un,psw){
       psw
     }
   }
-  let res = await axrequest(option)
+  let res = (await axrequest(option)).data
   return res
 }
 
 // 登陆验证
-async function checkLogStatus(){
-
+async function checkLogStatus(un){
   let option = {
     method:'post',
     url:'/api/user/verify',
+    params:{
+      un,
+    }
   }
-  let res = await axrequest(option)
+  let res = (await axrequest(option)).data;
+  console.log(res)
   return res
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div id="me">
-    <meheader></meheader>
+    <meheader :uinfos="uinfos"></meheader>
     <myscroll
       :probtype="3"
       class="meScroll"
@@ -27,7 +27,7 @@
       </meitem>
     </memoreone>
     <div class="moretwo">
-      <meitem @msgclick="msgclick">
+      <meitem @msgclick="semyCart">
         <template #icon>
           <i class="iconfont icon-gouwuche"></i>
         </template>
@@ -53,7 +53,7 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent, onBeforeMount, reactive, toRefs } from "vue";
 import meheader from "./me-header.vue";
 import measset from "./me-assets.vue";
 import memoreone from "./me-more-01.vue";
@@ -62,6 +62,8 @@ import toast from "@/libs/toast"
 import { useRouter } from 'vue-router'
 import { useStore } from "vuex";
 import { LOG_OUT } from "@/store/actionTypes";
+import base64 from 'js-base64';
+import { fetchUser } from '@/network/userNet';
 export default defineComponent({
   name: "mePage",
   components: {
@@ -74,14 +76,29 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
     const state = reactive({
-      logmsg:'点击登录',
-      isNotlogin:false
+      logmsg:store.state.is_login == true?'退出登陆':'点击登录',
+      isNotlogin:!store.state.is_login,
+      uinfos:{
+        uavator:'http://47.110.38.241/avator/avator-default.jpg',//头像 默认
+        uname:'未登录',//用户名
+        uphone:'未绑定'//绑定手机
+      }
     })
-    state.logmsg = store.state.is_login == true?'退出登陆':'点击登录';
-    state.isNotlogin = store.state.is_login == true?false:true;
-    const msgclick = ()=>{
+    onBeforeMount(async()=>{
+      let un = unescape(localStorage.getItem('userName'));
+      if(store.state.is_login){
+        let udata = await fetchUser(un);
+        if(udata.code){
+          state.uinfos = udata.data;
+          console.log(state.uinfos)
+        }
+      }
+    })
+    //查看购物车
+    const semyCart = ()=>{
       router.replace('/cart')
     }
+    //点击退出登陆
     const logout =()=>{
       if(store.state.is_login){
         store.dispatch(LOG_OUT);
@@ -92,12 +109,13 @@ export default defineComponent({
       }
       router.replace('/login');
     }
+    //点击注册
     const toregi = ()=>{
       router.replace('/register');
     }
     return{
       ...toRefs(state),
-      msgclick,
+      semyCart,
       logout,
       toregi
     }

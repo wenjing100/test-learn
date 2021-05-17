@@ -13,6 +13,17 @@ async function axrequest(config:Object){
     // },err=>{
     //     console.log(err)
     // })
+
+    instance.interceptors.request.use(config=>{
+        let token = localStorage.getItem('token');
+        if(token){
+          //bearer token 规范 jwt
+          config.headers.Authorization = 'Bearer ' + token;
+        }
+        return config;
+    },err=>{
+        console.log('拦截 出错'+err)
+    })
     return instance(config);
 }
 

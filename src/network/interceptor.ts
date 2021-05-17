@@ -4,7 +4,7 @@ import store from '@/store';
 import router from '@/router';
 
 
-export default ()=>{
+export default async()=>{
   //请求拦截  给每次请求头 加上token
   axios.interceptors.request.use(config=>{
     let token = localStorage.getItem('token');
@@ -17,9 +17,9 @@ export default ()=>{
   })
   //响应拦截，在token 失效，服务器返回401时候
   axios.interceptors.response.use(null,err=>{
-    if(err.response.status === 500){//没有登陆或者令牌过期
+    if(err.response.status === 401){//没有登陆或者令牌过期
       //清空本地token
-      console.log('清空token')
+      console.log('失效情况---清空token')
       store.dispatch(LOG_OUT);
       //跳转login
       router.replace('/login')
