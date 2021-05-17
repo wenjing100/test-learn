@@ -90,6 +90,7 @@ export default defineComponent({
   background: var(--color-tint);
   height: 132px;
   z-index: 12;
+  font-size: 16px;
   .nav{
     height: 44px;
     width: 100%;
@@ -114,6 +115,7 @@ export default defineComponent({
         height: 60px;
         width: 60px;
         background: #d8d7d7;
+        border-radius: 50%;
         img{
           width: 100%;
           height: 100%;

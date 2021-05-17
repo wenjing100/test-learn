@@ -9,11 +9,12 @@ async function fetchUser(un){
     }
   }
   let res = (await axrequest(option)).data
-  console.log(res)
   let udetails = {
-    
+    uavator:res.data[0].logo,
+    uname:res.data[0].buyer_name,
+    uphone:'18xxxxxxxx7'
   }
-  return res
+  return udetails
 }
 
 export {

@@ -62,7 +62,6 @@ import toast from "@/libs/toast"
 import { useRouter } from 'vue-router'
 import { useStore } from "vuex";
 import { LOG_OUT } from "@/store/actionTypes";
-import base64 from 'js-base64';
 import { fetchUser } from '@/network/userNet';
 export default defineComponent({
   name: "mePage",
@@ -87,11 +86,7 @@ export default defineComponent({
     onBeforeMount(async()=>{
       let un = unescape(localStorage.getItem('userName'));
       if(store.state.is_login){
-        let udata = await fetchUser(un);
-        if(udata.code){
-          state.uinfos = udata.data;
-          console.log(state.uinfos)
-        }
+        state.uinfos = await fetchUser(un);
       }
     })
     //查看购物车

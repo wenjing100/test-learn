@@ -23,7 +23,6 @@ async function checkLogStatus(un){
     }
   }
   let res = (await axrequest(option)).data;
-  console.log(res)
   return res
 }
 
